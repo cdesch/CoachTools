@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>comingSoon.msg</key>
+	<string>This feature is not available now but it is comming soon! Please make sure you watch for any updates!</string>
+	<key>comingSoon.title</key>
+	<string>Coming Soon</string>
+	<key>maxPlayers.msg</key>
+	<string>There is a Maximum {0} Active Players on a team</string>
+	<key>maxPlayers.title</key>
+	<string>Team Max Players</string>
+	<key>minPlayers.msg</key>
+	<string>There needs to be at least {0} active players on a team for a game</string>
+	<key>minPlayers.title</key>
+	<string>Minimum Players</string>
+	<key>numOnlyField.msg</key>
+	<string>{0} can only be a number value</string>
+	<key>numOnlyField.title</key>
+	<string>Invalid Value</string>
+	<key>numRange.msg</key>
+	<string>{0} must be between {1} and {2}</string>
+	<key>numRange.title</key>
+	<string>Number Range</string>
+	<key>numTooLarge.msg</key>
+	<string>{0} is too large</string>
+	<key>numTooLarge.title</key>
+	<string>Number Exceeds Maximum</string>
+	<key>requiredField.msg</key>
+	<string>{0} is a required field</string>
+	<key>requiredField.title</key>
+	<string>Required Field</string>
+	<key>startingPlayerSlots.msg</key>
+	<string>All the Starting Player slots must have a player before starting the game</string>
+	<key>startingPlayerSlots.title</key>
+	<string>Required</string>
+	<key>gameTimeStop.msg</key>
+	<string>The Game Clock has been stopped and set  {0}</string>
+	<key>gameTimeStop.title</key>
+	<string>Game Time Stoppage</string>
+	<key>requiredFieldEdit.msg</key>
+	<string>{0} is a required field. Data was not saved. </string>
+	<key>requiredFieldEdit.title</key>
+	<string>Required Field</string>
+	<key>emailInvalid.msg</key>
+	<string>{0} is not a valid email addres. </string>
+	<key>emailInvalid.title</key>
+	<string>Invalid Email Adddress</string>
+	<key>criticalError.msg</key>
+	<string>A Critical Error has been encounter, please attempt to restart your device or reinstall this App. Crash Logs have been sent back to CoachTools to be analyzed. We apologize for the inconvience. Error: {0}</string>
+	<key>criticalError.title</key>
+	<string>Critical Error</string>
+</dict>
+</plist>

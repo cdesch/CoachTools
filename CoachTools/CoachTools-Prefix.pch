@@ -1,0 +1,23 @@
+//
+// Prefix header for all source files of the 'CoachTools' target in the 'CoachTools' project
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iPhone SDK 3.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import <CoreData/CoreData.h>
+#endif
+
+#ifdef DCBLOCKNSLOGSTATEMENTS
+#define NSLog(format, ...)
+#else
+#define NSLog(format, ...) NSLog(format, ## __VA_ARGS__)
+#endif
+
+#

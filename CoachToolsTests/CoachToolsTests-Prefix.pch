@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'CoachToolsTests' target in the 'CoachToolsTests' project
+//
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+#endif

@@ -12,7 +12,7 @@
 #import "FlurryAnalytics.h"
 #import "HelpManagement.h"
 #import "Crittercism.h"
-#import "TestFlight.h"
+//#import "TestFlight.h"
 #import <Foundation/Foundation.h>
 
 @implementation CoachToolsAppDelegate

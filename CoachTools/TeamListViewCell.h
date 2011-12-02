@@ -14,6 +14,7 @@
     IBOutlet UILabel *winLabel;
     IBOutlet UILabel *lossLabel;
     IBOutlet UILabel *drawLabel;
+    IBOutlet UILabel *notPlayedLabel;
 
     
 }
@@ -22,5 +23,6 @@
 @property (nonatomic, retain) IBOutlet UILabel *winLabel;
 @property (nonatomic, retain) IBOutlet UILabel *lossLabel;
 @property (nonatomic, retain) IBOutlet UILabel *drawLabel;
+@property (nonatomic, retain) IBOutlet UILabel *notPlayedLabel;
 
 @end

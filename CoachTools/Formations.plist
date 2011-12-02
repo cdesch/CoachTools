@@ -712,38 +712,30 @@
 		<array>
 			<dict>
 				<key>name</key>
-				<string>3-3-1</string>
+				<string>3-3</string>
 				<key>positions</key>
 				<array>
 					<dict>
 						<key>name</key>
 						<string>Forward</string>
 						<key>x</key>
-						<integer>700</integer>
+						<integer>550</integer>
 						<key>y</key>
 						<integer>380</integer>
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>Midfield</string>
+						<string>Forward</string>
 						<key>x</key>
-						<integer>510</integer>
-						<key>y</key>
-						<integer>380</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Midfield</string>
-						<key>x</key>
-						<integer>510</integer>
+						<integer>550</integer>
 						<key>y</key>
 						<integer>215</integer>
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>Midfield</string>
+						<string>Forward</string>
 						<key>x</key>
-						<integer>510</integer>
+						<integer>550</integer>
 						<key>y</key>
 						<integer>570</integer>
 					</dict>
@@ -775,7 +767,7 @@
 			</dict>
 			<dict>
 				<key>name</key>
-				<string>2-3-2</string>
+				<string>1-3-2</string>
 				<key>positions</key>
 				<array>
 					<dict>
@@ -784,276 +776,7 @@
 						<key>x</key>
 						<integer>760</integer>
 						<key>y</key>
-						<integer>460</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Forward</string>
-						<key>x</key>
-						<integer>760</integer>
-						<key>y</key>
-						<integer>300</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Midfield</string>
-						<key>x</key>
-						<integer>510</integer>
-						<key>y</key>
-						<integer>215</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Midfield</string>
-						<key>x</key>
-						<integer>510</integer>
-						<key>y</key>
 						<integer>380</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Midfield</string>
-						<key>x</key>
-						<integer>510</integer>
-						<key>y</key>
-						<integer>570</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Defender</string>
-						<key>x</key>
-						<integer>310</integer>
-						<key>y</key>
-						<integer>460</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Defender</string>
-						<key>x</key>
-						<integer>310</integer>
-						<key>y</key>
-						<integer>300</integer>
-					</dict>
-				</array>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>3-2-2</string>
-				<key>positions</key>
-				<array>
-					<dict>
-						<key>name</key>
-						<string>Forward</string>
-						<key>x</key>
-						<integer>760</integer>
-						<key>y</key>
-						<integer>460</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Forward</string>
-						<key>x</key>
-						<integer>760</integer>
-						<key>y</key>
-						<integer>300</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Midfield</string>
-						<key>x</key>
-						<integer>510</integer>
-						<key>y</key>
-						<integer>460</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Midfield</string>
-						<key>x</key>
-						<integer>510</integer>
-						<key>y</key>
-						<integer>300</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Defender</string>
-						<key>x</key>
-						<integer>310</integer>
-						<key>y</key>
-						<integer>570</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Defender</string>
-						<key>x</key>
-						<integer>310</integer>
-						<key>y</key>
-						<integer>380</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Defender</string>
-						<key>x</key>
-						<integer>310</integer>
-						<key>y</key>
-						<integer>215</integer>
-					</dict>
-				</array>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>2-4-1</string>
-				<key>positions</key>
-				<array>
-					<dict>
-						<key>name</key>
-						<string>Forward</string>
-						<key>x</key>
-						<integer>700</integer>
-						<key>y</key>
-						<integer>380</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Midfield</string>
-						<key>x</key>
-						<integer>510</integer>
-						<key>y</key>
-						<integer>600</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Midfield</string>
-						<key>x</key>
-						<integer>510</integer>
-						<key>y</key>
-						<integer>450</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Midfield</string>
-						<key>x</key>
-						<integer>510</integer>
-						<key>y</key>
-						<integer>300</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Midfield</string>
-						<key>x</key>
-						<integer>510</integer>
-						<key>y</key>
-						<integer>150</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Defender</string>
-						<key>x</key>
-						<integer>310</integer>
-						<key>y</key>
-						<integer>460</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Defender</string>
-						<key>x</key>
-						<integer>310</integer>
-						<key>y</key>
-						<integer>300</integer>
-					</dict>
-				</array>
-			</dict>
-		</array>
-		<key>name</key>
-		<string>Child</string>
-		<key>numPlayers</key>
-		<integer>7</integer>
-	</dict>
-	<dict>
-		<key>formations</key>
-		<array>
-			<dict>
-				<key>name</key>
-				<string>3-3-1</string>
-				<key>positions</key>
-				<array>
-					<dict>
-						<key>name</key>
-						<string>Forward</string>
-						<key>x</key>
-						<integer>700</integer>
-						<key>y</key>
-						<integer>380</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Midfield</string>
-						<key>x</key>
-						<integer>510</integer>
-						<key>y</key>
-						<integer>380</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Midfield</string>
-						<key>x</key>
-						<integer>510</integer>
-						<key>y</key>
-						<integer>215</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Midfield</string>
-						<key>x</key>
-						<integer>510</integer>
-						<key>y</key>
-						<integer>570</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Defender</string>
-						<key>x</key>
-						<integer>310</integer>
-						<key>y</key>
-						<integer>215</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Defender</string>
-						<key>x</key>
-						<integer>310</integer>
-						<key>y</key>
-						<integer>380</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Defender</string>
-						<key>x</key>
-						<integer>310</integer>
-						<key>y</key>
-						<integer>570</integer>
-					</dict>
-				</array>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>2-3-2</string>
-				<key>positions</key>
-				<array>
-					<dict>
-						<key>name</key>
-						<string>Forward</string>
-						<key>x</key>
-						<integer>760</integer>
-						<key>y</key>
-						<integer>460</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Forward</string>
-						<key>x</key>
-						<integer>760</integer>
-						<key>y</key>
-						<integer>300</integer>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -1097,58 +820,59 @@
 					</dict>
 				</array>
 			</dict>
+		</array>
+		<key>name</key>
+		<string>Child</string>
+		<key>numPlayers</key>
+		<integer>7</integer>
+	</dict>
+	<dict>
+		<key>formations</key>
+		<array>
 			<dict>
 				<key>name</key>
-				<string>3-2-2</string>
+				<string>3-2-3-1</string>
 				<key>positions</key>
 				<array>
 					<dict>
 						<key>name</key>
 						<string>Forward</string>
 						<key>x</key>
-						<integer>760</integer>
+						<integer>680</integer>
 						<key>y</key>
-						<integer>460</integer>
+						<integer>215</integer>
 					</dict>
 					<dict>
 						<key>name</key>
 						<string>Forward</string>
 						<key>x</key>
-						<integer>760</integer>
+						<integer>680</integer>
 						<key>y</key>
-						<integer>300</integer>
+						<integer>380</integer>
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>Midfield</string>
+						<string>Forward</string>
 						<key>x</key>
-						<integer>510</integer>
-						<key>y</key>
-						<integer>460</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Midfield</string>
-						<key>x</key>
-						<integer>510</integer>
-						<key>y</key>
-						<integer>300</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Defender</string>
-						<key>x</key>
-						<integer>310</integer>
+						<integer>680</integer>
 						<key>y</key>
 						<integer>570</integer>
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>Defender</string>
+						<string>Midfield</string>
 						<key>x</key>
-						<integer>310</integer>
+						<integer>510</integer>
 						<key>y</key>
 						<integer>380</integer>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>Midfield</string>
+						<key>x</key>
+						<integer>510</integer>
+						<key>y</key>
+						<integer>215</integer>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -1158,18 +882,66 @@
 						<key>y</key>
 						<integer>215</integer>
 					</dict>
+					<dict>
+						<key>name</key>
+						<string>Defender</string>
+						<key>x</key>
+						<integer>310</integer>
+						<key>y</key>
+						<integer>380</integer>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>Defender</string>
+						<key>x</key>
+						<integer>310</integer>
+						<key>y</key>
+						<integer>570</integer>
+					</dict>
 				</array>
 			</dict>
 			<dict>
 				<key>name</key>
-				<string>2-4-1</string>
+				<string>3-3-2-1</string>
 				<key>positions</key>
 				<array>
 					<dict>
 						<key>name</key>
 						<string>Forward</string>
 						<key>x</key>
-						<integer>700</integer>
+						<integer>680</integer>
+						<key>y</key>
+						<integer>215</integer>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>Forward</string>
+						<key>x</key>
+						<integer>680</integer>
+						<key>y</key>
+						<integer>380</integer>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>Forward</string>
+						<key>x</key>
+						<integer>680</integer>
+						<key>y</key>
+						<integer>570</integer>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>Midfield</string>
+						<key>x</key>
+						<integer>510</integer>
+						<key>y</key>
+						<integer>215</integer>
+					</dict>
+					<dict>
+						<key>name</key>
+						<string>Midfield</string>
+						<key>x</key>
+						<integer>510</integer>
 						<key>y</key>
 						<integer>380</integer>
 					</dict>
@@ -1179,31 +951,7 @@
 						<key>x</key>
 						<integer>510</integer>
 						<key>y</key>
-						<integer>600</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Midfield</string>
-						<key>x</key>
-						<integer>510</integer>
-						<key>y</key>
-						<integer>450</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Midfield</string>
-						<key>x</key>
-						<integer>510</integer>
-						<key>y</key>
-						<integer>300</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>Midfield</string>
-						<key>x</key>
-						<integer>510</integer>
-						<key>y</key>
-						<integer>150</integer>
+						<integer>570</integer>
 					</dict>
 					<dict>
 						<key>name</key>

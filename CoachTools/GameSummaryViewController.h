@@ -29,7 +29,7 @@
     //IBOutlet UISegmentedControl *halfLengthControl;
     //IBOutlet UISegmentedControl *numPlayersControl;
     
-    int numPlayers;
+    //int numPlayers;
     
     //UISwitch *intergrateCalendarSwitch;
     

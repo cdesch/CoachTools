@@ -80,22 +80,17 @@
     self.title = @"Players";
     //[self.navigationController setToolbarHidden:NO];
     // Set up the Team Selection button.
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithTitle:@"Add Player" style:UIBarButtonItemStylePlain target:self action:@selector(insertPlayerButton:)];
+    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithTitle:@"Add Player" style:UIBarButtonItemStylePlain target:self action:@selector(insertItemButton:)];
     
     self.navigationItem.rightBarButtonItem = addButton;
     UIBarButtonItem *sortAscendingButton = [[UIBarButtonItem alloc] initWithTitle:@"Sort" style:UIBarButtonItemStyleBordered target:self action:@selector(sortButton:)];
-    
     UIBarButtonItem *flexibleBarButtItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     [self setToolbarItems:[NSArray arrayWithObjects:self.editButtonItem,flexibleBarButtItem,sortAscendingButton,nil]];
-    
     [flexibleBarButtItem release];
     [sortAscendingButton release];
 
-
     [addButton release];
-    
-
 
 }
 
@@ -322,7 +317,7 @@
     
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"New Player"
                                                              delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil
-                                                    otherButtonTitles:@"Import from Contact List",@"New to Contact List",  @"New to App Only", nil];
+                                                    otherButtonTitles:@"From Contacts",@"New Contact",  @"App Player Only", nil];
     actionSheet.tag = 2;
     actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
     //actionSheet.destructiveButtonIndex = 4; // make the second button red (destructive)
@@ -360,6 +355,38 @@
 	[navigation release];	
 }
 
+
+#pragma mark - ContactIntergration
+
+// Displays the information of a selected person
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person
+{
+	return YES;
+}
+
+
+// Does not allow users to perform default actions such as dialing a phone number, when they select a person property.
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person 
+								property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier
+{
+	return NO;
+}
+
+
+// Dismisses the people picker and shows the application when users tap Cancel. 
+- (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker;
+{
+	[self dismissModalViewControllerAnimated:YES];
+}
+
+- (void)newPersonViewController:(ABNewPersonViewController *)newPersonView didCompleteWithNewPerson:(ABRecordRef)person{
+    
+}
+
+
+
+#pragma mark - Forms
+
 - (void)itemForm{
     
     playerModel = [[NSMutableDictionary alloc] init];
@@ -367,19 +394,6 @@
     RootViewController *sharedController = [RootViewController sharedAppController];
     NSManagedObjectContext *managedObjectContext = [sharedController managedObjectContext];
     item = [NSEntityDescription insertNewObjectForEntityForName:@"Person" inManagedObjectContext:managedObjectContext];
-    
-    
-    //NSLog(@"%@",[newItem description]);
-    
-    
-    //NSDictionary *attributesByName = [[newItem entity] attributesByName];
-    //trainingModel = [[newItem dictionaryWithValuesForKeys:[attributesByName allKeys]] mutableCopy];
-    //NSLog(@"%@",[newItem description]);
-    //NSLog(@"%@",[trainingModel description]);
-    
-    
-    //
-    
     
     //ShowcaseModel *showcaseModel = [self model];
     ShowcaseModel *showcaseModel = [[[ShowcaseModel alloc] init] autorelease];

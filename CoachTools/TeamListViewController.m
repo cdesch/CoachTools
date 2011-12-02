@@ -544,7 +544,7 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return @"Team Name                      Win   Loss  Draw ";
+    return @"Team Name                 Win   Loss   Draw  Scheduled";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -579,8 +579,11 @@
     //cell.textLabel.text = [selectedTeam.name description];
 
     cell.teamNameLabel.text = [selectedTeam.name description];
-    cell.winLabel.text = [selectedTeam.cWins description];
-    cell.lossLabel.text = [selectedTeam.cLosses description];
+    NSArray *objectStats = [self fetchObjectStats:selectedTeam.name];
+    cell.winLabel.text = [[objectStats objectAtIndex:0] description];
+    cell.lossLabel.text = [[objectStats objectAtIndex:1] description];
+    cell.drawLabel.text = [[objectStats objectAtIndex:2] description];
+    cell.notPlayedLabel.text = [[objectStats objectAtIndex:3] description];
     //cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     // Configure the cell...
     //[self configureCell:cell atIndexPath:indexPath];
@@ -629,6 +632,46 @@
             NSLog(@"Insert");
         }   
     }
+}
+
+- (NSArray*)fetchObjectStats:(NSString*)objectName{    
+    
+    //NSMutableSet* statSet = [[NSMutableSet alloc] init];
+    
+    int wins = 0; 
+    int losses = 0;
+    int draw = 0;
+    int notPlayed = 0;
+    
+    RootViewController *appController = [RootViewController sharedAppController];
+
+    NSManagedObjectContext *moc = [appController managedObjectContext];
+    NSFetchRequest *request = [[[NSFetchRequest alloc] init] autorelease];
+    [request setEntity:[NSEntityDescription entityForName:@"Game" inManagedObjectContext:moc]];
+    [request setPredicate:[NSPredicate predicateWithFormat:@"ANY season.team.name like %@", objectName]];
+    NSArray *singleEmployeeDepartments = [moc executeFetchRequest:request error:NULL];
+    
+    NSLog(@"%d",[singleEmployeeDepartments count]);
+    
+    for(Game* game in singleEmployeeDepartments){
+        if([game.played boolValue] == FALSE){
+            notPlayed ++;
+        }else{
+            if([game.homeScore intValue] == [game.opponentScore intValue]){
+                //NSLog(@"Draw");
+                draw ++;
+            }else if([game.homeScore intValue] > [game.opponentScore intValue]){
+                //NSLog(@"Win");
+                wins ++;
+            }else{
+                //NSLog(@"Loss");        
+                losses++;
+            }
+        }
+    }
+    
+    //Wins - Loss - Draw - Not Played
+    return [[[NSArray alloc] initWithObjects:[NSNumber numberWithInt:wins],[NSNumber numberWithInt:losses],[NSNumber numberWithInt:draw],[NSNumber numberWithInt:notPlayed], nil] autorelease];
 }
 
 /*

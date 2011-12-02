@@ -22,6 +22,7 @@
 		2306F4571478CB5200EBBAC2 /* GameSummaryFormDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2306F4561478CB5000EBBAC2 /* GameSummaryFormDataSource.m */; };
 		230A5F0A1403404B00CFE088 /* GameLogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 230A5F081403404A00CFE088 /* GameLogViewController.m */; };
 		230A5F0B1403404B00CFE088 /* GameLogViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 230A5F091403404B00CFE088 /* GameLogViewController.xib */; };
+		230D8AA414881D5D00822774 /* libIBAForms.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 230D8AA314881D4700822774 /* libIBAForms.a */; };
 		2316D1851409BDF8005E676D /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2316D1841409BDF8005E676D /* EventKit.framework */; };
 		2316D18B1409CDA8005E676D /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2316D18A1409CDA8005E676D /* EventKitUI.framework */; };
 		231852E61406FCF70035DE91 /* CompileStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 231852E51406FCF60035DE91 /* CompileStats.m */; };
@@ -353,7 +354,6 @@
 		23DF62AB140495020084A11B /* GameSubViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23DF62AA140495020084A11B /* GameSubViewCell.xib */; };
 		23DF62AD1404956B0084A11B /* GameScoreViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23DF62AC1404956B0084A11B /* GameScoreViewCell.xib */; };
 		23E5072013DA5BAB00A349FE /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23E5071F13DA5BAA00A349FE /* RootViewController.xib */; };
-		23EB5358148591E600BB3C5F /* libIBAForms.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23EB53571485906100BB3C5F /* libIBAForms.a */; };
 		23EB6EBF140992C000D9B45A /* IAPManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23EB6EBD140992C000D9B45A /* IAPManagerViewController.m */; };
 		23EB6EC0140992C000D9B45A /* IAPManagerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23EB6EBE140992C000D9B45A /* IAPManagerViewController.xib */; };
 		23EB6EC81409946500D9B45A /* InAppPurchaseObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 23EB6EC71409946500D9B45A /* InAppPurchaseObserver.m */; };
@@ -392,19 +392,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		230D8AA214881D4700822774 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 230D8A9B14881D4700822774 /* IBAForms.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
+			remoteInfo = IBAForms;
+		};
 		232EBB1813526C63002277B9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 232EBADE13526C62002277B9 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 232EBAE613526C62002277B9;
 			remoteInfo = CoachTools;
-		};
-		23EB53561485906100BB3C5F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 23EB534F1485906100BB3C5F /* IBAForms.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D2AAC07E0554694100DB518D;
-			remoteInfo = IBAForms;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -433,6 +433,7 @@
 		230A5F071403404A00CFE088 /* GameLogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameLogViewController.h; sourceTree = "<group>"; };
 		230A5F081403404A00CFE088 /* GameLogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameLogViewController.m; sourceTree = "<group>"; };
 		230A5F091403404B00CFE088 /* GameLogViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameLogViewController.xib; sourceTree = "<group>"; };
+		230D8A9B14881D4700822774 /* IBAForms.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IBAForms.xcodeproj; path = ../../github/IBAForms/library/IBAForms.xcodeproj; sourceTree = "<group>"; };
 		2316D1841409BDF8005E676D /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		2316D18A1409CDA8005E676D /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
 		231852E41406FCF50035DE91 /* CompileStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompileStats.h; sourceTree = "<group>"; };
@@ -1051,7 +1052,6 @@
 		23DF62AA140495020084A11B /* GameSubViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameSubViewCell.xib; sourceTree = "<group>"; };
 		23DF62AC1404956B0084A11B /* GameScoreViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameScoreViewCell.xib; sourceTree = "<group>"; };
 		23E5071F13DA5BAA00A349FE /* RootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RootViewController.xib; sourceTree = "<group>"; };
-		23EB534F1485906100BB3C5F /* IBAForms.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IBAForms.xcodeproj; path = ../../github/IBAForms/library/IBAForms.xcodeproj; sourceTree = "<group>"; };
 		23EB6EBC140992C000D9B45A /* IAPManagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAPManagerViewController.h; sourceTree = "<group>"; };
 		23EB6EBD140992C000D9B45A /* IAPManagerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAPManagerViewController.m; sourceTree = "<group>"; };
 		23EB6EBE140992C000D9B45A /* IAPManagerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IAPManagerViewController.xib; sourceTree = "<group>"; };
@@ -1121,7 +1121,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				23EB5358148591E600BB3C5F /* libIBAForms.a in Frameworks */,
+				230D8AA414881D5D00822774 /* libIBAForms.a in Frameworks */,
 				23069B2D1479B6A10052F785 /* AddressBook.framework in Frameworks */,
 				23FAFC081479978300C42398 /* AddressBookUI.framework in Frameworks */,
 				2306F3E8147865EE00EBBAC2 /* SystemConfiguration.framework in Frameworks */,
@@ -1232,6 +1232,14 @@
 				23F40B0113C8B05F006EF20B /* DDBadgeViewCell.m */,
 			);
 			name = Deprecated;
+			sourceTree = "<group>";
+		};
+		230D8A9C14881D4700822774 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				230D8AA314881D4700822774 /* libIBAForms.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		231852E81406FD200035DE91 /* Entities */ = {
@@ -2117,7 +2125,7 @@
 		23C2FEC314858489002B8350 /* External */ = {
 			isa = PBXGroup;
 			children = (
-				23EB534F1485906100BB3C5F /* IBAForms.xcodeproj */,
+				230D8A9B14881D4700822774 /* IBAForms.xcodeproj */,
 				23C2FEC4148584BD002B8350 /* Crittercism-SDK */,
 			);
 			name = External;
@@ -2269,14 +2277,6 @@
 				23FD6BBB13EA7A1E00F6CC75 /* GridV.png */,
 			);
 			name = images;
-			sourceTree = "<group>";
-		};
-		23EB53501485906100BB3C5F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				23EB53571485906100BB3C5F /* libIBAForms.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		23EB6EC1140992D700D9B45A /* Work In Progress */ = {
@@ -2468,8 +2468,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 23EB53501485906100BB3C5F /* Products */;
-					ProjectRef = 23EB534F1485906100BB3C5F /* IBAForms.xcodeproj */;
+					ProductGroup = 230D8A9C14881D4700822774 /* Products */;
+					ProjectRef = 230D8A9B14881D4700822774 /* IBAForms.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -2481,11 +2481,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		23EB53571485906100BB3C5F /* libIBAForms.a */ = {
+		230D8AA314881D4700822774 /* libIBAForms.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libIBAForms.a;
-			remoteRef = 23EB53561485906100BB3C5F /* PBXContainerItemProxy */;
+			remoteRef = 230D8AA214881D4700822774 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

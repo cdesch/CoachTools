@@ -47,6 +47,9 @@
 - (IBAction)IAPManagerButton:(id)sender;
 - (IBAction)notAvailable:(id)sender;
 
+- (void)testPredicate;
+- (IBAction)testButton:(id)sender;
+
 
 
 @end

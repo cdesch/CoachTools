@@ -26,8 +26,8 @@
 //Flurr Excepption Handler
 void uncaughtExceptionHandler(NSException *exception) {
     [FlurryAnalytics logError:@"uncaughtExceptionHandler" message:@"Crash!" exception:exception];
-    NSLog(@"uncaughtExceptionHandler");
-    NSLog(@"This is where we save the application data during a exception");
+    //NSLog(@"uncaughtExceptionHandler");
+    //NSLog(@"This is where we save the application data during a exception");
 }
 
 /*
@@ -106,8 +106,8 @@ void SignalHandler(int sig) {
     [self.window makeKeyAndVisible];
     
     //Crittercism API
-    [Crittercism initWithAppID:@"4ec82c723f5b316f9a00004f" andKey:@"4ec82c723f5b316f9a00004flwax7sls" andSecret:@"if9cgs1z3bhu8gncwufsolmenpjeqvtq" andMainViewController:self.navigationController ];
-    [Crittercism sharedInstance].delegate = self;
+    //[Crittercism initWithAppID:@"4ec82c723f5b316f9a00004f" andKey:@"4ec82c723f5b316f9a00004flwax7sls" andSecret:@"if9cgs1z3bhu8gncwufsolmenpjeqvtq" andMainViewController:self.navigationController ];
+    //[Crittercism sharedInstance].delegate = self;
     
     return YES;
 }

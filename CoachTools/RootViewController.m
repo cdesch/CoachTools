@@ -35,7 +35,6 @@ static RootViewController *sharedInstance;
 		
 @synthesize fetchedResultsController;
 @synthesize managedObjectContext;
-
 @synthesize menuSectionsArray;
 @synthesize menuOptionsArray;
 
@@ -327,14 +326,15 @@ static RootViewController *sharedInstance;
 }
 
 - (void)testPredicate{
-    NSManagedObjectContext *moc = [fetchedResultsController managedObjectContext];
-    NSFetchRequest *request = [[[NSFetchRequest alloc] init] autorelease];
-    [request setEntity:[NSEntityDescription entityForName:@"Team" inManagedObjectContext:moc]];
-    [request setPredicate:[NSPredicate predicateWithFormat:@"seasons.games.homeScore > seasons.games.opponentScore"]];
-    NSArray *singleEmployeeDepartments = [moc executeFetchRequest:request error:NULL];
+
     
-    NSLog(@"%d",[singleEmployeeDepartments count]);
-   
+    
+
+}
+
+- (IBAction)testButton:(id)sender{
+    [self testPredicate];
+    
 }
  
  

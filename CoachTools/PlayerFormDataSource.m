@@ -20,14 +20,6 @@
 	if (self = [super initWithModel:aModel]) {
         
         // Some basic form fields that accept text input
-        IBAFormSection *buttonSection = [self addSectionWithHeaderTitle:nil footerTitle:nil];
-		buttonSection.formFieldStyle = [[[ShowcaseButtonStyle alloc] init] autorelease];;
-		[buttonSection addFormField:[[[IBAButtonFormField alloc] initWithTitle:@"From Contacts"
-																		  icon:nil
-																executionBlock:^{
-																	[self displaySampleForm];
-																}] autorelease]];
-        
 		IBAFormSection *basicFieldSection = [self addSectionWithHeaderTitle:@"Add Player" footerTitle:nil];
         basicFieldSection.formFieldStyle =[[[FormFieldStyle alloc] init] autorelease];
         
@@ -36,9 +28,13 @@
         [basicFieldSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"lastName" title:@"Last Name"] autorelease]];
         [basicFieldSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"email" title:@"E-Mail"] autorelease]];
         
-        
-		
-        
+        /*
+        IBATextFormField *numberField = [[IBATextFormField alloc] initWithKeyPath:@"number"
+                                                                            title:@"Number"
+                                                                 valueTransformer:[StringToNumberTransformer instance]];
+		[textInputTraitsSection addFormField:[numberField autorelease]];
+		numberField.textFormFieldCell.textField.keyboardType = UIKeyboardTypeNumberPad;
+*/	
         
         // Date fields
 		IBAFormSection *dateFieldSection = [self addSectionWithHeaderTitle:@"Dates" footerTitle:nil];
@@ -54,8 +50,6 @@
                                                                      defaultValue:[NSDate date]
                                                                              type:IBADateFormFieldTypeDate
                                                                     dateFormatter:dateFormatter] autorelease]];
-
-        
     }
     return self;
 }

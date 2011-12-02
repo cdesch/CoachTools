@@ -28,14 +28,13 @@
         [basicFieldSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"gameNumber" title:@"Game Number"] autorelease]];
 		[basicFieldSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"location" title:@"Location"] autorelease]];
         [basicFieldSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"opponent" title:@"Opponent"] autorelease]];
-        
         [basicFieldSection addFormField:[[[IBABooleanFormField alloc] initWithKeyPath:@"linkCalendar" title:@"Link Calendar"] autorelease]];
         //[basicFieldSection addFormField:[[[IBASliderField alloc] initWithKeyPath:@"Slider" title:@"Slider"] autorelease]];
 
         // Date fields
 		IBAFormSection *dateFieldSection = [self addSectionWithHeaderTitle:@"Dates" footerTitle:nil];
         dateFieldSection.formFieldStyle = [[[FormFieldStyle alloc] init] autorelease];
-        
+
 		NSDateFormatter *dateFormatter = [[[NSDateFormatter alloc] init] autorelease];
 		[dateFormatter setDateStyle:NSDateFormatterShortStyle];
 		[dateFormatter setTimeStyle:NSDateFormatterNoStyle];

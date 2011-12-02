@@ -42,5 +42,6 @@
 - (void)newItemForm;
 - (void)populateItem;
 - (void)showTeam:(Team *)team animated:(BOOL)animated;
+- (NSArray*)fetchObjectStats:(NSString*)objectName;
 
 @end

@@ -78,7 +78,7 @@
 - (void)viewDidLoad
 {
 
-    NSLog(@"Enter %s", __PRETTY_FUNCTION__);
+    //NSLog(@"Enter %s", __PRETTY_FUNCTION__);
     
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -485,75 +485,92 @@
 
 - (void)completeStartGameForm{
 
-    NSString* a = [self.itemModel valueForKey:@"numPlayers"];
-    NSString* b= [a substringWithRange:NSMakeRange(9, [a length]-4)];
-    NSLog(@"%@",b);
+  
     int maxPlayers = 22;
-    NSLog(@"he");
+
     //Check Number of active players
-    if( [self numActivePlayers:game.season.team] < [[self.itemModel valueForKey:@"numPlayers"] intValue])
-    {
-        [HelpManagement errorMessage:[NSString stringWithFormat:@"%d", [[self.itemModel valueForKey:@"numPlayers"] intValue]] error:@"minPlayers"];
-        //Check min players
-        
-    } else if ( [self numActivePlayers:game.season.team] > maxPlayers){
-        //Check Max Players
-        [HelpManagement errorMessage:[NSString stringWithFormat:@"%d", maxPlayers] error:@"maxPlayers"];
-    }
-    else if ([self.itemModel valueForKey:@"gameNumber"] == nil || [[self.itemModel valueForKey:@"gameNumber"] isEqualToString:@""]) {
-        //Check if empty
-        [HelpManagement errorMessage:@"Game Number" error:@"requiredFieldEdit"];
-        
-    }else if (![[self.itemModel valueForKey:@"numPlayers"] intValue]){
+    if ([self.itemModel valueForKey:@"numPlayers"]  == nil){
         //Check if number is a number
         [HelpManagement errorMessage:@"Number of Players" error:@"requiredFieldEdit"];
         
-    }
-    else if ([self.itemModel valueForKey:@"gameInterval"] == nil){
-        
-        [HelpManagement errorMessage:@"Game Interval" error:@"requiredFieldEdit"];
-        
-    }else if ([self.itemModel valueForKey:@"gameIntervalTime"] == nil){
-        
-        [HelpManagement errorMessage:@"Game Interval Time" error:@"requiredFieldEdit"];
-        
-    }
-    else{
-        NSLog(@"here");
-        if ([[self.itemModel valueForKey:@"gameInterval"] isEqualToString:@"Quarters"]) {
-            game.gameInterval = [NSNumber numberWithInt:4];
-        }else if ([[self.itemModel valueForKey:@"gameInterval"] isEqualToString:@"Halves"]) {
-            game.gameInterval = [NSNumber numberWithInt:2];
-        }
-        NSLog(@"here1");
-        game.numPlayers = [self.itemModel valueForKey:@"numPlayers"];
-        NSLog(@"here2");
-        game.gameIntervalTime =[NSNumber numberWithInt:[[self.itemModel valueForKey:@"gameIntervalTime"] intValue]]; //[NSNumber numberWithInt:[[self.itemModel valueForKey:@"gameIntervalTime"] intValue]];
-    
-        NSLog(@"here3");
-        RootViewController *appController = [RootViewController sharedAppController];
-        
-        NSManagedObjectContext *managedObjectContext = [appController managedObjectContext];
-             
-        NSError *error = nil;
-        if (![managedObjectContext save:&error]) {
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            [FlurryAnalytics logError:@"Unresolved Error Update" message:[game debugDescription] error:error];
-            abort();
-        }		
-        
-        //Display the GameManagement with the new Game;
-        GameManagementViewController *gameManagementViewController = appController.gameManagementViewController;
-        gameManagementViewController.game = game;
-        //FIXME Num players - Fix the datamodel
-        
-        gameManagementViewController.numPlayers = [[self.itemModel valueForKey:@"numPlayers"] intValue];
-        gameManagementViewController.modalPresentationStyle = UIModalPresentationFullScreen;
-        [self presentModalViewController:gameManagementViewController animated:YES];
-        
-        startGameButton.userInteractionEnabled = NO;
-    }
+    }else {
+        NSSet* myNumPlayersSet = [self.itemModel valueForKey:@"numPlayers"];
+        NSArray *myNumPlayersArray = [myNumPlayersSet allObjects];
+        NSString* numPlayers = [myNumPlayersArray objectAtIndex:0];
 
+        
+        if( [self numActivePlayers:game.season.team] < [numPlayers intValue])
+        {
+            //Check min players
+            [HelpManagement errorMessage:[NSString stringWithFormat:@"%d", [numPlayers intValue]] error:@"minPlayers"];
+            
+        } else if ( [self numActivePlayers:game.season.team] > maxPlayers){
+            //Check Max Players
+            [HelpManagement errorMessage:[NSString stringWithFormat:@"%d", maxPlayers] error:@"maxPlayers"];
+        }else if ([self.itemModel valueForKey:@"gameInterval"] == nil){
+            
+            [HelpManagement errorMessage:@"Game Interval" error:@"requiredFieldEdit"];
+            
+        }else if ([self.itemModel valueForKey:@"gameIntervalTime"] == nil){
+            
+            [HelpManagement errorMessage:@"Game Interval Time" error:@"requiredFieldEdit"];
+            
+        }
+        else{
+            NSSet* GameIntervalSet = [self.itemModel valueForKey:@"gameInterval"];
+            NSArray *gameIntervalArray = [GameIntervalSet allObjects];
+            NSString* gameInterval = [gameIntervalArray objectAtIndex:0] ;
+            
+            NSSet* gameIntervalTimeSet = [self.itemModel valueForKey:@"gameIntervalTime"];
+            NSArray *gameIntervalTimeArray = [gameIntervalTimeSet allObjects];
+            NSString* gameIntervalTime = [gameIntervalTimeArray objectAtIndex:0];
+            NSLog(@"%@",gameInterval);
+            NSLog(@"%@", gameIntervalTime );
+            /*if ([gameInterval isEqualToString:@"Quarters"]) {
+                game.gameInterval = [NSNumber numberWithInt:4];
+            }else if ([gameInterval isEqualToString:@"Halves"]) {
+                game.gameInterval = [NSNumber numberWithInt:2];
+            }
+*/
+            if ([gameInterval isEqualToString:@"Quarters"]) {
+                game.gameInterval = [NSNumber numberWithInt:4];
+            }else if ([gameInterval isEqualToString:@"Halves"]) {
+                game.gameInterval = [NSNumber numberWithInt:2];
+            }
+            
+            game.numPlayers = numPlayers;
+            game.gameIntervalTime =[NSNumber numberWithInt:[gameIntervalTime intValue]]; 
+
+            RootViewController *appController = [RootViewController sharedAppController];
+            NSManagedObjectContext *managedObjectContext = [appController managedObjectContext];
+            
+            NSError *error = nil;
+            if (![managedObjectContext save:&error]) {
+                NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+                [FlurryAnalytics logError:@"Unresolved Error Update" message:[game debugDescription] error:error];
+                abort();
+            }	
+            NSLog(@"here1");
+            
+            //Dismiss the form view controller
+            [self dismissModalViewControllerAnimated:NO];
+            
+            NSLog(@"here");
+            //Display the GameManagement with the new Game;
+            GameManagementViewController *gameManagementViewController = appController.gameManagementViewController;
+            gameManagementViewController.game = game;
+            //FIXME Num players - Fix the datamodel
+            
+            gameManagementViewController.numPlayers = [numPlayers intValue];
+            gameManagementViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+            [self presentModalViewController:gameManagementViewController animated:YES];
+            
+            startGameButton.userInteractionEnabled = NO;
+        }
+
+    }
+    
+  
 }
 
 - (void)cancelStartGameForm{
@@ -568,8 +585,6 @@
     //[[UIApplication sharedApplication] resignFirstResponder];
 //    [self.view endEditing:TRUE];
 
-    
-    
     //Validate
     
     if ([self.itemModel valueForKey:@"gameNumber"] == nil || [[self.itemModel valueForKey:@"gameNumber"] isEqualToString:@""]) {

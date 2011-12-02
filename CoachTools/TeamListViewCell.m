@@ -15,7 +15,7 @@
 @synthesize winLabel;
 @synthesize lossLabel;
 @synthesize drawLabel;
-
+@synthesize notPlayedLabel;
 
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier

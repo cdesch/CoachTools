@@ -30,17 +30,12 @@
 @property (nonatomic, retain) Team          *item;
 @property (nonatomic, retain) NSMutableDictionary *itemModel;
 
-
-
-
+- (void)insertItemButton:(id)sender;
 - (void)sortButton:(id)sender;
 - (void)sortList:(NSString *)key ascendingOrder:(BOOL)order;
-- (void)compileStatsButton:(id)sender;
-- (void)compileStatsAction:(id)sender;
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
-- (void)insertItemButton:(id)sender;
+- (void)generateItem;
 - (void)newItemForm;
-- (void)populateItem;
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 - (void)showTeam:(Team *)team animated:(BOOL)animated;
 - (NSArray*)fetchObjectStats:(NSString*)objectName;
 

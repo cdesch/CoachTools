@@ -12,14 +12,10 @@
 #import "AddTeamViewController.h"
 #import "Team.h"
 #import "TeamListViewCell.h"
-#import "CompileStats.h"
-
-
 #import <IBAForms/IBAForms.h>
 #import "ItemFormController.h"
 #import "ShowcaseModel.h"
 #import "TeamFormDataSource.h"
-
 #import "HelpManagement.h"
 #import "FlurryAnalytics.h"
 #import "PopulateTeam.h"
@@ -89,29 +85,15 @@
     
     
     UIBarButtonItem *sortAscendingButton = [[UIBarButtonItem alloc] initWithTitle:@"Sort" style:UIBarButtonItemStyleBordered target:self action:@selector(sortButton:)];
-    UIBarButtonItem *compileStatsButton = [[UIBarButtonItem alloc] initWithTitle:@"Compile Stats" style:UIBarButtonItemStyleBordered target:self action:@selector(compileStatsButton:)];
     UIBarButtonItem *flexibleBarButtItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
 
-    [self setToolbarItems:[NSArray arrayWithObjects:self.editButtonItem,flexibleBarButtItem,compileStatsButton,sortAscendingButton,nil]];
+    [self setToolbarItems:[NSArray arrayWithObjects:self.editButtonItem,flexibleBarButtItem,sortAscendingButton,nil]];
     
-    [compileStatsButton release];
     [flexibleBarButtItem release];
     [sortAscendingButton release];
     
     
-    NSError *error;
-	if (![[self fetchedResultsController] performFetch:&error]) {
-		// Update to handle the error appropriately.
-		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        [FlurryAnalytics logError:@"Unresolved Error Fetching" message:@"TeamList FetchedResultsController" error:error];
-		abort();  // Fail
-	}
-    
-    
-    
-    
-    //teamArray = nil;
-    
+
 }
 
 - (void)viewDidUnload
@@ -125,6 +107,16 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    
+    NSError *error;
+	if (![[self fetchedResultsController] performFetch:&error]) {
+		// Update to handle the error appropriately.
+		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        [FlurryAnalytics logError:@"Unresolved Error Fetching" message:@"TeamList FetchedResultsController" error:error];
+		abort();  // Fail
+	}
+
     
 }
 
@@ -151,13 +143,31 @@
 
 #pragma mark 
 #pragma mark - Actions
+#pragma mark - Buttons 
+//Insert Team Button -- Bring up an action sheet with some choices
+- (void)insertItemButton:(id)sender{
+    
+    //Turn off editting if its on
+    [self.tableView setEditing:FALSE animated:YES];
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"New Team"
+                                                             delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil
+                                                    otherButtonTitles:@"New Team", @"Sample Team", nil];
+    actionSheet.tag = 1;
+    actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
+    //actionSheet.destructiveButtonIndex = 4; // make the second button red (destructive)    
+    //[actionSheet showInView:self.view]; // show from our table view (pops up in the middle of the table)
+    [actionSheet showFromBarButtonItem:sender animated:YES];
+    [actionSheet release];
+    
+}
 
 //Sort Button is pressed
 - (void)sortButton:(id)sender{
     
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Sort by"
                                                              delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil
-                                                    otherButtonTitles:@"Name", @"Wins", @"Losses", nil];
+                                                    otherButtonTitles:@"Name", @"Wins", @"Losses",@"Draws", nil];
     actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
     //actionSheet.destructiveButtonIndex = 4; // make the second button red (destructive)
 
@@ -167,6 +177,7 @@
     [actionSheet release];
     
 }
+
 //Action Sheet Delegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     
@@ -178,23 +189,23 @@
             [self sortList:@"cWins" ascendingOrder:NO];            
         }else if (buttonIndex == 2){
             [self sortList:@"cLosses" ascendingOrder:NO];
-        }//else if (buttonIndex == 3){
-           // [self sortList:@"cDraws" ascendingOrder:NO];
-        //}
+        }else if (buttonIndex == 3){
+            [self sortList:@"cDraws" ascendingOrder:NO];
+        }
     }else if (actionSheet.tag == 1){
         if(buttonIndex == 0){
             [self newItemForm];
         }else if (buttonIndex == 1){
             //Populate Team        
-            [self populateItem];
+            [self generateItem];
         }
     }
 
 }
 
-- (void)sortList:(NSString *)key ascendingOrder:(BOOL)order{
+#pragma mark - implementation of buttons
 
-    
+- (void)sortList:(NSString *)key ascendingOrder:(BOOL)order{
 
     //Sort using key as sort parameter
     if(tableSortDescriptor != nil){
@@ -214,232 +225,66 @@
 	if (![[self fetchedResultsController] performFetch:&error]) {
 		// Update to handle the error appropriately.
 		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        [FlurryAnalytics logError:@"Unresolved Error Fetching" message:[tableSortDescriptor debugDescription] error:error];
 		abort();  // Fail
 	}
     
     [self.tableView reloadData];                                                                      
-    
-    
+        
 }
 
-- (void)compileStatsButton:(id)sender{
-    
-	
-    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
-    [self.navigationController.view addSubview:HUD];
-	
-    HUD.delegate = self;
-    HUD.labelText = @"Compiling...";
-    //HUD.detailsLabelText = @"updating data";
-	
-    [HUD showWhileExecuting:@selector(compileStatsAction:) onTarget:self withObject:nil animated:YES];
-    
-}
-
-- (void)compileStatsAction:(id)sender{
-    NSArray * teams = [_fetchedResultsController fetchedObjects] ;
-    
-    for(Team *selectedTeam in teams){
-        CompileStats *compile = [[CompileStats alloc] initWithTeam:selectedTeam];
-        [compile release];
-    }
-    
-    //Reload the data
-    NSError *error;
-	if (![[self fetchedResultsController] performFetch:&error]) {
-		// Update to handle the error appropriately.
-		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-		abort();  // Fail
-	}
-    
-    [self.tableView reloadData];    
-
-    //
-    
-    
-    HUD.customView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]] autorelease];
-	HUD.mode = MBProgressHUDModeCustomView;
-	HUD.labelText = @"Completed";
-    
-	sleep(1);
-}
-
-- (void)insertItemButton:(id)sender{
-
-    /*
-    AddTeamViewController *addController = [[AddTeamViewController alloc] initWithNibName:@"AddTeamViewController" bundle:nil];
-    addController.delegate = self;
-    
-    RootViewController *sharedController = [RootViewController sharedAppController];
-    NSManagedObjectContext *managedObjectContext = [sharedController managedObjectContext];
-	Team *newObject = [NSEntityDescription insertNewObjectForEntityForName:@"Team" inManagedObjectContext:managedObjectContext];
-	addController.team = newObject;   
-    
-    //Turn off editting if its on
-    [self.tableView setEditing:FALSE animated:YES];
-   
-    
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:addController];
-    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-    navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    
-    [self presentModalViewController:navigationController animated:YES];
-    
-    [navigationController release];
-    
-    [addController release];
-     */
-    
-    //Turn off editting if its on
-    [self.tableView setEditing:FALSE animated:YES];
-    
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"New Team"
-                                                             delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil
-                                                    otherButtonTitles:@"New Team", @"Sample Team", nil];
-    actionSheet.tag = 1;
-    actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
-    //actionSheet.destructiveButtonIndex = 4; // make the second button red (destructive)
-    
-    //[actionSheet showInView:self.view]; // show from our table view (pops up in the middle of the table)
-    [actionSheet showFromBarButtonItem:sender animated:YES];
-    [actionSheet release];
-    
-    /*
-    RootViewController *sharedController = [RootViewController sharedAppController];
-    NSManagedObjectContext *managedObjectContext = [sharedController managedObjectContext];
-    item = [NSEntityDescription insertNewObjectForEntityForName:@"Team" inManagedObjectContext:managedObjectContext];
-    
-    
-    //NSLog(@"%@",[newItem description]);
-    
-    
-    //NSDictionary *attributesByName = [[newItem entity] attributesByName];
-    //trainingModel = [[newItem dictionaryWithValuesForKeys:[attributesByName allKeys]] mutableCopy];
-    //NSLog(@"%@",[newItem description]);
-    //NSLog(@"%@",[trainingModel description]);
-    
-    
-    //
-    itemModel = [[NSMutableDictionary alloc] init];
-    
-    //ShowcaseModel *showcaseModel = [self model];
-    ShowcaseModel *showcaseModel = [[[ShowcaseModel alloc] init] autorelease];
-    showcaseModel.shouldAutoRotate = YES;
-    showcaseModel.tableViewStyleGrouped = YES;
-    showcaseModel.displayNavigationToolbar = YES;
-    
-    //
-    showcaseModel.modalPresentation = YES;
-    showcaseModel.modalPresentationStyle = UIModalPresentationFormSheet;
-	
-	//NSMutableDictionary *sampleFormModel = [[[NSMutableDictionary alloc] init] autorelease];
-    
-	// Values set on the model will be reflected in the form fields.
-	//[sampleFormModel setObject:@"A value contained in the model" forKey:@"readOnlyText"];
-    //[itemModel setObject:[NSString stringWithFormat:@"%d",[self.itemArray count] +1] forKey:@"trainingNumber"];
-    
-	TeamFormDataSource *sampleFormDataSource = [[[TeamFormDataSource alloc] initWithModel:itemModel] autorelease];
-	ItemFormController *sampleFormController = [[[ItemFormController alloc] initWithNibName:nil bundle:nil formDataSource:sampleFormDataSource] autorelease];
-	sampleFormController.title = @"Add Team";
-	sampleFormController.shouldAutoRotate = showcaseModel.shouldAutoRotate;
-	sampleFormController.tableViewStyle = showcaseModel.tableViewStyleGrouped ? UITableViewStyleGrouped : UITableViewStylePlain;
-    
-	
-    [[IBAInputManager sharedIBAInputManager] setInputNavigationToolbarEnabled:showcaseModel.displayNavigationToolbar];
-    
-	UIViewController *rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
-	if (showcaseModel.modalPresentation) {
-		UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
-																					 target:self 
-																					 action:@selector(completeForm)] autorelease];
-        UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel 
-                                                                                       target:self 
-                                                                                       action:@selector(cancelForm)] autorelease];
-		sampleFormController.navigationItem.rightBarButtonItem = doneButton;
-        sampleFormController.navigationItem.leftBarButtonItem = cancelButton;
-		UINavigationController *formNavigationController = [[[UINavigationController alloc] initWithRootViewController:sampleFormController] autorelease];
-		formNavigationController.modalPresentationStyle = showcaseModel.modalPresentationStyle;
-		[rootViewController presentModalViewController:formNavigationController animated:YES];
-	} else {
-        if ([rootViewController isKindOfClass:[UINavigationController class]]) {
-			[(UINavigationController *)rootViewController pushViewController:sampleFormController animated:YES];
-		}
-	}
-
-     */
-}
-
-- (void)newItemForm{
-    
-    
-    RootViewController *sharedController = [RootViewController sharedAppController];
-    NSManagedObjectContext *managedObjectContext = [sharedController managedObjectContext];
-    item = [NSEntityDescription insertNewObjectForEntityForName:@"Team" inManagedObjectContext:managedObjectContext];
-    
-    
-    //NSLog(@"%@",[newItem description]);
-    
-    
-    //NSDictionary *attributesByName = [[newItem entity] attributesByName];
-    //trainingModel = [[newItem dictionaryWithValuesForKeys:[attributesByName allKeys]] mutableCopy];
-    //NSLog(@"%@",[newItem description]);
-    //NSLog(@"%@",[trainingModel description]);
-    
-    
-    //
-    itemModel = [[NSMutableDictionary alloc] init];
-    
-    //ShowcaseModel *showcaseModel = [self model];
-    ShowcaseModel *showcaseModel = [[[ShowcaseModel alloc] init] autorelease];
-    showcaseModel.shouldAutoRotate = YES;
-    showcaseModel.tableViewStyleGrouped = YES;
-    showcaseModel.displayNavigationToolbar = YES;
-    
-    //
-    showcaseModel.modalPresentation = YES;
-    showcaseModel.modalPresentationStyle = UIModalPresentationFormSheet;
-	
-	//NSMutableDictionary *sampleFormModel = [[[NSMutableDictionary alloc] init] autorelease];
-    
-	// Values set on the model will be reflected in the form fields.
-	//[sampleFormModel setObject:@"A value contained in the model" forKey:@"readOnlyText"];
-    //[itemModel setObject:[NSString stringWithFormat:@"%d",[self.itemArray count] +1] forKey:@"trainingNumber"];
-    
-	TeamFormDataSource *sampleFormDataSource = [[[TeamFormDataSource alloc] initWithModel:itemModel] autorelease];
-	ItemFormController *sampleFormController = [[[ItemFormController alloc] initWithNibName:nil bundle:nil formDataSource:sampleFormDataSource] autorelease];
-	sampleFormController.title = @"Add Team";
-	sampleFormController.shouldAutoRotate = showcaseModel.shouldAutoRotate;
-	sampleFormController.tableViewStyle = showcaseModel.tableViewStyleGrouped ? UITableViewStyleGrouped : UITableViewStylePlain;
-    
-	
-    [[IBAInputManager sharedIBAInputManager] setInputNavigationToolbarEnabled:showcaseModel.displayNavigationToolbar];
-    
-	UIViewController *rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
-	if (showcaseModel.modalPresentation) {
-		UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
-																					 target:self 
-																					 action:@selector(completeForm)] autorelease];
-        UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel 
-                                                                                       target:self 
-                                                                                       action:@selector(cancelForm)] autorelease];
-		sampleFormController.navigationItem.rightBarButtonItem = doneButton;
-        sampleFormController.navigationItem.leftBarButtonItem = cancelButton;
-		UINavigationController *formNavigationController = [[[UINavigationController alloc] initWithRootViewController:sampleFormController] autorelease];
-		formNavigationController.modalPresentationStyle = showcaseModel.modalPresentationStyle;
-		[rootViewController presentModalViewController:formNavigationController animated:YES];
-	} else {
-        if ([rootViewController isKindOfClass:[UINavigationController class]]) {
-			[(UINavigationController *)rootViewController pushViewController:sampleFormController animated:YES];
-		}
-	}
-}
-
-- (void)populateItem{
+//Populate a new sample team
+- (void)generateItem{
     PopulateTeam* pop = [PopulateTeam alloc];
     [pop populate];
-
     [pop release];
+    
+    //
     [self.tableView reloadData];
+}
+
+//New Item from a form.
+- (void)newItemForm{
+
+    RootViewController *sharedController = [RootViewController sharedAppController];
+    NSManagedObjectContext *managedObjectContext = [sharedController managedObjectContext];
+    item = [NSEntityDescription insertNewObjectForEntityForName:@"Team" inManagedObjectContext:managedObjectContext];
+    
+    itemModel = [[NSMutableDictionary alloc] init];
+    
+    ShowcaseModel *showcaseModel = [[[ShowcaseModel alloc] init] autorelease];
+    showcaseModel.shouldAutoRotate = YES;
+    showcaseModel.tableViewStyleGrouped = YES;
+    showcaseModel.displayNavigationToolbar = YES;
+    showcaseModel.modalPresentation = YES;
+    showcaseModel.modalPresentationStyle = UIModalPresentationFormSheet;
+    
+	TeamFormDataSource *sampleFormDataSource = [[[TeamFormDataSource alloc] initWithModel:itemModel] autorelease];
+	ItemFormController *sampleFormController = [[[ItemFormController alloc] initWithNibName:nil bundle:nil formDataSource:sampleFormDataSource] autorelease];
+	sampleFormController.title = @"Add Team";
+	sampleFormController.shouldAutoRotate = showcaseModel.shouldAutoRotate;
+	sampleFormController.tableViewStyle = showcaseModel.tableViewStyleGrouped ? UITableViewStyleGrouped : UITableViewStylePlain;
+    
+    [[IBAInputManager sharedIBAInputManager] setInputNavigationToolbarEnabled:showcaseModel.displayNavigationToolbar];
+    
+	UIViewController *rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+	if (showcaseModel.modalPresentation) {
+		UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
+																					 target:self 
+																					 action:@selector(completeForm)] autorelease];
+        UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel 
+                                                                                       target:self 
+                                                                                       action:@selector(cancelForm)] autorelease];
+		sampleFormController.navigationItem.rightBarButtonItem = doneButton;
+        sampleFormController.navigationItem.leftBarButtonItem = cancelButton;
+		UINavigationController *formNavigationController = [[[UINavigationController alloc] initWithRootViewController:sampleFormController] autorelease];
+		formNavigationController.modalPresentationStyle = showcaseModel.modalPresentationStyle;
+		[rootViewController presentModalViewController:formNavigationController animated:YES];
+	} else {
+        if ([rootViewController isKindOfClass:[UINavigationController class]]) {
+			[(UINavigationController *)rootViewController pushViewController:sampleFormController animated:YES];
+		}
+	}
 }
 
 
@@ -447,7 +292,6 @@
     //Team validators
     if  ([self.itemModel valueForKey:@"name"] == nil ||  [[self.itemModel valueForKey:@"name"] isEqualToString:@""]){
         //Check if empty
-        
         [HelpManagement errorMessage:@"Team Name" error:@"requiredField"];
         
     }else {
@@ -466,8 +310,9 @@
             abort();
         }		
         
+        [self showTeam:item animated:YES];
         [self dismissModalViewControllerAnimated:YES];
-        [self.tableView reloadData]; 
+    
     }
     
 }
@@ -486,8 +331,7 @@
         [FlurryAnalytics logError:@"Unresolved Error Deleting" message:[item debugDescription] error:error];
 		abort();
 	}		
-    
-    
+
     [self dismissModalViewControllerAnimated:YES];
 }
 
@@ -506,7 +350,7 @@
     // Create a detail view controller, set the team, then push it.
     TeamSummaryViewController *detailViewController = [[TeamSummaryViewController alloc] initWithNibName:@"TeamSummaryViewController" bundle:nil teamSelected:team];
     
-    [self.tableView setEditing:FALSE animated:YES];
+    [self.tableView setEditing:FALSE animated:NO];
     
     [self.navigationController pushViewController:detailViewController animated:animated];
     [detailViewController release];
@@ -514,15 +358,12 @@
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     // Return the number of sections.
     return 1;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
 
     // Return the number of rows in the section.
     //return [teamArray count] ;
@@ -532,8 +373,7 @@
 
 }
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
-{
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath{
     /*
     Team *selectedTeam = [self.teamArray objectAtIndex:indexPath.row];
     cell.textLabel.text = [selectedTeam.name description];
@@ -634,10 +474,9 @@
     }
 }
 
+//Get the stats of the team
 - (NSArray*)fetchObjectStats:(NSString*)objectName{    
-    
-    //NSMutableSet* statSet = [[NSMutableSet alloc] init];
-    
+
     int wins = 0; 
     int losses = 0;
     int draw = 0;
@@ -650,8 +489,6 @@
     [request setEntity:[NSEntityDescription entityForName:@"Game" inManagedObjectContext:moc]];
     [request setPredicate:[NSPredicate predicateWithFormat:@"ANY season.team.name like %@", objectName]];
     NSArray *singleEmployeeDepartments = [moc executeFetchRequest:request error:NULL];
-    
-    NSLog(@"%d",[singleEmployeeDepartments count]);
     
     for(Game* game in singleEmployeeDepartments){
         if([game.played boolValue] == FALSE){
@@ -793,9 +630,7 @@
 	HUD = nil;
 }
 
-
 - (NSFetchedResultsController *)fetchedResultsController {
-    
     
     if (_fetchedResultsController != nil) {
         return _fetchedResultsController;
@@ -825,9 +660,7 @@
     [fetchRequest release];
     [theFetchedResultsController release];
     
-    return _fetchedResultsController;    
-    
+    return _fetchedResultsController;        
 }
-
 
 @end

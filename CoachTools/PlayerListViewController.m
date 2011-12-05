@@ -14,11 +14,11 @@
 #import "Person.h"
 #import "UIColor-MoreColors.h"
 
-
 #import <IBAForms/IBAForms.h>
 #import "ItemFormController.h"
 #import "ShowcaseModel.h"
 #import "PlayerFormDataSource.h"
+#import "PlayerImportFormDataSource.h"
 #import "EventManager.h"
 
 #import "FlurryAnalytics.h"
@@ -145,7 +145,6 @@
 	return YES;
 }
 
-
 #pragma mark 
 #pragma mark - Actions
 
@@ -157,7 +156,6 @@
                                                     otherButtonTitles:@"Name", @"Number", @"Goals", @"Starts", nil];
     actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
     //actionSheet.destructiveButtonIndex = 4; // make the second button red (destructive)
-    
     //[actionSheet showInView:self.view]; // show from our table view (pops up in the middle of the table)
     [actionSheet showFromBarButtonItem:sender animated:YES];
     [actionSheet release];
@@ -179,7 +177,6 @@
             [sortDescriptors release];
             
             [self.tableView reloadData];    
-            
             
         }else if (buttonIndex == 2){
             [self sortList:@"cGoals" ascendingOrder:NO];
@@ -217,111 +214,17 @@
     
 }
 
-
-
-
+//Button Control with ActionSheet for options
 - (void)insertItemButton:(id)sender{
 
-    /*
-    AddPlayerViewController *addController = [[AddPlayerViewController alloc] initWithNibName:@"AddPlayerViewController" bundle:nil teamSelected:team];
-    
-    addController.delegate = self;
-    
-    RootViewController *sharedController = [RootViewController sharedAppController];
-    NSManagedObjectContext *managedObjectContext = [sharedController managedObjectContext];    Person* newObject = [NSEntityDescription insertNewObjectForEntityForName:@"Person" inManagedObjectContext:managedObjectContext];
-	addController.person = newObject;  
-    
-    //Turn off editting if its on
-    [self.tableView setEditing:FALSE animated:YES];
-    
-    
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:addController];
-    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-    navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    
-    [self presentModalViewController:navigationController animated:YES];
-    
-    [navigationController release];
-    
-    [addController release];
-     
-     */
-    /*
-    playerModel = [[NSMutableDictionary alloc] init];
-    
-    
-    RootViewController *sharedController = [RootViewController sharedAppController];
-    NSManagedObjectContext *managedObjectContext = [sharedController managedObjectContext];
-    item = [NSEntityDescription insertNewObjectForEntityForName:@"Person" inManagedObjectContext:managedObjectContext];
-    
-    
-    //NSLog(@"%@",[newItem description]);
-    
-    
-    //NSDictionary *attributesByName = [[newItem entity] attributesByName];
-    //trainingModel = [[newItem dictionaryWithValuesForKeys:[attributesByName allKeys]] mutableCopy];
-    //NSLog(@"%@",[newItem description]);
-    //NSLog(@"%@",[trainingModel description]);
-    
-    
-    //
-    
-    
-    //ShowcaseModel *showcaseModel = [self model];
-    ShowcaseModel *showcaseModel = [[[ShowcaseModel alloc] init] autorelease];
-    showcaseModel.shouldAutoRotate = YES;
-    showcaseModel.tableViewStyleGrouped = YES;
-    showcaseModel.displayNavigationToolbar = YES;
-    
-    //
-    showcaseModel.modalPresentation = YES;
-    showcaseModel.modalPresentationStyle = UIModalPresentationFormSheet;
-	
-	//NSMutableDictionary *sampleFormModel = [[[NSMutableDictionary alloc] init] autorelease];
-    
-	// Values set on the model will be reflected in the form fields.
-	//[sampleFormModel setObject:@"A value contained in the model" forKey:@"readOnlyText"];
-    [playerModel setObject:[NSString stringWithFormat:@"%d",[self.playerArray count] +1] forKey:@"playerNumber"];
-    
-	PlayerFormDataSource *sampleFormDataSource = [[[PlayerFormDataSource alloc] initWithModel:playerModel] autorelease];
-	ItemFormController *sampleFormController = [[[ItemFormController alloc] initWithNibName:nil bundle:nil formDataSource:sampleFormDataSource] autorelease];
-	sampleFormController.title = @"Add Player Form";
-	sampleFormController.shouldAutoRotate = showcaseModel.shouldAutoRotate;
-	sampleFormController.tableViewStyle = showcaseModel.tableViewStyleGrouped ? UITableViewStyleGrouped : UITableViewStylePlain;
-    
-	
-    [[IBAInputManager sharedIBAInputManager] setInputNavigationToolbarEnabled:showcaseModel.displayNavigationToolbar];
-    
-	UIViewController *rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
-	if (showcaseModel.modalPresentation) {
-		UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
-																					 target:self 
-																					 action:@selector(completeSampleForm)] autorelease];
-        UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel 
-                                                                                       target:self 
-                                                                                       action:@selector(cancelForm)] autorelease];
-		sampleFormController.navigationItem.rightBarButtonItem = doneButton;
-        sampleFormController.navigationItem.leftBarButtonItem = cancelButton;
-		UINavigationController *formNavigationController = [[[UINavigationController alloc] initWithRootViewController:sampleFormController] autorelease];
-		formNavigationController.modalPresentationStyle = showcaseModel.modalPresentationStyle;
-		[rootViewController presentModalViewController:formNavigationController animated:YES];
-	} else {
-        if ([rootViewController isKindOfClass:[UINavigationController class]]) {
-			[(UINavigationController *)rootViewController pushViewController:sampleFormController animated:YES];
-		}
-	}
-
-
-     */
     [self.tableView setEditing:FALSE animated:YES];
     
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"New Player"
                                                              delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil
-                                                    otherButtonTitles:@"From Contacts",@"New Contact",  @"App Player Only", nil];
+                                                    otherButtonTitles:@"From Contacts",@"New Contact",@"App Player Only", nil];
     actionSheet.tag = 2;
     actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
     //actionSheet.destructiveButtonIndex = 4; // make the second button red (destructive)
-    
     //[actionSheet showInView:self.view]; // show from our table view (pops up in the middle of the table)
     [actionSheet showFromBarButtonItem:sender animated:YES];
     [actionSheet release];
@@ -329,26 +232,42 @@
 }
 
 - (void)itemImport{
-    
+    /*
     ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
     picker.peoplePickerDelegate = self;
 	// Display only a person's phone, email, and birthdate
 	NSArray *displayedItems = [NSArray arrayWithObjects:[NSNumber numberWithInt:kABPersonPhoneProperty], 
                                [NSNumber numberWithInt:kABPersonEmailProperty],
                                [NSNumber numberWithInt:kABPersonBirthdayProperty], nil];
-	
+	picker.modalPresentationStyle = UIModalPresentationFormSheet;
 	picker.displayedProperties = displayedItems;
 	// Show the picker 
 	[self presentModalViewController:picker animated:YES];
-    [picker release];	
+    [picker release];
+     */
+    
+    PlayerEditViewController *detailViewController = [[PlayerEditViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    // ...
+    // Pass the selected object to the new view controller.
+    //Person *selectedPlayer = [self.playerArray objectAtIndex:indexPath.row];
+    
+    //((PlayerSummaryViewController *)detailViewController).player = selectedPlayer;
+    UINavigationController* navController = [[UINavigationController alloc] initWithRootViewController:detailViewController];
+    //detailViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+    navController.modalPresentationStyle = UIModalPresentationFormSheet;
+    [self presentModalViewController:navController animated:YES];
+    [detailViewController release];
+    
+    
 }
 
-
 - (void)itemNewIntergrated{
+    
     ABNewPersonViewController *picker = [[ABNewPersonViewController alloc] init];
 	picker.newPersonViewDelegate = self;
 	
 	UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:picker];
+    navigation.modalPresentationStyle = UIModalPresentationFormSheet;
 	[self presentModalViewController:navigation animated:YES];
 	
 	[picker release];
@@ -359,17 +278,51 @@
 #pragma mark - ContactIntergration
 
 // Displays the information of a selected person
-- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person
-{
-	return YES;
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person{
+    //[self dismissModalViewControllerAnimated:YES];
+    
+    RootViewController *sharedController = [RootViewController sharedAppController];
+    NSManagedObjectContext *managedObjectContext = [sharedController managedObjectContext];
+    item = [NSEntityDescription insertNewObjectForEntityForName:@"Person" inManagedObjectContext:managedObjectContext];
+    
+    // setting the properties
+    item.firstName          = (NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
+    item.lastName           = (NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);	
+    item.contactIdentifier  = [NSNumber numberWithInt:ABRecordGetRecordID(person)];	
+    item.playerNumber       = [NSString stringWithFormat:@"%d",[self.playerArray count] +1];
+    item.team               = team;
+    
+    //Save the Data.   
+    NSError *error = nil;
+    if (![managedObjectContext save:&error]) {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }		
+    
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"playerNumber" ascending:YES];
+	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:&sortDescriptor count:1];
+	
+	NSMutableArray *sortedItems = [[NSMutableArray alloc] initWithArray:[team.players allObjects]];
+	[sortedItems sortUsingDescriptors:sortDescriptors];
+	self.playerArray = sortedItems;
+    
+	[sortDescriptor release];
+	[sortDescriptors release];
+	[sortedItems release];
+	
+    //Update and refresh the table
+    [self.tableView reloadData]; 
+    
+    [self dismissModalViewControllerAnimated:YES];
+    
+	return NO;
 }
-
 
 // Does not allow users to perform default actions such as dialing a phone number, when they select a person property.
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person 
 								property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier
 {
-	return NO;
+	return YES;
 }
 
 
@@ -383,7 +336,62 @@
     
 }
 
+- (void)completeItemImportForm{
+    
+    if ([self.playerModel valueForKey:@"playerNumber"] == nil || [[self.playerModel valueForKey:@"playerNumber"] isEqualToString:@""]) {
+        
+        //Check if empty
+        [HelpManagement errorMessage:@"Player Number" error:@"requiredFieldEdit"];
+        
+    }else{
+        
+        item.playerNumber = [self.playerModel valueForKey:@"playerNumber"];
+        item.team = team;
 
+        //Save the Data.
+        RootViewController *ac = [RootViewController sharedAppController];
+        NSManagedObjectContext *managedObjectContext = [ac managedObjectContext];
+        
+        NSError *error = nil;
+        if (![managedObjectContext save:&error]) {
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            abort();
+        }		
+
+        [self dismissModalViewControllerAnimated:YES];
+    }
+       
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"playerNumber" ascending:YES];
+	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:&sortDescriptor count:1];
+	
+	NSMutableArray *sortedItems = [[NSMutableArray alloc] initWithArray:[team.players allObjects]];
+	[sortedItems sortUsingDescriptors:sortDescriptors];
+	self.playerArray = sortedItems;
+    
+	[sortDescriptor release];
+	[sortDescriptors release];
+	[sortedItems release];
+	
+	// Update recipe type and ingredients on return.
+    [self.tableView reloadData]; 
+    
+}
+- (void)cancelItemImportForm{
+    
+    RootViewController *ac = [RootViewController sharedAppController];
+    NSManagedObjectContext *managedObjectContext = [ac managedObjectContext];
+    
+	[managedObjectContext deleteObject:item];
+    
+	NSError *error = nil;
+	if (![managedObjectContext save:&error]) {
+        
+		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		abort();
+	}		
+    
+    [self dismissModalViewControllerAnimated:YES];
+}
 
 #pragma mark - Forms
 
@@ -395,20 +403,14 @@
     NSManagedObjectContext *managedObjectContext = [sharedController managedObjectContext];
     item = [NSEntityDescription insertNewObjectForEntityForName:@"Person" inManagedObjectContext:managedObjectContext];
     
-    //ShowcaseModel *showcaseModel = [self model];
     ShowcaseModel *showcaseModel = [[[ShowcaseModel alloc] init] autorelease];
     showcaseModel.shouldAutoRotate = YES;
     showcaseModel.tableViewStyleGrouped = YES;
     showcaseModel.displayNavigationToolbar = YES;
-    
-    //
     showcaseModel.modalPresentation = YES;
     showcaseModel.modalPresentationStyle = UIModalPresentationFormSheet;
-	
-	//NSMutableDictionary *sampleFormModel = [[[NSMutableDictionary alloc] init] autorelease];
     
 	// Values set on the model will be reflected in the form fields.
-	//[sampleFormModel setObject:@"A value contained in the model" forKey:@"readOnlyText"];
     [playerModel setObject:[NSString stringWithFormat:@"%d",[self.playerArray count] +1] forKey:@"playerNumber"];
     
 	PlayerFormDataSource *sampleFormDataSource = [[[PlayerFormDataSource alloc] initWithModel:playerModel] autorelease];
@@ -416,7 +418,6 @@
 	sampleFormController.title = @"Add Player Form";
 	sampleFormController.shouldAutoRotate = showcaseModel.shouldAutoRotate;
 	sampleFormController.tableViewStyle = showcaseModel.tableViewStyleGrouped ? UITableViewStyleGrouped : UITableViewStylePlain;
-    
 	
     [[IBAInputManager sharedIBAInputManager] setInputNavigationToolbarEnabled:showcaseModel.displayNavigationToolbar];
     
@@ -438,10 +439,7 @@
 			[(UINavigationController *)rootViewController pushViewController:sampleFormController animated:YES];
 		}
 	}
-    
-
 }
-
 
 - (void)completeSampleForm{
     //Validate
@@ -477,7 +475,6 @@
               
         item.birthdate =  [[dateCal dateFromComponents:dateComponent] copy];
 
-        
         //Save the Data.
         RootViewController *ac = [RootViewController sharedAppController];
         NSManagedObjectContext *managedObjectContext = [ac managedObjectContext];
@@ -491,10 +488,7 @@
         
         
         [self dismissModalViewControllerAnimated:YES];
-        //NSLog(@"Dismissed");
-        //NSLog(@"%@", [self.trainingModel description]);
     }
-    
     
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"playerNumber" ascending:YES];
 	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:&sortDescriptor count:1];
@@ -511,7 +505,6 @@
     [self.tableView reloadData]; 
     
     //Show Training
-    
 }
 
 - (void)cancelForm{
@@ -542,9 +535,7 @@
 
 - (void)addPlayerViewController:(AddPlayerViewController *)addPlayerViewController didAddPerson:(Person *)player{
     if (player) {        
-
         [self showPlayer:player animated:YES];
-
     }
     
     // Dismiss the modal add recipe view controller
@@ -579,8 +570,7 @@
     return [playerArray count];
 }
 
-- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
-{
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath{
     
     Person *selectedPlayer = [self.playerArray objectAtIndex:indexPath.row];
     cell.textLabel.text = [selectedPlayer.lastName description];
@@ -591,16 +581,14 @@
         cell.textLabel.text = [cell.textLabel.text stringByAppendingString:@", "];
         cell.textLabel.text = [cell.textLabel.text stringByAppendingString:[selectedPlayer.firstName description]];
     }
-    
 
-    
     //cell.detailTextLabel.text = [selectedPlayer.playerNumber description];
         //cell.accessoryType = UIButtonTypeRoundedRect;
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 
 {
-    return @"No. | Name                         | Starts | Goals   ";
+    return @"No. | Name                        Starts  Goals  Assists  Penalities   ";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -628,8 +616,7 @@
         }
         
 	}
-    
-    //Person *selectedPlayer = [self.playerArray objectAtIndex:indexPath.row];
+
     Person *selectedPlayer = [self.playerArray objectAtIndex:indexPath.row];
     cell.playerNumberLabel.text = [selectedPlayer.playerNumber description];
     
@@ -637,8 +624,6 @@
     if([selectedPlayer.active boolValue] == TRUE){
         //Player is Active
         cell.badgeView.badgeText = @"Active";
-        //cell.badgeView.badgeColor = [UIColor greenColor];
-        //cell.badgeView.badgeColor = [UIColor greenColor] = [UIColor colorWithRed:0.85 green:0.6 blue:0.738 alpha:1.];
         cell.badgeView.badgeColor = [UIColor greenWeb];
     }else{
         cell.badgeView.badgeText = @"Not Active";
@@ -646,12 +631,10 @@
         
     }
     
-
     cell.badgeView.isSelected = FALSE;
     cell.badgeView.badgeTextColor = [UIColor whiteColor];
     
     //Check if first name exists
-    
     if ([[selectedPlayer.firstName description] length] != 0)
     {
         cell.playerNameLabel.text = [NSString stringWithFormat:@"%@, %@", [selectedPlayer.lastName description], [selectedPlayer.firstName description]];
@@ -659,10 +642,10 @@
         cell.playerNameLabel.text = [selectedPlayer.lastName description];
     }
     
-    cell.startStatLabel.text = [selectedPlayer.cStarts description];
-    cell.goalsStatLabel.text = [selectedPlayer.cGoals description];
-    
-    
+    cell.startStatLabel.text = [NSString stringWithFormat:@"%d", [selectedPlayer.gameStart count]];
+    cell.goalsStatLabel.text = [NSString stringWithFormat:@"%d", [selectedPlayer.gameScore count]];
+    cell.assistStatLabel.text =[NSString stringWithFormat:@"%d", [selectedPlayer.gameAssist count]]; 
+    cell.penaltyStatLabel.text =[NSString stringWithFormat:@"%d", [selectedPlayer.gamePenalty count]]; 
     
     // Configure the cell...
     //[self configureCell:cell atIndexPath:indexPath];
@@ -699,15 +682,11 @@
                                            arrayWithObject:indexPath]
                          withRowAnimation:UITableViewRowAnimationFade];
 		
-        // Save the context.
+        // Save the context
 		NSError *error;
 		if (![managedObjectContext save:&error]) {
-			/*
-			 Replace this implementation with code to handle the error appropriately.
-			 
-			 abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
-			 */
 			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            [FlurryAnalytics logError:@"Unresolved Error Deleting" message:[selectedPlayer debugDescription] error:error];
 			abort();
 		}
     }   
@@ -717,8 +696,6 @@
 
     }   
 }
-
-
 
 /*
 // Override to support rearranging the table view.
@@ -735,7 +712,6 @@
     return YES;
 }
 */
-
 
 #pragma mark - Table view delegate
 

@@ -85,7 +85,6 @@
 {
     [super viewWillAppear:animated];
     
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -135,7 +134,6 @@
         NSLog(@"Check Mark!!");
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
-    
 }
 
 

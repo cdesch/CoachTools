@@ -37,12 +37,20 @@
 		NSSet *affectingKey = [NSSet setWithObject:@"active"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
+	if ([key isEqualToString:@"contactIdentifierValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"contactIdentifier"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
 	if ([key isEqualToString:@"cGoalsValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"cGoals"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 	if ([key isEqualToString:@"phoneNumberValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"phoneNumber"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"emergancyContactValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"emergancyContact"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 	if ([key isEqualToString:@"cStartsValue"]) {
@@ -130,6 +138,25 @@
 
 
 
+- (double)contactIdentifierValue {
+	NSNumber *result = [self contactIdentifier];
+	return [result doubleValue];
+}
+
+- (void)setContactIdentifierValue:(double)value_ {
+	[self setContactIdentifier:[NSNumber numberWithDouble:value_]];
+}
+
+- (double)primitiveContactIdentifierValue {
+	NSNumber *result = [self primitiveContactIdentifier];
+	return [result doubleValue];
+}
+
+- (void)setPrimitiveContactIdentifierValue:(double)value_ {
+	[self setPrimitiveContactIdentifier:[NSNumber numberWithDouble:value_]];
+}
+
+
 
 
 
@@ -194,6 +221,25 @@
 
 @dynamic emergancyContact;
 
+
+
+- (double)emergancyContactValue {
+	NSNumber *result = [self emergancyContact];
+	return [result doubleValue];
+}
+
+- (void)setEmergancyContactValue:(double)value_ {
+	[self setEmergancyContact:[NSNumber numberWithDouble:value_]];
+}
+
+- (double)primitiveEmergancyContactValue {
+	NSNumber *result = [self primitiveEmergancyContact];
+	return [result doubleValue];
+}
+
+- (void)setPrimitiveEmergancyContactValue:(double)value_ {
+	[self setPrimitiveEmergancyContact:[NSNumber numberWithDouble:value_]];
+}
 
 
 

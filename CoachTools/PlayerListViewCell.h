@@ -14,6 +14,8 @@
     IBOutlet UILabel *playerNameLabel;
     IBOutlet UILabel *startStatLabel;
     IBOutlet UILabel *goalsStatLabel;
+    IBOutlet UILabel *assistStatLabel;
+    IBOutlet UILabel *penaltyStatLabel;
     BadgeView *badgeView;
 }
 
@@ -21,6 +23,8 @@
 @property (nonatomic, retain) IBOutlet UILabel *playerNameLabel;
 @property (nonatomic, retain) IBOutlet UILabel *startStatLabel;
 @property (nonatomic, retain) IBOutlet UILabel *goalsStatLabel;
+@property (nonatomic, retain) IBOutlet UILabel *assistStatLabel;
+@property (nonatomic, retain) IBOutlet UILabel *penaltyStatLabel;
 @property (nonatomic, retain) IBOutlet BadgeView *badgeView;
 
 

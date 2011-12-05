@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Team.h"
 #import "AddPlayerViewController.h"
+#import "PlayerEditViewController.h"
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 
@@ -33,6 +34,8 @@
 - (void)itemImport;
 - (void)itemNewIntergrated;
 - (void)itemForm;
+- (void)completeItemImportForm;
+- (void)cancelItemImportForm;
 - (void)showPlayer:(Person *)person animated:(BOOL)animated;
 - (BOOL)validateEmail:(NSString *)candidate;
     

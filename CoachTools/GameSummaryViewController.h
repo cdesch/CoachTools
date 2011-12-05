@@ -7,16 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DateTimeSelectionViewController.h"
 #import "Team.h"
 
 @class Game;
 
-@interface GameSummaryViewController : UIViewController <DateTimeSelectionDelegate> {
+@interface GameSummaryViewController : UIViewController  {
 
     NSMutableDictionary *itemModel;
     Game *game;
-   
+    
     UITextField *gameNumberTextField;
     UITextField *opponentTextField;
     UITextField *locationTextField;
@@ -25,14 +24,6 @@
     NSDate *tempDate;
     
     IBOutlet UIButton *startGameButton;
-        
-    //IBOutlet UISegmentedControl *halfLengthControl;
-    //IBOutlet UISegmentedControl *numPlayersControl;
-    
-    //int numPlayers;
-    
-    //UISwitch *intergrateCalendarSwitch;
-    
     
 }
 @property (nonatomic, retain) NSMutableDictionary   *itemModel;
@@ -45,23 +36,15 @@
 @property (nonatomic, retain) NSDate *tempDate;
 
 @property (nonatomic, retain) IBOutlet UIButton *startGameButton;
-//@property (nonatomic, retain) IBOutlet UISegmentedControl *halfLengthControl;
-//@property (nonatomic, retain) IBOutlet UISegmentedControl *numPlayersControl;
-//@property (nonatomic, retain) IBOutlet UISwitch *intergrateCalendarSwitch;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil gameSelected:(Game *)aGame;
 
 //For game button
-//- (IBAction)dateTextFieldClicked:(id)sender;
 - (IBAction)startGame:(id)sender;
 - (void)completeStartGameForm;
 - (void)cancelStartGameForm;
-//- (void)completeEditGameForm;
 - (void)completeEditGameForm:(id)sender;
 - (void)cancelEditGameForm;
-//- (IBAction)halfTimeLengthChanged:(id)sender;
-//- (IBAction)numPlayersChanged:(id)sender;
-//- (IBAction)intergrateCalendarSwitchChanged:(id)sender;
 - (BOOL)validateGame;
 - (IBAction)gameLogButton;
 - (int)numActivePlayers:(Team*)team;

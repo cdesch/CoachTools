@@ -14,15 +14,11 @@
 #import "SeasonListViewController.h"
 #import "iToast.h"
 
-
-
 @implementation TeamSummaryViewController
 
 @synthesize popoverController=_myPopoverController;
 @synthesize team;
-
 @synthesize nameTextField;
-
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil teamSelected:(Team *)aTeam
 {
@@ -155,10 +151,8 @@
     PlayerListViewController *listViewController = [[PlayerListViewController alloc] initWithNibName:@"PlayerListViewController" bundle:nil teamSelected:team];
 
     [self.navigationController pushViewController:listViewController animated:YES];
-    
     [listViewController release];
 }
-
 
 - (IBAction)manageSeasonButton{
     
@@ -166,13 +160,9 @@
     SeasonListViewController *listViewController = [[SeasonListViewController alloc] initWithNibName:@"SeasonListViewController" bundle:nil teamSelected:team];
     
     [self.navigationController pushViewController:listViewController animated:YES];
-    
     [listViewController release];
 
 }
-
-
-
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {

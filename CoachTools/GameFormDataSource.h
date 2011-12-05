@@ -10,5 +10,4 @@
 
 @interface GameFormDataSource : IBAFormDataSource
 
-- (void)displaySampleForm;
 @end

@@ -71,7 +71,11 @@
 
 
 
-@property (nonatomic, retain) NSString *contactIdentifier;
+@property (nonatomic, retain) NSNumber *contactIdentifier;
+
+@property double contactIdentifierValue;
+- (double)contactIdentifierValue;
+- (void)setContactIdentifierValue:(double)value_;
 
 //- (BOOL)validateContactIdentifier:(id*)value_ error:(NSError**)error_;
 
@@ -103,7 +107,11 @@
 
 
 
-@property (nonatomic, retain) NSString *emergancyContact;
+@property (nonatomic, retain) NSNumber *emergancyContact;
+
+@property double emergancyContactValue;
+- (double)emergancyContactValue;
+- (void)setEmergancyContactValue:(double)value_;
 
 //- (BOOL)validateEmergancyContact:(id*)value_ error:(NSError**)error_;
 
@@ -264,8 +272,11 @@
 
 
 
-- (NSString*)primitiveContactIdentifier;
-- (void)setPrimitiveContactIdentifier:(NSString*)value;
+- (NSNumber*)primitiveContactIdentifier;
+- (void)setPrimitiveContactIdentifier:(NSNumber*)value;
+
+- (double)primitiveContactIdentifierValue;
+- (void)setPrimitiveContactIdentifierValue:(double)value_;
 
 
 
@@ -294,8 +305,11 @@
 
 
 
-- (NSString*)primitiveEmergancyContact;
-- (void)setPrimitiveEmergancyContact:(NSString*)value;
+- (NSNumber*)primitiveEmergancyContact;
+- (void)setPrimitiveEmergancyContact:(NSNumber*)value;
+
+- (double)primitiveEmergancyContactValue;
+- (void)setPrimitiveEmergancyContactValue:(double)value_;
 
 
 

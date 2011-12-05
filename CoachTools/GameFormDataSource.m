@@ -56,30 +56,6 @@
                                                                      defaultValue:[NSDate date]
                                                                              type:IBADateFormFieldTypeTime
                                                                     dateFormatter:timeFormatter] autorelease]];
-        /*
-        NSArray *modalPresentationStyleOptions = [IBAPickListFormOption pickListOptionsForStrings:[NSArray arrayWithObjects:
-                                                                                                   @"Full Screen", 
-                                                                                                   @"Page Sheet",
-                                                                                                   @"Form Sheet", 
-                                                                                                   @"Current Context",
-                                                                                                   nil]];	
-		IBASingleIndexTransformer *modalPresentationStyleTransformer = [[[IBASingleIndexTransformer alloc] initWithPickListOptions:modalPresentationStyleOptions] autorelease];
-		[basicFieldSection addFormField:[[[IBAPickListFormField alloc] initWithKeyPath:@"modalPresentationStyle"
-                                                                                 title:@"Modal Style"
-                                                                      valueTransformer:modalPresentationStyleTransformer
-                                                                         selectionMode:IBAPickListSelectionModeSingle
-                                                                               options:modalPresentationStyleOptions] autorelease]];	
-		*/
-		/*
-		IBAFormSection *buttonSection = [self addSectionWithHeaderTitle:nil footerTitle:nil];
-		buttonSection.formFieldStyle = [[[ShowcaseButtonStyle alloc] init] autorelease];;
-		[buttonSection addFormField:[[[IBAButtonFormField alloc] initWithTitle:@"Start Game"
-																		  icon:nil
-																executionBlock:^{
-																	[self displaySampleForm];
-																}] autorelease]];
-        */
-        
 
 
     }

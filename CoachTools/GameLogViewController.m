@@ -178,8 +178,6 @@
         }
     }
  	
-    
-    //All others NO
 	return YES;
 }
 

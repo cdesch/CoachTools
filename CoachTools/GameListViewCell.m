@@ -14,6 +14,7 @@
 @synthesize opponentLabel;
 @synthesize dateLabel;
 @synthesize locationLabel;
+@synthesize penaltyStatLabel;
 @synthesize badgeView;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -37,16 +38,18 @@
     badgeView.isSelected = selected;
     
     if(selected){
-        gameNumberLabel.textColor = [UIColor whiteColor];
-        opponentLabel.textColor = [UIColor whiteColor];
-        dateLabel.textColor = [UIColor whiteColor];
-        locationLabel.textColor = [UIColor whiteColor];
+        gameNumberLabel.textColor   = [UIColor whiteColor];
+        opponentLabel.textColor     = [UIColor whiteColor];
+        dateLabel.textColor         = [UIColor whiteColor];
+        locationLabel.textColor     = [UIColor whiteColor];
+        penaltyStatLabel.textColor  = [UIColor whiteColor];
         
     }else{
-        gameNumberLabel.textColor = [UIColor blackColor];
-        opponentLabel.textColor = [UIColor blackColor];
-        dateLabel.textColor = [UIColor blackColor];
-        locationLabel.textColor = [UIColor blackColor];
+        gameNumberLabel.textColor   = [UIColor blackColor];
+        opponentLabel.textColor     = [UIColor blackColor];
+        dateLabel.textColor         = [UIColor blackColor];
+        locationLabel.textColor     = [UIColor blackColor];
+        penaltyStatLabel.textColor  = [UIColor blackColor];
     }
     
     
@@ -62,17 +65,18 @@
     badgeView.isSelected = highlighted;
     
     if(highlighted){
-        
-        gameNumberLabel.textColor = [UIColor whiteColor];
-        opponentLabel.textColor = [UIColor whiteColor];
-        dateLabel.textColor = [UIColor whiteColor];
-        locationLabel.textColor = [UIColor whiteColor];
+        gameNumberLabel.textColor   = [UIColor whiteColor];
+        opponentLabel.textColor     = [UIColor whiteColor];
+        dateLabel.textColor         = [UIColor whiteColor];
+        locationLabel.textColor     = [UIColor whiteColor];
+        penaltyStatLabel.textColor  = [UIColor whiteColor];
         
     }else{
-        gameNumberLabel.textColor = [UIColor blackColor];
-        opponentLabel.textColor = [UIColor blackColor];
-        dateLabel.textColor = [UIColor blackColor];
-        locationLabel.textColor = [UIColor blackColor];
+        gameNumberLabel.textColor   = [UIColor blackColor];
+        opponentLabel.textColor     = [UIColor blackColor];
+        dateLabel.textColor         = [UIColor blackColor];
+        locationLabel.textColor     = [UIColor blackColor];
+        penaltyStatLabel.textColor  = [UIColor blackColor];
     }
     
     [self.badgeView setNeedsDisplay];

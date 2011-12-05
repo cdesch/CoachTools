@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import "Team.h"
 #import "Season.h"
 #import "AddGameViewController.h"
 
@@ -16,7 +15,6 @@
     NSMutableDictionary *itemModel;
     NSMutableArray      *itemArray;
     Game                *item;
-//    Team            *team;
     Season              *season;
     
     NSDate              *tempDate;
@@ -25,7 +23,6 @@
 @property (nonatomic, retain) NSMutableDictionary   *itemModel;
 @property (nonatomic, retain) NSMutableArray        *itemArray;
 @property (nonatomic, retain) Game                  *item;
-//@property (nonatomic, retain) Team              *team;
 @property (nonatomic, retain) Season                *season;
 @property (nonatomic, retain) NSDate                *tempDate;
 
@@ -33,7 +30,6 @@
 
 - (void)sortButton:(id)sender;
 - (void)sortList:(NSString *)key ascendingOrder:(BOOL)order;
-
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 - (void)insertGameButton;
 - (void)showGame:(Game *)game animated:(BOOL)animated;

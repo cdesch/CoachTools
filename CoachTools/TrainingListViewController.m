@@ -37,21 +37,6 @@
         //Initialize 
         season = aSeason;
         
-        //
-     	//trainingModel = [[NSMutableDictionary alloc] init];
-        
-        //RootViewController *sharedController = [RootViewController sharedAppController];
-        //NSManagedObjectContext *managedObjectContext = [sharedController managedObjectContext];
-        //Training* newObject = [NSEntityDescription insertNewObjectForEntityForName:@"Training" inManagedObjectContext:managedObjectContext];
-        
-                
-        //NSLog(@"%@",[newObject description]);
-        
-        //NSDictionary *attributesByName = [[newObject entity] attributesByName];
-        // NSMutableDictionary *valuesDictionary = [[newObject dictionaryWithValuesForKeys:[attributesByName allKeys]] mutableCopy];
-        //NSLog(@"%@",[newObject description]);
-        //NSLog(@"%@",[valuesDictionary description]);
-        
     }
     return self;
     

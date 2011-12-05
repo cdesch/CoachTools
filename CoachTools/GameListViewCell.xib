@@ -50,6 +50,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{10, 11}, {22, 21}}</string>
 								<reference key="NSSuperview" ref="77576978"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="457699229"/>
 								<string key="NSReuseIdentifierKey">_NS:327</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -83,6 +84,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{40, 11}, {159, 21}}</string>
 								<reference key="NSSuperview" ref="77576978"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="877730596"/>
 								<string key="NSReuseIdentifierKey">_NS:327</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -112,6 +114,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{237, 11}, {113, 21}}</string>
 								<reference key="NSSuperview" ref="77576978"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="248295978"/>
 								<string key="NSReuseIdentifierKey">_NS:327</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -135,6 +138,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{379, 11}, {178, 21}}</string>
 								<reference key="NSSuperview" ref="77576978"/>
+								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="533661207"/>
 								<string key="NSReuseIdentifierKey">_NS:327</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -155,6 +159,7 @@
 								<int key="NSvFlags">297</int>
 								<string key="NSFrame">{{566, 4}, {162, 33}}</string>
 								<reference key="NSSuperview" ref="77576978"/>
+								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:195</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">3</int>
@@ -165,9 +170,30 @@
 								</object>
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 							</object>
+							<object class="IBUILabel" id="198067312">
+								<reference key="NSNextResponder" ref="77576978"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{493, 10}, {42, 21}}</string>
+								<reference key="NSSuperview" ref="77576978"/>
+								<reference key="NSWindow"/>
+								<string key="NSReuseIdentifierKey">_NS:345</string>
+								<bool key="IBUIOpaque">NO</bool>
+								<bool key="IBUIClipsSubviews">YES</bool>
+								<int key="IBUIContentMode">7</int>
+								<bool key="IBUIUserInteractionEnabled">NO</bool>
+								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
+								<string key="IBUIText">Label</string>
+								<reference key="IBUITextColor" ref="29592703"/>
+								<nil key="IBUIHighlightedColor"/>
+								<int key="IBUIBaselineAdjustment">1</int>
+								<float key="IBUIMinimumFontSize">10</float>
+								<reference key="IBUIFontDescription" ref="836269982"/>
+								<reference key="IBUIFont" ref="16137769"/>
+							</object>
 						</object>
 						<string key="NSFrameSize">{748, 43}</string>
 						<reference key="NSSuperview" ref="861248551"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="432886747"/>
 						<string key="NSReuseIdentifierKey">_NS:370</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -183,6 +209,7 @@
 				</object>
 				<string key="NSFrameSize">{768, 44}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="77576978"/>
 				<string key="NSReuseIdentifierKey">_NS:358</string>
 				<object class="NSColor" key="IBUIBackgroundColor">
@@ -237,6 +264,14 @@
 					</object>
 					<int key="connectionID">13</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">penaltyStatLabel</string>
+						<reference key="source" ref="861248551"/>
+						<reference key="destination" ref="198067312"/>
+					</object>
+					<int key="connectionID">15</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -270,6 +305,7 @@
 							<reference ref="432886747"/>
 							<reference ref="457699229"/>
 							<reference ref="533661207"/>
+							<reference ref="198067312"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -298,6 +334,11 @@
 						<reference key="object" ref="533661207"/>
 						<reference key="parent" ref="861248551"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">14</int>
+						<reference key="object" ref="198067312"/>
+						<reference key="parent" ref="861248551"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -308,6 +349,7 @@
 					<string>-2.CustomClassName</string>
 					<string>-2.IBPluginDependency</string>
 					<string>11.IBPluginDependency</string>
+					<string>14.IBPluginDependency</string>
 					<string>3.CustomClassName</string>
 					<string>3.IBPluginDependency</string>
 					<string>4.IBPluginDependency</string>
@@ -320,6 +362,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>UIResponder</string>
+					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>GameListViewCell</string>
@@ -343,9 +386,89 @@
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">13</int>
+			<int key="maxID">15</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<bool key="EncodedWithXMLCoder">YES</bool>
+				<object class="IBPartialClassDescription">
+					<string key="className">BadgeView</string>
+					<string key="superclassName">UIView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/BadgeView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">GameListViewCell</string>
+					<string key="superclassName">UITableViewCell</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>badgeView</string>
+							<string>dateLabel</string>
+							<string>gameNumberLabel</string>
+							<string>locationLabel</string>
+							<string>opponentLabel</string>
+							<string>penaltyStatLabel</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>BadgeView</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+							<string>UILabel</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>badgeView</string>
+							<string>dateLabel</string>
+							<string>gameNumberLabel</string>
+							<string>locationLabel</string>
+							<string>opponentLabel</string>
+							<string>penaltyStatLabel</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">badgeView</string>
+								<string key="candidateClassName">BadgeView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">dateLabel</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">gameNumberLabel</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">locationLabel</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">opponentLabel</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">penaltyStatLabel</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/GameListViewCell.h</string>
+					</object>
+				</object>
+			</object>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBIPadFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDevelopmentDependencies">

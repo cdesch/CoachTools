@@ -14,11 +14,12 @@
 @synthesize playerNameLabel;
 @synthesize goalsStatLabel;
 @synthesize startStatLabel;
+@synthesize assistStatLabel;
+@synthesize penaltyStatLabel;
+
 @synthesize badgeView;
 
-
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
@@ -29,8 +30,7 @@
 #pragma mark -
 #pragma mark accessors
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated{
     [super setSelected:selected animated:animated];
     
     badgeView.isSelected = selected;
@@ -40,12 +40,16 @@
         playerNameLabel.textColor = [UIColor whiteColor];
         goalsStatLabel.textColor = [UIColor whiteColor];
         startStatLabel.textColor = [UIColor whiteColor];
+        assistStatLabel.textColor = [UIColor whiteColor];
+        penaltyStatLabel.textColor = [UIColor whiteColor];
         
     }else{
         playerNumberLabel.textColor = [UIColor blackColor];
         playerNameLabel.textColor = [UIColor blackColor];
         goalsStatLabel.textColor = [UIColor blackColor];
         startStatLabel.textColor = [UIColor blackColor];
+        assistStatLabel.textColor = [UIColor blackColor];
+        penaltyStatLabel.textColor = [UIColor blackColor];
     }
     
     
@@ -53,7 +57,6 @@
 
     // Configure the view for the selected state
 }
-
 
 - (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
     
@@ -66,29 +69,29 @@
         playerNameLabel.textColor = [UIColor whiteColor];
         goalsStatLabel.textColor = [UIColor whiteColor];
         startStatLabel.textColor = [UIColor whiteColor];
+        assistStatLabel.textColor = [UIColor whiteColor];
+        penaltyStatLabel.textColor = [UIColor whiteColor];
         
     }else{
         playerNumberLabel.textColor = [UIColor blackColor];
         playerNameLabel.textColor = [UIColor blackColor];
         goalsStatLabel.textColor = [UIColor blackColor];
         startStatLabel.textColor = [UIColor blackColor];
+        assistStatLabel.textColor = [UIColor blackColor];
+        penaltyStatLabel.textColor = [UIColor blackColor];
     }
     
     [self.badgeView setNeedsDisplay];
      
 }
  
- - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+     [super setEditing:editing animated:animated];
  
- [super setEditing:editing animated:animated];
+     [self.badgeView setNeedsDisplay];
+}
  
- [self.badgeView setNeedsDisplay];
- }
- 
-
-
-- (void)dealloc
-{
+- (void)dealloc{
     [super dealloc];
 }
 

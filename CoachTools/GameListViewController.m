@@ -538,6 +538,8 @@
     cell.badgeView.isSelected = FALSE;
     cell.badgeView.badgeTextColor = [UIColor whiteColor];
     
+    cell.penaltyStatLabel.text =[NSString stringWithFormat:@"%d", [selectedGame.gamePenalty count]]; 
+    
     //cell.badgeText = [NSString stringWithFormat:@"Row %d", indexPath.row];
     //cell.badgeColor = [UIColor orangeColor];
     

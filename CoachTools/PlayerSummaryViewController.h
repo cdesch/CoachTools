@@ -17,7 +17,7 @@
     UITextField *lastNameTextField;
     UITextField *firstNameTextField;
     UITextField *playerNumberTextField;
-    UITextField *emailTextField;
+    //UITextField *emailTextField;
     UISwitch *playerActiveSwitch;
     
     NSMutableArray *generalStatsArray;
@@ -28,13 +28,15 @@
     CPTXYGraph *graph, *barChart;
     IBOutlet CPTGraphHostingView *scatterPlotView;
     
+    NSMutableDictionary *playerModel;
+    
 }
 
 @property (nonatomic, retain) Person *player;
 @property (nonatomic, retain) IBOutlet UITextField *lastNameTextField;
 @property (nonatomic, retain) IBOutlet UITextField *firstNameTextField;
 @property (nonatomic, retain) IBOutlet UITextField *playerNumberTextField;
-@property (nonatomic, retain) IBOutlet UITextField *emailTextField;
+//@property (nonatomic, retain) IBOutlet UITextField *emailTextField;
 @property (nonatomic, retain) IBOutlet UISwitch *playerActiveSwitch;
 
 @property (nonatomic, retain) UISegmentedControl *segControlGraphType;
@@ -45,6 +47,8 @@
 @property (nonatomic, retain) NSMutableDictionary *gameTimesDictionary;
 
 @property(readwrite, retain, nonatomic) NSMutableArray *dataForChart, *dataForPlot, *dataForShadow;
+
+@property (nonatomic, retain) NSMutableDictionary *playerModel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil playerSelected:(Person *)aPlayer;
 

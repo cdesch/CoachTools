@@ -23,9 +23,11 @@
 		230A5F0A1403404B00CFE088 /* GameLogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 230A5F081403404A00CFE088 /* GameLogViewController.m */; };
 		230A5F0B1403404B00CFE088 /* GameLogViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 230A5F091403404B00CFE088 /* GameLogViewController.xib */; };
 		230D8AA414881D5D00822774 /* libIBAForms.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 230D8AA314881D4700822774 /* libIBAForms.a */; };
+		230D8AAC1488521800822774 /* DateTimeSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 230D8AAA1488521800822774 /* DateTimeSelectionViewController.m */; };
+		230D8AAD1488521800822774 /* DateTimeSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 230D8AAB1488521800822774 /* DateTimeSelectionViewController.xib */; };
 		2316D1851409BDF8005E676D /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2316D1841409BDF8005E676D /* EventKit.framework */; };
 		2316D18B1409CDA8005E676D /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2316D18A1409CDA8005E676D /* EventKitUI.framework */; };
-		231852E61406FCF70035DE91 /* CompileStats.m in Sources */ = {isa = PBXBuildFile; fileRef = 231852E51406FCF60035DE91 /* CompileStats.m */; };
+		231703BE14886E8F00FB83B6 /* PlayerImportFormDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 231703BD14886E8F00FB83B6 /* PlayerImportFormDataSource.m */; };
 		231E932713FC84D40000DB54 /* iToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 231E932613FC84D40000DB54 /* iToast.m */; };
 		2323A03413722BEC006769B5 /* GameListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2323A03213722BEC006769B5 /* GameListViewController.m */; };
 		2323A03513722BEC006769B5 /* GameListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2323A03313722BEC006769B5 /* GameListViewController.xib */; };
@@ -59,6 +61,8 @@
 		232EBB2213526C63002277B9 /* CoachToolsTests.h in Resources */ = {isa = PBXBuildFile; fileRef = 232EBB2113526C63002277B9 /* CoachToolsTests.h */; };
 		232EBB2413526C63002277B9 /* CoachToolsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 232EBB2313526C63002277B9 /* CoachToolsTests.m */; };
 		234047F1140D4EA7006CECB8 /* Grass2_1680x1050.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 234047F0140D4EA7006CECB8 /* Grass2_1680x1050.jpg */; };
+		23409791148D519A000B3746 /* PlayerEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23409790148D519A000B3746 /* PlayerEditViewController.m */; };
+		23409794148D5D80000B3746 /* ELCTextfieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23409793148D5D80000B3746 /* ELCTextfieldCell.m */; };
 		23505BB11383328300FACCA8 /* bench2.png in Resources */ = {isa = PBXBuildFile; fileRef = 23505BB01383328300FACCA8 /* bench2.png */; };
 		2351986E1385781900A0C978 /* PlayerLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2351986D1385781900A0C978 /* PlayerLayer.m */; };
 		235B6BBD13FF3FDF00C478F6 /* BadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 235B6BBC13FF3FDE00C478F6 /* BadgeView.m */; };
@@ -242,8 +246,6 @@
 		23A5184B13776931006477C6 /* PlayerListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23A5184913776931006477C6 /* PlayerListViewController.m */; };
 		23A5184C13776931006477C6 /* PlayerListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23A5184A13776931006477C6 /* PlayerListViewController.xib */; };
 		23A987AC14031C1E004E7CF3 /* GameListViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23A987AB14031C1E004E7CF3 /* GameListViewCell.xib */; };
-		23AFE82413E76AB100F3AA5B /* DateTimeSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFE82213E76AB100F3AA5B /* DateTimeSelectionViewController.m */; };
-		23AFE82513E76AB100F3AA5B /* DateTimeSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23AFE82313E76AB100F3AA5B /* DateTimeSelectionViewController.xib */; };
 		23AFE82F13E77EA400F3AA5B /* ListSelectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFE82D13E77EA300F3AA5B /* ListSelectionViewController.m */; };
 		23AFE83013E77EA400F3AA5B /* ListSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23AFE82E13E77EA300F3AA5B /* ListSelectionViewController.xib */; };
 		23AFE83F13E7809200F3AA5B /* SeasonListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23AFE83D13E7809200F3AA5B /* SeasonListViewController.m */; };
@@ -434,10 +436,13 @@
 		230A5F081403404A00CFE088 /* GameLogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameLogViewController.m; sourceTree = "<group>"; };
 		230A5F091403404B00CFE088 /* GameLogViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameLogViewController.xib; sourceTree = "<group>"; };
 		230D8A9B14881D4700822774 /* IBAForms.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IBAForms.xcodeproj; path = ../../github/IBAForms/library/IBAForms.xcodeproj; sourceTree = "<group>"; };
+		230D8AA91488521800822774 /* DateTimeSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateTimeSelectionViewController.h; sourceTree = "<group>"; };
+		230D8AAA1488521800822774 /* DateTimeSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateTimeSelectionViewController.m; sourceTree = "<group>"; };
+		230D8AAB1488521800822774 /* DateTimeSelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DateTimeSelectionViewController.xib; sourceTree = "<group>"; };
 		2316D1841409BDF8005E676D /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		2316D18A1409CDA8005E676D /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
-		231852E41406FCF50035DE91 /* CompileStats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompileStats.h; sourceTree = "<group>"; };
-		231852E51406FCF60035DE91 /* CompileStats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompileStats.m; sourceTree = "<group>"; };
+		231703BC14886E8F00FB83B6 /* PlayerImportFormDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerImportFormDataSource.h; sourceTree = "<group>"; };
+		231703BD14886E8F00FB83B6 /* PlayerImportFormDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerImportFormDataSource.m; sourceTree = "<group>"; };
 		231E932513FC84D40000DB54 /* iToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iToast.h; sourceTree = "<group>"; };
 		231E932613FC84D40000DB54 /* iToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iToast.m; sourceTree = "<group>"; };
 		2323A03113722BEC006769B5 /* GameListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameListViewController.h; sourceTree = "<group>"; };
@@ -484,6 +489,10 @@
 		232EBB2113526C63002277B9 /* CoachToolsTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoachToolsTests.h; sourceTree = "<group>"; };
 		232EBB2313526C63002277B9 /* CoachToolsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoachToolsTests.m; sourceTree = "<group>"; };
 		234047F0140D4EA7006CECB8 /* Grass2_1680x1050.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Grass2_1680x1050.jpg; sourceTree = "<group>"; };
+		2340978F148D5199000B3746 /* PlayerEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerEditViewController.h; sourceTree = "<group>"; };
+		23409790148D519A000B3746 /* PlayerEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerEditViewController.m; sourceTree = "<group>"; };
+		23409792148D5D80000B3746 /* ELCTextfieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ELCTextfieldCell.h; path = ../../github/ELCTextFieldCell/Classes/ELCTextfieldCell.h; sourceTree = "<group>"; };
+		23409793148D5D80000B3746 /* ELCTextfieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ELCTextfieldCell.m; path = ../../github/ELCTextFieldCell/Classes/ELCTextfieldCell.m; sourceTree = "<group>"; };
 		23505BB01383328300FACCA8 /* bench2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bench2.png; sourceTree = "<group>"; };
 		2351986C1385781900A0C978 /* PlayerLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerLayer.h; sourceTree = "<group>"; };
 		2351986D1385781900A0C978 /* PlayerLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerLayer.m; sourceTree = "<group>"; };
@@ -833,9 +842,6 @@
 		23A5184913776931006477C6 /* PlayerListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerListViewController.m; sourceTree = "<group>"; };
 		23A5184A13776931006477C6 /* PlayerListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerListViewController.xib; sourceTree = "<group>"; };
 		23A987AB14031C1E004E7CF3 /* GameListViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameListViewCell.xib; sourceTree = "<group>"; };
-		23AFE82113E76AB100F3AA5B /* DateTimeSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateTimeSelectionViewController.h; sourceTree = "<group>"; };
-		23AFE82213E76AB100F3AA5B /* DateTimeSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateTimeSelectionViewController.m; sourceTree = "<group>"; };
-		23AFE82313E76AB100F3AA5B /* DateTimeSelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DateTimeSelectionViewController.xib; sourceTree = "<group>"; };
 		23AFE82C13E77EA200F3AA5B /* ListSelectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListSelectionViewController.h; sourceTree = "<group>"; };
 		23AFE82D13E77EA300F3AA5B /* ListSelectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListSelectionViewController.m; sourceTree = "<group>"; };
 		23AFE82E13E77EA300F3AA5B /* ListSelectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ListSelectionViewController.xib; sourceTree = "<group>"; };
@@ -1194,14 +1200,12 @@
 		2306F4521478A4A500EBBAC2 /* TODO Deprecate */ = {
 			isa = PBXGroup;
 			children = (
+				230D8AA91488521800822774 /* DateTimeSelectionViewController.h */,
+				230D8AAA1488521800822774 /* DateTimeSelectionViewController.m */,
+				230D8AAB1488521800822774 /* DateTimeSelectionViewController.xib */,
 				23EB6EC914099A9E00D9B45A /* IADManagerViewController.h */,
 				23EB6ECA14099A9E00D9B45A /* IADManagerViewController.m */,
 				23EB6ECB14099A9E00D9B45A /* IADManagerViewController.xib */,
-				23AFE82113E76AB100F3AA5B /* DateTimeSelectionViewController.h */,
-				23AFE82213E76AB100F3AA5B /* DateTimeSelectionViewController.m */,
-				23AFE82313E76AB100F3AA5B /* DateTimeSelectionViewController.xib */,
-				231852E41406FCF50035DE91 /* CompileStats.h */,
-				231852E51406FCF60035DE91 /* CompileStats.m */,
 			);
 			name = "TODO Deprecate";
 			sourceTree = "<group>";
@@ -1316,6 +1320,7 @@
 		232EBAEA13526C62002277B9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				23409795148D5D86000B3746 /* ELCTextFieldCell */,
 				23C2FEC314858489002B8350 /* External */,
 				23069B2C1479B6A10052F785 /* AddressBook.framework */,
 				23FAFC071479978300C42398 /* AddressBookUI.framework */,
@@ -1421,6 +1426,15 @@
 				2372D56313526CF0003AEA8D /* TouchJSON */,
 			);
 			name = cocos2d;
+			sourceTree = "<group>";
+		};
+		23409795148D5D86000B3746 /* ELCTextFieldCell */ = {
+			isa = PBXGroup;
+			children = (
+				23409792148D5D80000B3746 /* ELCTextfieldCell.h */,
+				23409793148D5D80000B3746 /* ELCTextfieldCell.m */,
+			);
+			name = ELCTextFieldCell;
 			sourceTree = "<group>";
 		};
 		23505BB21383508000FACCA8 /* GameScene */ = {
@@ -1886,6 +1900,8 @@
 		239322D81375EAD4002E7C1C /* Players */ = {
 			isa = PBXGroup;
 			children = (
+				2340978F148D5199000B3746 /* PlayerEditViewController.h */,
+				23409790148D519A000B3746 /* PlayerEditViewController.m */,
 				2363B4C213718F4B0082F206 /* AddPlayerViewController.h */,
 				2363B4C313718F4B0082F206 /* AddPlayerViewController.m */,
 				2363B4C413718F4B0082F206 /* AddPlayerViewController.xib */,
@@ -1900,6 +1916,8 @@
 				23F160C913A17B5E00408488 /* PlayerListViewCell.xib */,
 				2397A24E146DDC1700FABD16 /* PlayerFormDataSource.h */,
 				2397A24F146DDC1700FABD16 /* PlayerFormDataSource.m */,
+				231703BC14886E8F00FB83B6 /* PlayerImportFormDataSource.h */,
+				231703BD14886E8F00FB83B6 /* PlayerImportFormDataSource.m */,
 			);
 			name = Players;
 			sourceTree = "<group>";
@@ -2529,7 +2547,6 @@
 				23B6DE9313E5D7E900DC17A6 /* DateTimeViewController.xib in Resources */,
 				23B6DEA913E5D93200DC17A6 /* Readme.md in Resources */,
 				23B6DEAC13E5D9E400DC17A6 /* TDDatePickerController.xib in Resources */,
-				23AFE82513E76AB100F3AA5B /* DateTimeSelectionViewController.xib in Resources */,
 				23AFE83013E77EA400F3AA5B /* ListSelectionViewController.xib in Resources */,
 				23AFE84013E7809200F3AA5B /* SeasonListViewController.xib in Resources */,
 				23AFE84713E7823500F3AA5B /* SeasonAddViewController.xib in Resources */,
@@ -2634,6 +2651,7 @@
 				23C2FF69148584BD002B8350 /* CrittercismDescriptionViewController.xib in Resources */,
 				23C2FF6A148584BD002B8350 /* CrittercismRootViewController.xib in Resources */,
 				23C2FF6B148584BD002B8350 /* CrittercismViewController.xib in Resources */,
+				230D8AAD1488521800822774 /* DateTimeSelectionViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2850,7 +2868,6 @@
 				23B6DEA413E5D91700DC17A6 /* TDSemiModalViewController.m in Sources */,
 				23B6DEA513E5D91700DC17A6 /* UIViewController+TDSemiModalExtension.m in Sources */,
 				23B6DEA613E5D91700DC17A6 /* TDDatePickerController.m in Sources */,
-				23AFE82413E76AB100F3AA5B /* DateTimeSelectionViewController.m in Sources */,
 				23AFE82F13E77EA400F3AA5B /* ListSelectionViewController.m in Sources */,
 				23AFE83F13E7809200F3AA5B /* SeasonListViewController.m in Sources */,
 				23AFE84413E780B500F3AA5B /* SeasonAddViewController.m in Sources */,
@@ -2862,7 +2879,6 @@
 				23DF62A1140492340084A11B /* GameStartViewCell.m in Sources */,
 				23DF62A6140494BD0084A11B /* GameScoreViewCell.m in Sources */,
 				23DF62A9140494E30084A11B /* GameSubViewCell.m in Sources */,
-				231852E61406FCF70035DE91 /* CompileStats.m in Sources */,
 				239BB98F14072557008AACDE /* MBProgressHUD.m in Sources */,
 				23EB6EBF140992C000D9B45A /* IAPManagerViewController.m in Sources */,
 				23EB6EC81409946500D9B45A /* InAppPurchaseObserver.m in Sources */,
@@ -2895,6 +2911,10 @@
 				2306F4571478CB5200EBBAC2 /* GameSummaryFormDataSource.m in Sources */,
 				23DEB4F9147B042E008B16B2 /* ModelMap1to2.xcmappingmodel in Sources */,
 				23C2FF63148584BD002B8350 /* Crittercism.xcdatamodeld in Sources */,
+				230D8AAC1488521800822774 /* DateTimeSelectionViewController.m in Sources */,
+				231703BE14886E8F00FB83B6 /* PlayerImportFormDataSource.m in Sources */,
+				23409791148D519A000B3746 /* PlayerEditViewController.m in Sources */,
+				23409794148D5D80000B3746 /* ELCTextfieldCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,6 +14,7 @@
     UILabel *opponentLabel;
     UILabel *dateLabel;
     UILabel *locationLabel;  
+    UILabel *penaltyStatLabel;
     BadgeView *badgeView;
 }
 
@@ -21,6 +22,7 @@
 @property (nonatomic, retain) IBOutlet UILabel *opponentLabel;
 @property (nonatomic, retain) IBOutlet UILabel *dateLabel; 
 @property (nonatomic, retain) IBOutlet UILabel *locationLabel; 
+@property (nonatomic, retain) IBOutlet UILabel *penaltyStatLabel;
 @property (nonatomic, retain) IBOutlet BadgeView *badgeView;
 
 @end

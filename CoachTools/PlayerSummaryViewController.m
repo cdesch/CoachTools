@@ -13,6 +13,8 @@
 #import "iToast.h"
 #import "PlistStringUtil.h"
 
+#import "PlayerEditViewController.h"
+
 #import "RootViewController.h"
 #import "PlayerImportFormDataSource.h"
 #import "ItemFormController.h"
@@ -87,7 +89,10 @@
     
     UINavigationItem *navigationItem = self.navigationItem;
     navigationItem.title = @"Player Summary";
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(editItem:)];
+    
+    self.navigationItem.rightBarButtonItem = editButton;
+    [editButton release];
     
     //********** Compile Stats *******
     
@@ -235,111 +240,66 @@
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
-    
-    playerModel = [[NSMutableDictionary alloc] init];
-    
-    RootViewController *sharedController = [RootViewController sharedAppController];
-    NSManagedObjectContext *managedObjectContext = [sharedController managedObjectContext];
-    //item = [NSEntityDescription insertNewObjectForEntityForName:@"Person" inManagedObjectContext:managedObjectContext];
-    
-    ShowcaseModel *showcaseModel = [[[ShowcaseModel alloc] init] autorelease];
-    showcaseModel.shouldAutoRotate = YES;
-    showcaseModel.tableViewStyleGrouped = YES;
-    showcaseModel.displayNavigationToolbar = YES;
-    showcaseModel.modalPresentation = YES;
-    showcaseModel.modalPresentationStyle = UIModalPresentationFormSheet;
-    
-	// Values set on the model will be reflected in the form fields.
-    //[playerModel setObject:[NSString stringWithFormat:@"%d",[self.playerArray count] +1] forKey:@"playerNumber"];
-    
-	PlayerImportFormDataSource *sampleFormDataSource = [[[PlayerImportFormDataSource alloc] initWithModel:playerModel] autorelease];
-	ItemFormController *sampleFormController = [[[ItemFormController alloc] initWithNibName:nil bundle:nil formDataSource:sampleFormDataSource] autorelease];
-	sampleFormController.title = @"Add Player Form";
-	sampleFormController.shouldAutoRotate = showcaseModel.shouldAutoRotate;
-	sampleFormController.tableViewStyle = showcaseModel.tableViewStyleGrouped ? UITableViewStyleGrouped : UITableViewStylePlain;
-	
-    [[IBAInputManager sharedIBAInputManager] setInputNavigationToolbarEnabled:showcaseModel.displayNavigationToolbar];
-    
-	UIViewController *rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
-	if (showcaseModel.modalPresentation) {
-		UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
-																					 target:self 
-																					 action:@selector(completeSampleForm)] autorelease];
-        UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel 
-                                                                                       target:self 
-                                                                                       action:@selector(cancelForm)] autorelease];
-		sampleFormController.navigationItem.rightBarButtonItem = doneButton;
-        sampleFormController.navigationItem.leftBarButtonItem = cancelButton;
-		UINavigationController *formNavigationController = [[[UINavigationController alloc] initWithRootViewController:sampleFormController] autorelease];
-		formNavigationController.modalPresentationStyle = showcaseModel.modalPresentationStyle;
-		[rootViewController presentModalViewController:formNavigationController animated:YES];
-	} else {
-        if ([rootViewController isKindOfClass:[UINavigationController class]]) {
-			[(UINavigationController *)rootViewController pushViewController:sampleFormController animated:YES];
-		}
-	}
-    /*
-    [super setEditing:editing animated:animated];
-    
-     
-     
-    //Set Editing and Hide backbutton
-    lastNameTextField.enabled = editing;
-    firstNameTextField.enabled = editing;
-    playerNumberTextField.enabled = editing;
-    //emailTextField.enabled = editing;
-	[self.navigationItem setHidesBackButton:editing animated:YES];
-    
 
+}
+
+- (void)editItem:(id)sender{    
     
-	if (!editing) {
-        //Reset the forms
-        lastNameTextField.borderStyle = UITextBorderStyleNone;
-        firstNameTextField.borderStyle = UITextBorderStyleNone;
-        playerNumberTextField.borderStyle = UITextBorderStyleNone;
-        //emailTextField.borderStyle = UITextBorderStyleNone;
+    if([player.contactIdentifier intValue] == (-1) ){
         
-        if ([self validatePerson]){
-            //form data to the object
-            player.lastName = lastNameTextField.text;
-            player.firstName = firstNameTextField.text;
-            player.playerNumber = playerNumberTextField.text;
-            //player.email = emailTextField.text;
-            
-            NSManagedObjectContext *context = player.managedObjectContext;
-            NSError *error = nil;
-            if (![context save:&error]) {
-                
-                NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-                abort();
-            }else{
-                //Confirm the Save to the user
-                [[iToast makeText:NSLocalizedString(@"Data Saved", @"")] show];
-                
-            }
-            
-        }else{
-            //Since the data did not validate, reset the form
-            lastNameTextField.text = player.lastName;
-            firstNameTextField.text = player.firstName;
-            playerNumberTextField.text = player.playerNumber;
-            //emailTextField.text = player.email;
-        }
-
-
-	}else{
+        PlayerEditViewController *detailViewController = [[PlayerEditViewController alloc] initWithStyle:UITableViewStyleGrouped player:player];
+        detailViewController.delegate = self;
         
-        //Show Form Boxes
-        lastNameTextField.borderStyle = UITextBorderStyleRoundedRect;
-        firstNameTextField.borderStyle = UITextBorderStyleRoundedRect;
-        playerNumberTextField.borderStyle = UITextBorderStyleRoundedRect;
-        //emailTextField.borderStyle = UITextBorderStyleRoundedRect;
-    }	
+        UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:detailViewController];
+        navigation.modalPresentationStyle = UIModalPresentationFormSheet;
+        [self presentModalViewController:navigation animated:YES];
+        [detailViewController release];
+        
+    }else {
+        
+        PlayerEditViewController *detailViewController = [[PlayerEditViewController alloc] initWithStyle:UITableViewStyleGrouped player:player];
+        detailViewController.delegate = self;
+        
+        UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:detailViewController];
+        navigation.modalPresentationStyle = UIModalPresentationFormSheet;
+        [self presentModalViewController:navigation animated:YES];
+        [detailViewController release];
+    }
 
-     */
+}
+#pragma mark playerEdit Delegates
+//Save NewPlayer
+- (void)doneEditingPlayer:(PlayerEditViewController *)doneEditingPlayer player:(Person *)player{
+    
+    RootViewController *ac = [RootViewController sharedAppController];
+    NSManagedObjectContext *managedObjectContext = [ac managedObjectContext];
+    
+    NSError *error = nil;
+    if (![managedObjectContext save:&error]) {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    
+    //Show and Dimiss
+    [self dismissModalViewControllerAnimated:YES];
+
+}
+
+
+//Delete the cancelled Player
+- (void)cancelledEditingPlayer:(PlayerEditViewController *)cancelledEditingPlayer{
+
+    RootViewController *ac = [RootViewController sharedAppController];
+    NSManagedObjectContext *managedObjectContext = [ac managedObjectContext];
+    
+    [managedObjectContext refreshObject:player mergeChanges:NO];
+    
+    [self dismissModalViewControllerAnimated:YES];	
+
 }
 
 - (IBAction)activeSwitchChanged:(id)sender{
+    
     player.active = [NSNumber numberWithBool:playerActiveSwitch.on];
     
     NSManagedObjectContext *context = player.managedObjectContext;

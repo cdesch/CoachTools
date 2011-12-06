@@ -8,16 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "CorePlot-CocoaTouch.h"
+#import "PlayerEditViewController.h"
 
 @class Person;
 
-@interface PlayerSummaryViewController : UIViewController <CPTPlotDataSource, CPTPieChartDataSource, CPTBarPlotDelegate> {
+@interface PlayerSummaryViewController : UIViewController <CPTPlotDataSource, CPTPieChartDataSource, CPTBarPlotDelegate, PlayerEditDelegate> {
     Person *player;
     
     UITextField *lastNameTextField;
     UITextField *firstNameTextField;
     UITextField *playerNumberTextField;
-    //UITextField *emailTextField;
     UISwitch *playerActiveSwitch;
     
     NSMutableArray *generalStatsArray;
@@ -36,9 +36,7 @@
 @property (nonatomic, retain) IBOutlet UITextField *lastNameTextField;
 @property (nonatomic, retain) IBOutlet UITextField *firstNameTextField;
 @property (nonatomic, retain) IBOutlet UITextField *playerNumberTextField;
-//@property (nonatomic, retain) IBOutlet UITextField *emailTextField;
 @property (nonatomic, retain) IBOutlet UISwitch *playerActiveSwitch;
-
 @property (nonatomic, retain) UISegmentedControl *segControlGraphType;
 @property (nonatomic, retain) UISegmentedControl *segControlSeasonType;
 
@@ -51,7 +49,7 @@
 @property (nonatomic, retain) NSMutableDictionary *playerModel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil playerSelected:(Person *)aPlayer;
-
+- (void)editItem:(id)sender;
 - (IBAction)activeSwitchChanged:(id)sender;
 
 // Build the graph

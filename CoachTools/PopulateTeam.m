@@ -44,10 +44,12 @@
     for (int i = 1; i < 15; i++){
     
         Person* player =  [NSEntityDescription insertNewObjectForEntityForName:@"Person" inManagedObjectContext:managedObjectContext];
-        player.playerNumber = [NSString stringWithFormat:@"%d", i];
-        player.firstName = [NSString stringWithFormat:@"%d", i];
-        player.lastName = @"Player";
-        player.team = team;
+        player.playerNumber         = [NSString stringWithFormat:@"%d", i];
+        player.firstName            = [NSString stringWithFormat:@"%d", i];
+        player.lastName             = @"Player";
+        player.team                 = team;
+        NSNumber *recordId          = [NSNumber numberWithInteger:(-2)];
+        player.contactIdentifier    = [recordId stringValue];
         error = nil;
      
         if (![managedObjectContext save:&error]) {
@@ -55,7 +57,6 @@
             [FlurryAnalytics logError:[NSString stringWithFormat:@"Unresolved Error CoreData %s", __PRETTY_FUNCTION__] message:@"CoreData" error:error];
             abort();
         }		
-        
     }
     
     //Create Seasons

@@ -8,12 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "Team.h"
-#import "AddPlayerViewController.h"
+//#import "AddPlayerViewController.h"
 #import "PlayerEditViewController.h"
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 
-@interface PlayerListViewController : UITableViewController <UINavigationControllerDelegate,UIPopoverControllerDelegate, AddPlayerDelegate, UIActionSheetDelegate, ABPeoplePickerNavigationControllerDelegate, ABNewPersonViewControllerDelegate>{
+@interface PlayerListViewController : UITableViewController <UINavigationControllerDelegate,UIPopoverControllerDelegate, UIActionSheetDelegate, PlayerEditDelegate>{
     
     NSMutableDictionary *playerModel;
     NSMutableArray  *playerArray;
@@ -31,12 +31,7 @@
 - (void)sortList:(NSString *)key ascendingOrder:(BOOL)order;
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 - (void)insertItemButton:(id)sender;
-- (void)itemImport;
-- (void)itemNewIntergrated;
-- (void)itemForm;
-- (void)completeItemImportForm;
-- (void)cancelItemImportForm;
 - (void)showPlayer:(Person *)person animated:(BOOL)animated;
-- (BOOL)validateEmail:(NSString *)candidate;
-    
+
+
 @end

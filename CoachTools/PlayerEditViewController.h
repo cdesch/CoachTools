@@ -11,15 +11,16 @@
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import "Person.h"
-
+#import "AddressBookViewController.h"
 @protocol PlayerEditDelegate;
 
-@interface PlayerEditViewController : UITableViewController <ABPeoplePickerNavigationControllerDelegate, ABNewPersonViewControllerDelegate, ELCTextFieldDelegate>{
+@interface PlayerEditViewController : UITableViewController <ABPersonViewControllerDelegate, ELCTextFieldDelegate, AddressBookDelegate>{
     
 	id<PlayerEditDelegate> delegate;
 	NSArray *labels;
 	NSArray *placeholders;
     Person *item;
+    
 }
 @property(nonatomic,assign)id <PlayerEditDelegate> delegate;
 @property (nonatomic, retain) NSArray *labels;
@@ -30,15 +31,14 @@
 - (void)saveButton:(id)sender;
 - (void)cancelButton:(id)sender;
 - (void)configureTextFieldCell:(ELCTextfieldCell *)cell atIndexPath:(NSIndexPath *)indexPath;
-- (void)itemImport;
 - (BOOL)validateItem;
 
 @end
 
 @protocol PlayerEditDelegate <NSObject>
 
-- (void)addPlayerViewController:(PlayerEditViewController *)doneEditingPlayer didAddPerson:(Person *)person;
-- (void)addPlayerViewController:(PlayerEditViewController *)cancelledEditingPlayer;
+- (void)doneEditingPlayer:(PlayerEditViewController *)doneEditingPlayer player:(Person *)person;
+- (void)cancelledEditingPlayer:(PlayerEditViewController *)cancelledEditingPlayer;
 
 @end
 

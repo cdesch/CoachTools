@@ -7,6 +7,8 @@
 //
 
 #import "PlayerEditViewController.h"
+#import "AddressBookViewController.h"
+#import "HelpManagement.h"
 
 @implementation PlayerEditViewController
 
@@ -29,7 +31,7 @@
     if (self) {
         // Custom initialization
         item = player;
-        
+
     }
     return self;
 }
@@ -151,7 +153,7 @@
 
 
 - (void)configureTextFieldCell:(ELCTextfieldCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-	
+	    
 	cell.leftLabel.text = [self.labels objectAtIndex:indexPath.row];
 	cell.rightTextField.placeholder = [self.placeholders objectAtIndex:indexPath.row];
     if(item.playerNumber != nil){
@@ -161,14 +163,13 @@
 	cell.indexPath = indexPath;
 	cell.delegate = self;
     //Disables UITableViewCell from accidentally becoming selected.
-    cell.selectionStyle = UITableViewCellEditingStyleNone;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
 	if(indexPath.row == 3) {
         
 		[cell.rightTextField setKeyboardType:UIKeyboardTypeNumberPad];
 	}
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *CellIdentifier = @"Cell";
@@ -193,9 +194,13 @@
             cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
         }
         
-        //[self configureCell:cell atIndexPath:indexPath];    
-        cell.textLabel.text = [NSString stringWithFormat:@"Contact: %@ %@", item.firstName, item.lastName];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        if([item.contactIdentifier intValue] == (-1) || [item.contactIdentifier intValue] == (-2)){
+            cell.textLabel.text = [NSString stringWithFormat:@"Contact: None Assigned"];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }else{
+            cell.textLabel.text = [NSString stringWithFormat:@"Contact: %@ %@", item.firstName, item.lastName];            
+             cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+        }
         
         return cell;
     }
@@ -204,54 +209,7 @@
     
 }
 
-- (void)itemImport{
-    
-    ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
-    picker.peoplePickerDelegate = self;
-	// Display only a person's phone, email, and birthdate
-	NSArray *displayedItems = [NSArray arrayWithObjects:[NSNumber numberWithInt:kABPersonPhoneProperty], 
-                               [NSNumber numberWithInt:kABPersonEmailProperty],
-                               [NSNumber numberWithInt:kABPersonBirthdayProperty], nil];
-	picker.modalPresentationStyle = UIModalPresentationFormSheet;
-	picker.displayedProperties = displayedItems;
-	// Show the picker 
-	[self presentModalViewController:picker animated:YES];
-    [picker release];
-}
-
-- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person{
-    
-    item.firstName          = (NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
-    item.lastName           = (NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);	
-    item.contactIdentifier  = [NSNumber numberWithInt:ABRecordGetRecordID(person)];	
-        
-    [self dismissModalViewControllerAnimated:YES];
-    
-    [self.tableView reloadData];
-    
-	return NO;
-}
-
-// Does not allow users to perform default actions such as dialing a phone number, when they select a person property.
-- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person 
-								property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier
-{
-	return YES;
-}
-
-
-// Dismisses the people picker and shows the application when users tap Cancel. 
-- (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker;
-{
-	[self dismissModalViewControllerAnimated:YES];
-}
-
-- (void)newPersonViewController:(ABNewPersonViewController *)newPersonView didCompleteWithNewPerson:(ABRecordRef)person{
-    
-}
-
 #pragma mark ELCTextFieldCellDelegate Methods
-
 
 - (void)textFieldDidReturnWithIndexPath:(NSIndexPath*)indexPath {
     
@@ -278,41 +236,48 @@
     
     //Check before saving
     if([self validateItem]){
-        /*
-        RootViewController *ac = [RootViewController sharedAppController];
-        NSManagedObjectContext *managedObjectContext = [ac managedObjectContext];
-        
-        
-        NSError *error = nil;
-        if (![managedObjectContext save:&error]) {
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }		
-        */
-        [self.delegate doneEditingPlayer:self didAddPerson:item];
+        [self.delegate doneEditingPlayer:self player:item];
     }
 
 }
 
 - (void)cancelButton:(id)sender{
-    /*
-    RootViewController *ac = [RootViewController sharedAppController];
-    NSManagedObjectContext *managedObjectContext = [ac managedObjectContext];
-    
-	[managedObjectContext deleteObject:person];
-    
-	NSError *error = nil;
-	if (![managedObjectContext save:&error]) {
-        
-		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-		abort();
-	}*/		
-    
+
     [self.delegate cancelledEditingPlayer:self];
 }
 
 - (BOOL)validateItem{
+    int maxVal = 99;
+    int minVal = 0;
     
+    //Game Number validators
+    if ([item.playerNumber isEqualToString:@""]) {
+        //Check if empty
+       [HelpManagement errorMessage:@"Player Number" error:@"requiredFieldEdit"];
+        return FALSE;
+    }else if (![item.playerNumber intValue]){
+        //Check if number is a number
+        [HelpManagement errorMessage:@"Player Number" error:@"numOnlyField"];
+        return FALSE;
+    }
+    
+    else if (([item.playerNumber intValue] > maxVal) || ([item.playerNumber intValue] < minVal)){
+        //Check if number within the range        
+        NSMutableArray *msgParams = [[[NSMutableArray alloc] init] autorelease];
+        [msgParams addObject:@"Player Number"];
+        [msgParams addObject:[NSString stringWithFormat:@"%d", minVal]];
+        [msgParams addObject:[NSString stringWithFormat:@"%d", maxVal]];
+        
+        [HelpManagement errorMessageWithParams:msgParams error:@"numRange"];
+       
+        return FALSE;
+    }else if (self.item.contactIdentifier == nil ){
+        //Check if empty
+        [HelpManagement errorMessage:@"Contact Identifier" error:@"requiredFieldEdit"];
+                
+        return FALSE;
+        
+    }
     return TRUE;
 }
 
@@ -355,43 +320,101 @@
 }
 */
 
+#pragma mark Addressbook Delegat
+
+- (void)doneAddressBook:(AddressBookViewController *)doneAddressBook contactIdentifier:(NSNumber *)contactIdentifier{
+    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+    
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    
+    cell.textLabel.text = [NSString stringWithFormat:@"Contact: %@ %@", item.firstName, item.lastName];
+    
+    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+    
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+- (void)cancelledAddressBook:(AddressBookViewController *)cancelledAddressBook{
+    //Do Nothing
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark ABdelegate
+- (BOOL)personViewController:(ABPersonViewController *)personViewController shouldPerformDefaultActionForPerson:(ABRecordRef)person 
+					property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifierForValue
+{
+	return NO;
+}
+
+
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
     if(indexPath.section == 1){
         if(indexPath.row == 0){
             //Contact
-            ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
-            picker.peoplePickerDelegate = self;
-            // Display only a person's phone, email, and birthdate
-            NSArray *displayedItems = [NSArray arrayWithObjects:[NSNumber numberWithInt:kABPersonPhoneProperty], 
-                                       [NSNumber numberWithInt:kABPersonEmailProperty],
-                                       [NSNumber numberWithInt:kABPersonBirthdayProperty], nil];
-            picker.modalPresentationStyle = UIModalPresentationFormSheet;
-            picker.displayedProperties = displayedItems;
-            // Show the picker 
-            [self presentModalViewController:picker animated:YES];
-            [picker release];
             
+            if([item.contactIdentifier intValue] == (-1)  || [item.contactIdentifier intValue] == (-2)){
+                //Edit the Link
+                AddressBookViewController *detailViewController = [[AddressBookViewController alloc] initWithStyle:UITableViewStyleGrouped player:item];
+                detailViewController.delegate = self;
+
+                [self.navigationController pushViewController:detailViewController animated:YES];
+                [detailViewController release];
+            }else{
+                ABAddressBookRef addressBook = ABAddressBookCreate();
+                // Search for the person named "Appleseed" in the address book
+                //NSArray *people = (NSArray *)ABAddressBookCopyPeopleWithName(addressBook, CFSTR("Appleseed"));
+                ABRecordID recordID = (ABRecordID) [item.contactIdentifier intValue];
+                NSLog(@" record %d", recordID);
+
+                //NSArray *people = (NSArray *)ABAddressBookGetPersonWithRecordID(addressBook, recordID);
+                ABRecordRef person = ABAddressBookGetPersonWithRecordID(addressBook, recordID);
+                // Display "Appleseed" information if found in the address book 
+                if (person != nil)
+                {
+                    //ABRecordRef person = (ABRecordRef)[people objectAtIndex:0];
+                    ABPersonViewController *picker = [[[ABPersonViewController alloc] init] autorelease];
+                    picker.personViewDelegate = self;
+                    picker.displayedPerson = person;
+                    // Allow users to edit the person’s information
+                    picker.allowsEditing = YES;
+                    [self.navigationController pushViewController:picker animated:YES];
+                }
+                else 
+                {
+                    // Show an alert if "Appleseed" is not in Contacts
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" 
+                                                                    message:@"Could not find person in the Contacts application" 
+                                                                   delegate:nil 
+                                                          cancelButtonTitle:@"Cancel" 
+                                                          otherButtonTitles:nil];
+                    [alert show];
+                    [alert release];
+                }
+                
+                //[people release];
+                CFRelease(addressBook);
+            }
         }else if (indexPath.row == 1){
             //Emergancy Contact
             //TODO: Finish Emergancy Contacts
-            ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
-            picker.peoplePickerDelegate = self;
-            // Display only a person's phone, email, and birthdate
-            NSArray *displayedItems = [NSArray arrayWithObjects:[NSNumber numberWithInt:kABPersonPhoneProperty], 
-                                       [NSNumber numberWithInt:kABPersonEmailProperty],
-                                       [NSNumber numberWithInt:kABPersonBirthdayProperty], nil];
-            picker.modalPresentationStyle = UIModalPresentationFormSheet;
-            picker.displayedProperties = displayedItems;
-            // Show the picker 
-            [self presentModalViewController:picker animated:YES];
-            [picker release];
         }
     }
-    
+}
+
+- (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.section == 1){
+        if(indexPath.row == 0){
+            //Edit the link
+            AddressBookViewController *detailViewController = [[AddressBookViewController alloc] initWithStyle:UITableViewStyleGrouped player:item];
+            detailViewController.delegate = self;
+            [self.navigationController pushViewController:detailViewController animated:YES];
+            [detailViewController release];
+        }
+    }
 }
 
 @end

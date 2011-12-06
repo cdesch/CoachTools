@@ -337,8 +337,7 @@
     }else if (![[self.itemModel valueForKey:@"gameNumber"] intValue]){
         //Check if number is a number
         [HelpManagement errorMessage:@"Game Number" error:@"numOnlyField"];
-        
-        
+    
     }
     else if ([self.itemModel valueForKey:@"date"] == nil){
         
@@ -348,8 +347,7 @@
         
         [HelpManagement errorMessage:@"Time" error:@"requiredFieldEdit"];
         
-    }
-    else{
+    }else{
         
         //item.gameNumber = [NSNumber numberWithInt:[[self.itemModel valueForKey:@"gameNumber"] intValue]];
         game.gameNumber = [self.itemModel valueForKey:@"gameNumber"];
@@ -393,7 +391,7 @@
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             [FlurryAnalytics logError:@"Unresolved Error Inserting" message:[game debugDescription] error:error];
             abort();
-        }		
+        }
         
         [self dismissModalViewControllerAnimated:YES];
         //NSLog(@"Dismissed");

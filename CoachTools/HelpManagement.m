@@ -23,4 +23,16 @@
     [someError release];
 }
 
++ (void)errorMessageWithParams:(NSMutableArray*)msgParams error:(NSString *)error{
+    
+    UIAlertView *someError = [[UIAlertView alloc] initWithTitle:[PlistStringUtil retrieveErrorText:[error stringByAppendingString:@".title"] withParams:msgParams] message:[PlistStringUtil retrieveErrorText:[error stringByAppendingString:@".msg"] withParams:msgParams] delegate: self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+    
+    [someError show];
+    [someError release];
+
+}
+
+
+
+
 @end

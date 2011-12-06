@@ -13,5 +13,6 @@
 }
 
 + (void)errorMessage:(NSString*)title error:(NSString *)error;
++ (void)errorMessageWithParams:(NSMutableArray*)msgParams error:(NSString *)error;
 
 @end

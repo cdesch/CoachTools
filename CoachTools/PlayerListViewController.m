@@ -184,23 +184,11 @@
         }else if (buttonIndex == 3){
             [self sortList:@"cStarts" ascendingOrder:NO];
         }
-    }else if (actionSheet.tag == 2) {
-        if(buttonIndex == 0){
-            [self itemImport];
-            
-        }else if (buttonIndex == 1){
-            
-            [self itemNewIntergrated];
-        }
-        else if (buttonIndex == 2){
-            [self itemForm];
-        }
     }
     
 }
 
 - (void)sortList:(NSString *)key ascendingOrder:(BOOL)order{
-    
     
     //Sort using key as sort parameter
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:key ascending:order];
@@ -219,165 +207,45 @@
 
     [self.tableView setEditing:FALSE animated:YES];
     
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"New Player"
-                                                             delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil
-                                                    otherButtonTitles:@"From Contacts",@"New Contact",@"App Player Only", nil];
-    actionSheet.tag = 2;
-    actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
-    //actionSheet.destructiveButtonIndex = 4; // make the second button red (destructive)
-    //[actionSheet showInView:self.view]; // show from our table view (pops up in the middle of the table)
-    [actionSheet showFromBarButtonItem:sender animated:YES];
-    [actionSheet release];
-    
-}
-
-- (void)itemImport{
-    /*
-    ABPeoplePickerNavigationController *picker = [[ABPeoplePickerNavigationController alloc] init];
-    picker.peoplePickerDelegate = self;
-	// Display only a person's phone, email, and birthdate
-	NSArray *displayedItems = [NSArray arrayWithObjects:[NSNumber numberWithInt:kABPersonPhoneProperty], 
-                               [NSNumber numberWithInt:kABPersonEmailProperty],
-                               [NSNumber numberWithInt:kABPersonBirthdayProperty], nil];
-	picker.modalPresentationStyle = UIModalPresentationFormSheet;
-	picker.displayedProperties = displayedItems;
-	// Show the picker 
-	[self presentModalViewController:picker animated:YES];
-    [picker release];
-     */
-    
-    PlayerEditViewController *detailViewController = [[PlayerEditViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    // ...
-    // Pass the selected object to the new view controller.
-    //Person *selectedPlayer = [self.playerArray objectAtIndex:indexPath.row];
-    
-    //((PlayerSummaryViewController *)detailViewController).player = selectedPlayer;
-    UINavigationController* navController = [[UINavigationController alloc] initWithRootViewController:detailViewController];
-    //detailViewController.modalPresentationStyle = UIModalPresentationFormSheet;
-    navController.modalPresentationStyle = UIModalPresentationFormSheet;
-    [self presentModalViewController:navController animated:YES];
-    [detailViewController release];
-    
-    
-}
-
-- (void)itemNewIntergrated{
-    
-    ABNewPersonViewController *picker = [[ABNewPersonViewController alloc] init];
-	picker.newPersonViewDelegate = self;
-	
-	UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:picker];
-    navigation.modalPresentationStyle = UIModalPresentationFormSheet;
-	[self presentModalViewController:navigation animated:YES];
-	
-	[picker release];
-	[navigation release];	
-}
-
-
-#pragma mark - ContactIntergration
-
-// Displays the information of a selected person
-- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person{
-    //[self dismissModalViewControllerAnimated:YES];
-    
     RootViewController *sharedController = [RootViewController sharedAppController];
     NSManagedObjectContext *managedObjectContext = [sharedController managedObjectContext];
     item = [NSEntityDescription insertNewObjectForEntityForName:@"Person" inManagedObjectContext:managedObjectContext];
+    item.playerNumber = [NSString stringWithFormat:@"%d", [playerArray count] + 1];
+    NSNumber *recordId        = [NSNumber numberWithInteger:(-2)];
+    item.contactIdentifier    = [recordId stringValue];	
+    PlayerEditViewController *detailViewController = [[PlayerEditViewController alloc] initWithStyle:UITableViewStyleGrouped player:item];
+    detailViewController.delegate = self;
     
-    // setting the properties
-    item.firstName          = (NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
-    item.lastName           = (NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);	
-    item.contactIdentifier  = [NSNumber numberWithInt:ABRecordGetRecordID(person)];	
-    item.playerNumber       = [NSString stringWithFormat:@"%d",[self.playerArray count] +1];
-    item.team               = team;
+    //detailViewController.modalPresentationStyle = UIModalPresentationFormSheet;
+    UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:detailViewController];
+    navigation.modalPresentationStyle = UIModalPresentationFormSheet;
+    [self presentModalViewController:navigation animated:YES];
+    [detailViewController release];
     
-    //Save the Data.   
+}
+
+//Save NewPlayer
+- (void)doneEditingPlayer:(PlayerEditViewController *)doneEditingPlayer player:(Person *)player{
+    
+    RootViewController *ac = [RootViewController sharedAppController];
+    NSManagedObjectContext *managedObjectContext = [ac managedObjectContext];
+    
+    player.team = team;
     NSError *error = nil;
     if (![managedObjectContext save:&error]) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
-    }		
+    }	
     
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"playerNumber" ascending:YES];
-	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:&sortDescriptor count:1];
-	
-	NSMutableArray *sortedItems = [[NSMutableArray alloc] initWithArray:[team.players allObjects]];
-	[sortedItems sortUsingDescriptors:sortDescriptors];
-	self.playerArray = sortedItems;
-    
-	[sortDescriptor release];
-	[sortDescriptors release];
-	[sortedItems release];
-	
-    //Update and refresh the table
-    [self.tableView reloadData]; 
-    
+    //Show and Dimiss
+    [self showPlayer:player animated:YES];
     [self dismissModalViewControllerAnimated:YES];
     
-	return NO;
-}
-
-// Does not allow users to perform default actions such as dialing a phone number, when they select a person property.
-- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person 
-								property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier
-{
-	return YES;
 }
 
 
-// Dismisses the people picker and shows the application when users tap Cancel. 
-- (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker;
-{
-	[self dismissModalViewControllerAnimated:YES];
-}
-
-- (void)newPersonViewController:(ABNewPersonViewController *)newPersonView didCompleteWithNewPerson:(ABRecordRef)person{
-    
-}
-
-- (void)completeItemImportForm{
-    
-    if ([self.playerModel valueForKey:@"playerNumber"] == nil || [[self.playerModel valueForKey:@"playerNumber"] isEqualToString:@""]) {
-        
-        //Check if empty
-        [HelpManagement errorMessage:@"Player Number" error:@"requiredFieldEdit"];
-        
-    }else{
-        
-        item.playerNumber = [self.playerModel valueForKey:@"playerNumber"];
-        item.team = team;
-
-        //Save the Data.
-        RootViewController *ac = [RootViewController sharedAppController];
-        NSManagedObjectContext *managedObjectContext = [ac managedObjectContext];
-        
-        NSError *error = nil;
-        if (![managedObjectContext save:&error]) {
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }		
-
-        [self dismissModalViewControllerAnimated:YES];
-    }
-       
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"playerNumber" ascending:YES];
-	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:&sortDescriptor count:1];
-	
-	NSMutableArray *sortedItems = [[NSMutableArray alloc] initWithArray:[team.players allObjects]];
-	[sortedItems sortUsingDescriptors:sortDescriptors];
-	self.playerArray = sortedItems;
-    
-	[sortDescriptor release];
-	[sortDescriptors release];
-	[sortedItems release];
-	
-	// Update recipe type and ingredients on return.
-    [self.tableView reloadData]; 
-    
-}
-- (void)cancelItemImportForm{
-    
+//Delete the cancelled Player
+- (void)cancelledEditingPlayer:(PlayerEditViewController *)cancelledEditingPlayer{
     RootViewController *ac = [RootViewController sharedAppController];
     NSManagedObjectContext *managedObjectContext = [ac managedObjectContext];
     
@@ -388,160 +256,10 @@
         
 		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 		abort();
-	}		
-    
-    [self dismissModalViewControllerAnimated:YES];
-}
-
-#pragma mark - Forms
-
-- (void)itemForm{
-    
-    playerModel = [[NSMutableDictionary alloc] init];
-    
-    RootViewController *sharedController = [RootViewController sharedAppController];
-    NSManagedObjectContext *managedObjectContext = [sharedController managedObjectContext];
-    item = [NSEntityDescription insertNewObjectForEntityForName:@"Person" inManagedObjectContext:managedObjectContext];
-    
-    ShowcaseModel *showcaseModel = [[[ShowcaseModel alloc] init] autorelease];
-    showcaseModel.shouldAutoRotate = YES;
-    showcaseModel.tableViewStyleGrouped = YES;
-    showcaseModel.displayNavigationToolbar = YES;
-    showcaseModel.modalPresentation = YES;
-    showcaseModel.modalPresentationStyle = UIModalPresentationFormSheet;
-    
-	// Values set on the model will be reflected in the form fields.
-    [playerModel setObject:[NSString stringWithFormat:@"%d",[self.playerArray count] +1] forKey:@"playerNumber"];
-    
-	PlayerFormDataSource *sampleFormDataSource = [[[PlayerFormDataSource alloc] initWithModel:playerModel] autorelease];
-	ItemFormController *sampleFormController = [[[ItemFormController alloc] initWithNibName:nil bundle:nil formDataSource:sampleFormDataSource] autorelease];
-	sampleFormController.title = @"Add Player Form";
-	sampleFormController.shouldAutoRotate = showcaseModel.shouldAutoRotate;
-	sampleFormController.tableViewStyle = showcaseModel.tableViewStyleGrouped ? UITableViewStyleGrouped : UITableViewStylePlain;
-	
-    [[IBAInputManager sharedIBAInputManager] setInputNavigationToolbarEnabled:showcaseModel.displayNavigationToolbar];
-    
-	UIViewController *rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
-	if (showcaseModel.modalPresentation) {
-		UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
-																					 target:self 
-																					 action:@selector(completeSampleForm)] autorelease];
-        UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel 
-                                                                                       target:self 
-                                                                                       action:@selector(cancelForm)] autorelease];
-		sampleFormController.navigationItem.rightBarButtonItem = doneButton;
-        sampleFormController.navigationItem.leftBarButtonItem = cancelButton;
-		UINavigationController *formNavigationController = [[[UINavigationController alloc] initWithRootViewController:sampleFormController] autorelease];
-		formNavigationController.modalPresentationStyle = showcaseModel.modalPresentationStyle;
-		[rootViewController presentModalViewController:formNavigationController animated:YES];
-	} else {
-        if ([rootViewController isKindOfClass:[UINavigationController class]]) {
-			[(UINavigationController *)rootViewController pushViewController:sampleFormController animated:YES];
-		}
 	}
+    
+    [self dismissModalViewControllerAnimated:YES];	
 }
-
-- (void)completeSampleForm{
-    //Validate
-    
-    if ([self.playerModel valueForKey:@"playerNumber"] == nil || [[self.playerModel valueForKey:@"playerNumber"] isEqualToString:@""]) {
-        //Check if empty
-        [HelpManagement errorMessage:@"Player Number" error:@"requiredFieldEdit"];
-        
-    }else if ([self.playerModel valueForKey:@"lastName"] == nil || [[self.playerModel valueForKey:@"lastName"] isEqualToString:@""]){
-        //Check if empty
-        [HelpManagement errorMessage:@"Last Name" error:@"requiredFieldEdit"];
-        
-    } else if ([self.playerModel valueForKey:@"firstName"] == nil || [[self.playerModel valueForKey:@"firstName"] isEqualToString:@""]){
-        //Check if empty
-        [HelpManagement errorMessage:@"First Name" error:@"requiredFieldEdit"];
-        
-    }else if ([self.playerModel valueForKey:@"email"] == nil || [[self.playerModel valueForKey:@"email"] isEqualToString:@""] || ![self validateEmail:[self.playerModel valueForKey:@"email"]]){
-        
-        [HelpManagement errorMessage:[self.playerModel valueForKey:@"email"]  error:@"emailInvalid"];
-
-    }else{
-        
-        item.playerNumber = [self.playerModel valueForKey:@"playerNumber"];
-        item.firstName = [self.playerModel valueForKey:@"firstName"];
-        item.lastName = [self.playerModel valueForKey:@"lastName"];
-        item.email = [self.playerModel valueForKey:@"email"];
-        item.team = team;
-        
-        //Date
-
-        NSCalendar *dateCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-        NSDateComponents *dateComponent = [dateCal components:( NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekCalendarUnit | NSWeekdayCalendarUnit |NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:[self.playerModel valueForKey:@"birthdate"]];
-              
-        item.birthdate =  [[dateCal dateFromComponents:dateComponent] copy];
-
-        //Save the Data.
-        RootViewController *ac = [RootViewController sharedAppController];
-        NSManagedObjectContext *managedObjectContext = [ac managedObjectContext];
-        
-        NSError *error = nil;
-        if (![managedObjectContext save:&error]) {
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-            abort();
-        }		
-        
-        
-        
-        [self dismissModalViewControllerAnimated:YES];
-    }
-    
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"playerNumber" ascending:YES];
-	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:&sortDescriptor count:1];
-	
-	NSMutableArray *sortedItems = [[NSMutableArray alloc] initWithArray:[team.players allObjects]];
-	[sortedItems sortUsingDescriptors:sortDescriptors];
-	self.playerArray = sortedItems;
-    
-	[sortDescriptor release];
-	[sortDescriptors release];
-	[sortedItems release];
-	
-	// Update recipe type and ingredients on return.
-    [self.tableView reloadData]; 
-    
-    //Show Training
-}
-
-- (void)cancelForm{
-    
-    RootViewController *ac = [RootViewController sharedAppController];
-    NSManagedObjectContext *managedObjectContext = [ac managedObjectContext];
-    
-	[managedObjectContext deleteObject:item];
-    
-	NSError *error = nil;
-	if (![managedObjectContext save:&error]) {
-        
-		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-		abort();
-	}		
-    
-    
-    [self dismissModalViewControllerAnimated:YES];
-}
-
-- (BOOL)validateEmail:(NSString *)candidate {
-    NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"; 
-    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex]; 
-    
-    return [emailTest evaluateWithObject:candidate];
-}
-
-
-- (void)addPlayerViewController:(AddPlayerViewController *)addPlayerViewController didAddPerson:(Person *)player{
-    if (player) {        
-        [self showPlayer:player animated:YES];
-    }
-    
-    // Dismiss the modal add recipe view controller
-    [self dismissModalViewControllerAnimated:YES];
-}
-
 
 - (void)showPlayer:(Person *)person animated:(BOOL)animated {
     

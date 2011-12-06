@@ -37,10 +37,6 @@
 		NSSet *affectingKey = [NSSet setWithObject:@"active"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
-	if ([key isEqualToString:@"contactIdentifierValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"contactIdentifier"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-	}
 	if ([key isEqualToString:@"cGoalsValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"cGoals"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -136,25 +132,6 @@
 
 @dynamic contactIdentifier;
 
-
-
-- (double)contactIdentifierValue {
-	NSNumber *result = [self contactIdentifier];
-	return [result doubleValue];
-}
-
-- (void)setContactIdentifierValue:(double)value_ {
-	[self setContactIdentifier:[NSNumber numberWithDouble:value_]];
-}
-
-- (double)primitiveContactIdentifierValue {
-	NSNumber *result = [self primitiveContactIdentifier];
-	return [result doubleValue];
-}
-
-- (void)setPrimitiveContactIdentifierValue:(double)value_ {
-	[self setPrimitiveContactIdentifier:[NSNumber numberWithDouble:value_]];
-}
 
 
 

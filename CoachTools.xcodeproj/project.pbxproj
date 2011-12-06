@@ -63,6 +63,7 @@
 		234047F1140D4EA7006CECB8 /* Grass2_1680x1050.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 234047F0140D4EA7006CECB8 /* Grass2_1680x1050.jpg */; };
 		23409791148D519A000B3746 /* PlayerEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23409790148D519A000B3746 /* PlayerEditViewController.m */; };
 		23409794148D5D80000B3746 /* ELCTextfieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23409793148D5D80000B3746 /* ELCTextfieldCell.m */; };
+		234097AC148DB4DE000B3746 /* AddressBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 234097AB148DB4DD000B3746 /* AddressBookViewController.m */; };
 		23505BB11383328300FACCA8 /* bench2.png in Resources */ = {isa = PBXBuildFile; fileRef = 23505BB01383328300FACCA8 /* bench2.png */; };
 		2351986E1385781900A0C978 /* PlayerLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2351986D1385781900A0C978 /* PlayerLayer.m */; };
 		235B6BBD13FF3FDF00C478F6 /* BadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 235B6BBC13FF3FDE00C478F6 /* BadgeView.m */; };
@@ -493,6 +494,8 @@
 		23409790148D519A000B3746 /* PlayerEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerEditViewController.m; sourceTree = "<group>"; };
 		23409792148D5D80000B3746 /* ELCTextfieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ELCTextfieldCell.h; path = ../../github/ELCTextFieldCell/Classes/ELCTextfieldCell.h; sourceTree = "<group>"; };
 		23409793148D5D80000B3746 /* ELCTextfieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ELCTextfieldCell.m; path = ../../github/ELCTextFieldCell/Classes/ELCTextfieldCell.m; sourceTree = "<group>"; };
+		234097AA148DB4DC000B3746 /* AddressBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressBookViewController.h; sourceTree = "<group>"; };
+		234097AB148DB4DD000B3746 /* AddressBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressBookViewController.m; sourceTree = "<group>"; };
 		23505BB01383328300FACCA8 /* bench2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bench2.png; sourceTree = "<group>"; };
 		2351986C1385781900A0C978 /* PlayerLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerLayer.h; sourceTree = "<group>"; };
 		2351986D1385781900A0C978 /* PlayerLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerLayer.m; sourceTree = "<group>"; };
@@ -1437,6 +1440,20 @@
 			name = ELCTextFieldCell;
 			sourceTree = "<group>";
 		};
+		234097A5148D6C0C000B3746 /* Deprecated */ = {
+			isa = PBXGroup;
+			children = (
+				2397A24E146DDC1700FABD16 /* PlayerFormDataSource.h */,
+				2397A24F146DDC1700FABD16 /* PlayerFormDataSource.m */,
+				231703BC14886E8F00FB83B6 /* PlayerImportFormDataSource.h */,
+				231703BD14886E8F00FB83B6 /* PlayerImportFormDataSource.m */,
+				2363B4C213718F4B0082F206 /* AddPlayerViewController.h */,
+				2363B4C313718F4B0082F206 /* AddPlayerViewController.m */,
+				2363B4C413718F4B0082F206 /* AddPlayerViewController.xib */,
+			);
+			name = Deprecated;
+			sourceTree = "<group>";
+		};
 		23505BB21383508000FACCA8 /* GameScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -1900,11 +1917,11 @@
 		239322D81375EAD4002E7C1C /* Players */ = {
 			isa = PBXGroup;
 			children = (
+				234097AA148DB4DC000B3746 /* AddressBookViewController.h */,
+				234097AB148DB4DD000B3746 /* AddressBookViewController.m */,
 				2340978F148D5199000B3746 /* PlayerEditViewController.h */,
 				23409790148D519A000B3746 /* PlayerEditViewController.m */,
-				2363B4C213718F4B0082F206 /* AddPlayerViewController.h */,
-				2363B4C313718F4B0082F206 /* AddPlayerViewController.m */,
-				2363B4C413718F4B0082F206 /* AddPlayerViewController.xib */,
+				234097A5148D6C0C000B3746 /* Deprecated */,
 				23A5184813776931006477C6 /* PlayerListViewController.h */,
 				23A5184913776931006477C6 /* PlayerListViewController.m */,
 				23A5184A13776931006477C6 /* PlayerListViewController.xib */,
@@ -1914,10 +1931,6 @@
 				23F160C513A17B4900408488 /* PlayerListViewCell.h */,
 				23F160C613A17B4900408488 /* PlayerListViewCell.m */,
 				23F160C913A17B5E00408488 /* PlayerListViewCell.xib */,
-				2397A24E146DDC1700FABD16 /* PlayerFormDataSource.h */,
-				2397A24F146DDC1700FABD16 /* PlayerFormDataSource.m */,
-				231703BC14886E8F00FB83B6 /* PlayerImportFormDataSource.h */,
-				231703BD14886E8F00FB83B6 /* PlayerImportFormDataSource.m */,
 			);
 			name = Players;
 			sourceTree = "<group>";
@@ -2915,6 +2928,7 @@
 				231703BE14886E8F00FB83B6 /* PlayerImportFormDataSource.m in Sources */,
 				23409791148D519A000B3746 /* PlayerEditViewController.m in Sources */,
 				23409794148D5D80000B3746 /* ELCTextfieldCell.m in Sources */,
+				234097AC148DB4DE000B3746 /* AddressBookViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

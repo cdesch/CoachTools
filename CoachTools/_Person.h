@@ -71,11 +71,7 @@
 
 
 
-@property (nonatomic, retain) NSNumber *contactIdentifier;
-
-@property double contactIdentifierValue;
-- (double)contactIdentifierValue;
-- (void)setContactIdentifierValue:(double)value_;
+@property (nonatomic, retain) NSString *contactIdentifier;
 
 //- (BOOL)validateContactIdentifier:(id*)value_ error:(NSError**)error_;
 
@@ -272,11 +268,8 @@
 
 
 
-- (NSNumber*)primitiveContactIdentifier;
-- (void)setPrimitiveContactIdentifier:(NSNumber*)value;
-
-- (double)primitiveContactIdentifierValue;
-- (void)setPrimitiveContactIdentifierValue:(double)value_;
+- (NSString*)primitiveContactIdentifier;
+- (void)setPrimitiveContactIdentifier:(NSString*)value;
 
 
 

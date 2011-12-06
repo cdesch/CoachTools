@@ -45,10 +45,6 @@
 		NSSet *affectingKey = [NSSet setWithObject:@"phoneNumber"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
-	if ([key isEqualToString:@"emergancyContactValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"emergancyContact"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-	}
 	if ([key isEqualToString:@"cStartsValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"cStarts"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -196,27 +192,8 @@
 
 
 
-@dynamic emergancyContact;
+@dynamic playerNumber;
 
-
-
-- (double)emergancyContactValue {
-	NSNumber *result = [self emergancyContact];
-	return [result doubleValue];
-}
-
-- (void)setEmergancyContactValue:(double)value_ {
-	[self setEmergancyContact:[NSNumber numberWithDouble:value_]];
-}
-
-- (double)primitiveEmergancyContactValue {
-	NSNumber *result = [self primitiveEmergancyContact];
-	return [result doubleValue];
-}
-
-- (void)setPrimitiveEmergancyContactValue:(double)value_ {
-	[self setPrimitiveEmergancyContact:[NSNumber numberWithDouble:value_]];
-}
 
 
 
@@ -255,20 +232,6 @@
 
 
 
-@dynamic playerNumber;
-
-
-
-
-
-
-@dynamic birthdate;
-
-
-
-
-
-
 @dynamic cAbsences;
 
 
@@ -290,6 +253,13 @@
 - (void)setPrimitiveCAbsencesValue:(short)value_ {
 	[self setPrimitiveCAbsences:[NSNumber numberWithShort:value_]];
 }
+
+
+
+
+
+@dynamic birthdate;
+
 
 
 
@@ -335,6 +305,17 @@
 	[self willAccessValueForKey:@"gameSub"];
 	NSMutableSet *result = [self mutableSetValueForKey:@"gameSub"];
 	[self didAccessValueForKey:@"gameSub"];
+	return result;
+}
+	
+
+@dynamic emergancyContact;
+
+	
+- (NSMutableSet*)emergancyContactSet {
+	[self willAccessValueForKey:@"emergancyContact"];
+	NSMutableSet *result = [self mutableSetValueForKey:@"emergancyContact"];
+	[self didAccessValueForKey:@"emergancyContact"];
 	return result;
 }
 	

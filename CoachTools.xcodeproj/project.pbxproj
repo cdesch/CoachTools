@@ -64,6 +64,8 @@
 		23409791148D519A000B3746 /* PlayerEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23409790148D519A000B3746 /* PlayerEditViewController.m */; };
 		23409794148D5D80000B3746 /* ELCTextfieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23409793148D5D80000B3746 /* ELCTextfieldCell.m */; };
 		234097AC148DB4DE000B3746 /* AddressBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 234097AB148DB4DD000B3746 /* AddressBookViewController.m */; };
+		234097BD148DF55E000B3746 /* EmergancyContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 234097BC148DF55D000B3746 /* EmergancyContact.m */; };
+		234097C0148DF573000B3746 /* _EmergancyContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 234097BF148DF572000B3746 /* _EmergancyContact.m */; };
 		23505BB11383328300FACCA8 /* bench2.png in Resources */ = {isa = PBXBuildFile; fileRef = 23505BB01383328300FACCA8 /* bench2.png */; };
 		2351986E1385781900A0C978 /* PlayerLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2351986D1385781900A0C978 /* PlayerLayer.m */; };
 		235B6BBD13FF3FDF00C478F6 /* BadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 235B6BBC13FF3FDE00C478F6 /* BadgeView.m */; };
@@ -496,6 +498,10 @@
 		23409793148D5D80000B3746 /* ELCTextfieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ELCTextfieldCell.m; path = ../../github/ELCTextFieldCell/Classes/ELCTextfieldCell.m; sourceTree = "<group>"; };
 		234097AA148DB4DC000B3746 /* AddressBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressBookViewController.h; sourceTree = "<group>"; };
 		234097AB148DB4DD000B3746 /* AddressBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressBookViewController.m; sourceTree = "<group>"; };
+		234097BB148DF55D000B3746 /* EmergancyContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmergancyContact.h; sourceTree = "<group>"; };
+		234097BC148DF55D000B3746 /* EmergancyContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmergancyContact.m; sourceTree = "<group>"; };
+		234097BE148DF572000B3746 /* _EmergancyContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _EmergancyContact.h; sourceTree = "<group>"; };
+		234097BF148DF572000B3746 /* _EmergancyContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _EmergancyContact.m; sourceTree = "<group>"; };
 		23505BB01383328300FACCA8 /* bench2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bench2.png; sourceTree = "<group>"; };
 		2351986C1385781900A0C978 /* PlayerLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerLayer.h; sourceTree = "<group>"; };
 		2351986D1385781900A0C978 /* PlayerLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerLayer.m; sourceTree = "<group>"; };
@@ -1270,6 +1276,8 @@
 				B90EE191135FC12A0091A7B9 /* Team.m */,
 				2360F0231422D13100962B3A /* Training.h */,
 				2360F0241422D13100962B3A /* Training.m */,
+				234097BB148DF55D000B3746 /* EmergancyContact.h */,
+				234097BC148DF55D000B3746 /* EmergancyContact.m */,
 			);
 			name = Entities;
 			sourceTree = "<group>";
@@ -2393,6 +2401,8 @@
 		B90EE197135FC1320091A7B9 /* gen */ = {
 			isa = PBXGroup;
 			children = (
+				234097BE148DF572000B3746 /* _EmergancyContact.h */,
+				234097BF148DF572000B3746 /* _EmergancyContact.m */,
 				2360F0271422D1E300962B3A /* _Training.h */,
 				2360F0281422D1E300962B3A /* _Training.m */,
 				23D3FB3B139D961700E1A349 /* _Season.h */,
@@ -2929,6 +2939,8 @@
 				23409791148D519A000B3746 /* PlayerEditViewController.m in Sources */,
 				23409794148D5D80000B3746 /* ELCTextfieldCell.m in Sources */,
 				234097AC148DB4DE000B3746 /* AddressBookViewController.m in Sources */,
+				234097BD148DF55E000B3746 /* EmergancyContact.m in Sources */,
+				234097C0148DF573000B3746 /* _EmergancyContact.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

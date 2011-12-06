@@ -8,10 +8,10 @@
 @class Team;
 @class GameScore;
 @class GameSub;
+@class EmergancyContact;
 @class GameScore;
 @class GameStart;
 @class GamePenalty;
-
 
 
 
@@ -103,13 +103,9 @@
 
 
 
-@property (nonatomic, retain) NSNumber *emergancyContact;
+@property (nonatomic, retain) NSString *playerNumber;
 
-@property double emergancyContactValue;
-- (double)emergancyContactValue;
-- (void)setEmergancyContactValue:(double)value_;
-
-//- (BOOL)validateEmergancyContact:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validatePlayerNumber:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -129,18 +125,6 @@
 
 
 
-@property (nonatomic, retain) NSString *playerNumber;
-
-//- (BOOL)validatePlayerNumber:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSDate *birthdate;
-
-//- (BOOL)validateBirthdate:(id*)value_ error:(NSError**)error_;
-
-
-
 @property (nonatomic, retain) NSNumber *cAbsences;
 
 @property short cAbsencesValue;
@@ -148,6 +132,12 @@
 - (void)setCAbsencesValue:(short)value_;
 
 //- (BOOL)validateCAbsences:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSDate *birthdate;
+
+//- (BOOL)validateBirthdate:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -175,6 +165,11 @@
 
 @property (nonatomic, retain) NSSet* gameSub;
 - (NSMutableSet*)gameSubSet;
+
+
+
+@property (nonatomic, retain) NSSet* emergancyContact;
+- (NSMutableSet*)emergancyContactSet;
 
 
 
@@ -217,6 +212,11 @@
 - (void)removeGameSub:(NSSet*)value_;
 - (void)addGameSubObject:(GameSub*)value_;
 - (void)removeGameSubObject:(GameSub*)value_;
+
+- (void)addEmergancyContact:(NSSet*)value_;
+- (void)removeEmergancyContact:(NSSet*)value_;
+- (void)addEmergancyContactObject:(EmergancyContact*)value_;
+- (void)removeEmergancyContactObject:(EmergancyContact*)value_;
 
 - (void)addGameAssist:(NSSet*)value_;
 - (void)removeGameAssist:(NSSet*)value_;
@@ -298,11 +298,8 @@
 
 
 
-- (NSNumber*)primitiveEmergancyContact;
-- (void)setPrimitiveEmergancyContact:(NSNumber*)value;
-
-- (double)primitiveEmergancyContactValue;
-- (void)setPrimitiveEmergancyContactValue:(double)value_;
+- (NSString*)primitivePlayerNumber;
+- (void)setPrimitivePlayerNumber:(NSString*)value;
 
 
 
@@ -322,23 +319,17 @@
 
 
 
-- (NSString*)primitivePlayerNumber;
-- (void)setPrimitivePlayerNumber:(NSString*)value;
+- (NSNumber*)primitiveCAbsences;
+- (void)setPrimitiveCAbsences:(NSNumber*)value;
+
+- (short)primitiveCAbsencesValue;
+- (void)setPrimitiveCAbsencesValue:(short)value_;
 
 
 
 
 - (NSDate*)primitiveBirthdate;
 - (void)setPrimitiveBirthdate:(NSDate*)value;
-
-
-
-
-- (NSNumber*)primitiveCAbsences;
-- (void)setPrimitiveCAbsences:(NSNumber*)value;
-
-- (short)primitiveCAbsencesValue;
-- (void)setPrimitiveCAbsencesValue:(short)value_;
 
 
 
@@ -367,6 +358,11 @@
 
 - (NSMutableSet*)primitiveGameSub;
 - (void)setPrimitiveGameSub:(NSMutableSet*)value;
+
+
+
+- (NSMutableSet*)primitiveEmergancyContact;
+- (void)setPrimitiveEmergancyContact:(NSMutableSet*)value;
 
 
 

@@ -9,7 +9,7 @@
 #import "RootViewController.h"
 
 #import "GameManagementViewController.h"
-
+#import "ChalkTalkViewController.h"
 #import "TeamListViewController.h"
 #import "Person.h"
 #import "GameTimerDisplay.h"
@@ -85,21 +85,18 @@ static RootViewController *sharedInstance;
     
     // Do any additional setup after loading the view from its nib.
     gameTimer = [[GameTimer alloc] init];
-    gameManagementViewController = [[GameManagementViewController alloc] initWithNibName:@"GameManagementViewController" bundle:nil];
+    //gameManagementViewController = [[GameManagementViewController alloc] initWithNibName:@"GameManagementViewController" bundle:nil];
     sharedInstance = self;
     
     NSError *error = nil;
     if (![[self fetchedResultsController] performFetch:&error]) {
-        
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         [FlurryAnalytics logError:@"Unresolved Error Fetching" message:@"RootViewController FetchedResultsController" error:error];
         abort();
     }
     
     self.title = @"CoachTools";    
-    
-    //Macro Driven NSLOG
-    //NSLog(@"%s", __PRETTY_FUNCTION__);
+
 }
 
 - (void)viewDidUnload
@@ -150,6 +147,17 @@ static RootViewController *sharedInstance;
     [someError release];
     
 }
+
+
+- (IBAction)chalkTalk:(id)sender{
+    ChalkTalkViewController *cocoGameViewController = [[ChalkTalkViewController alloc] initWithNibName:@"ChalkTalkViewController" bundle:nil];
+
+    cocoGameViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+    [self presentModalViewController:cocoGameViewController animated:YES];
+    [cocoGameViewController release];
+}
+
+
 - (IBAction)IAPManagerButton:(id)sender{
     IAPManagerViewController *addController = [[IAPManagerViewController alloc] initWithNibName:@"IAPManagerViewController" bundle:nil];
     //addController.delegate = self;
@@ -325,15 +333,8 @@ static RootViewController *sharedInstance;
     
 }
 
-- (void)testPredicate{
-
-    
-    
-
-}
-
 - (IBAction)testButton:(id)sender{
-    [self testPredicate];
+
     
 }
  

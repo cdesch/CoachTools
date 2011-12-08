@@ -67,8 +67,7 @@
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
-   // navController = [[UINavigationController alloc] init];
-    
+   // navController = [[UINavigationController alloc] init]
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
@@ -116,6 +115,8 @@
         [FlurryAnalytics logError:@"Unresolved Error Fetching" message:@"TeamList FetchedResultsController" error:error];
 		abort();  // Fail
 	}
+    
+    [self.tableView reloadData];
 
     
 }
@@ -289,6 +290,10 @@
 
 
 - (void)completeForm{
+    
+    //Deactivate the input requestor if it was currenlty editing
+    [[IBAInputManager sharedIBAInputManager] deactivateActiveInputRequestor];
+    
     //Team validators
     if  ([self.itemModel valueForKey:@"name"] == nil ||  [[self.itemModel valueForKey:@"name"] isEqualToString:@""]){
         //Check if empty
@@ -309,7 +314,7 @@
             [FlurryAnalytics logError:@"Unresolved Error Inserting" message:[item debugDescription] error:error];
             abort();
         }		
-        
+        [itemModel release];
         [self showTeam:item animated:YES];
         [self dismissModalViewControllerAnimated:YES];
     
@@ -332,6 +337,7 @@
 		abort();
 	}		
 
+    [itemModel release];
     [self dismissModalViewControllerAnimated:YES];
 }
 
@@ -462,8 +468,7 @@
         // Save the context.
 		NSError *error;
 		if (![managedObjectContext save:&error]) {
-
-			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+			//NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             [FlurryAnalytics logError:@"Unresolved Error Deleting" message:[selectedTeam debugDescription] error:error];
 			abort();
         }   
@@ -482,31 +487,34 @@
     int draw = 0;
     int notPlayed = 0;
     
-    RootViewController *appController = [RootViewController sharedAppController];
-
-    NSManagedObjectContext *moc = [appController managedObjectContext];
-    NSFetchRequest *request = [[[NSFetchRequest alloc] init] autorelease];
-    [request setEntity:[NSEntityDescription entityForName:@"Game" inManagedObjectContext:moc]];
-    [request setPredicate:[NSPredicate predicateWithFormat:@"ANY season.team.name like %@", objectName]];
-    NSArray *singleEmployeeDepartments = [moc executeFetchRequest:request error:NULL];
-    
-    for(Game* game in singleEmployeeDepartments){
-        if([game.played boolValue] == FALSE){
-            notPlayed ++;
-        }else{
-            if([game.homeScore intValue] == [game.opponentScore intValue]){
-                //NSLog(@"Draw");
-                draw ++;
-            }else if([game.homeScore intValue] > [game.opponentScore intValue]){
-                //NSLog(@"Win");
-                wins ++;
+    if (objectName != nil){
+        RootViewController *appController = [RootViewController sharedAppController];
+        
+        NSManagedObjectContext *moc = [appController managedObjectContext];
+        NSFetchRequest *request = [[[NSFetchRequest alloc] init] autorelease];
+        [request setEntity:[NSEntityDescription entityForName:@"Game" inManagedObjectContext:moc]];
+        [request setPredicate:[NSPredicate predicateWithFormat:@"ANY season.team.name like %@", objectName]];
+        NSArray *singleEmployeeDepartments = [moc executeFetchRequest:request error:NULL];
+        
+        for(Game* game in singleEmployeeDepartments){
+            if([game.played boolValue] == FALSE){
+                notPlayed ++;
             }else{
-                //NSLog(@"Loss");        
-                losses++;
+                if([game.homeScore intValue] == [game.opponentScore intValue]){
+                    //NSLog(@"Draw");
+                    draw ++;
+                }else if([game.homeScore intValue] > [game.opponentScore intValue]){
+                    //NSLog(@"Win");
+                    wins ++;
+                }else{
+                    //NSLog(@"Loss");        
+                    losses++;
+                }
             }
         }
+        
     }
-    
+
     //Wins - Loss - Draw - Not Played
     return [[[NSArray alloc] initWithObjects:[NSNumber numberWithInt:wins],[NSNumber numberWithInt:losses],[NSNumber numberWithInt:draw],[NSNumber numberWithInt:notPlayed], nil] autorelease];
 }
@@ -527,7 +535,6 @@
     return YES;
 }
 */
-
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller {
     // The fetch controller is about to start sending change notifications, so prepare the table view for updates.
@@ -582,38 +589,25 @@
     [self.tableView endUpdates];
 }
 
-
+/*
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
 
     // Navigation logic may go here. Create and push another view controller.
     TeamSummaryViewController *detailViewController = [[TeamSummaryViewController alloc] initWithNibName:@"TeamSummaryViewController" bundle:nil];
-    // ...
-    // Pass the selected object to the new view controller.
-    //Team *selectedTeam = [self.teamArray objectAtIndex:indexPath.row];
-    
-    //((TeamSummaryViewController *)detailViewController).team = selectedTeam;
+
     [self.navigationController pushViewController:detailViewController animated:YES];
     
     [detailViewController release];
 }
+*/
 
 
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-    {
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    // Navigation logic may go here. Create and push another view controller.
-        //TeamSummaryViewController *detailViewController = [[TeamSummaryViewController alloc] initWithNibName:@"TeamSummaryViewController" bundle:nil teamSelected:[self.teamArray objectAtIndex:indexPath.row]];
 
-        TeamSummaryViewController *detailViewController = [[TeamSummaryViewController alloc] initWithNibName:@"TeamSummaryViewController" bundle:nil teamSelected:[_fetchedResultsController objectAtIndexPath:indexPath]];
-
-        // ...
-    // Pass the selected object to the new view controller.
-    //Team *selectedTeam = [self.teamArray objectAtIndex:indexPath.row];
-    
-    //((TeamSummaryViewController *)detailViewController).team = selectedTeam;
+    TeamSummaryViewController *detailViewController = [[TeamSummaryViewController alloc] initWithNibName:@"TeamSummaryViewController" bundle:nil teamSelected:[_fetchedResultsController objectAtIndexPath:indexPath]];
     [self.navigationController pushViewController:detailViewController animated:YES];
         
     [detailViewController release];

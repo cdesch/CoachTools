@@ -28,7 +28,6 @@
         
 		[basicFieldSection addFormField:[[[IBABooleanFormField alloc] initWithKeyPath:@"booleanSwitchValue" title:@"Calendar"] autorelease]];
         
-        
         // Date fields
 		IBAFormSection *dateFieldSection = [self addSectionWithHeaderTitle:@"Dates" footerTitle:nil];
         dateFieldSection.formFieldStyle = [[[FormFieldStyle alloc] init] autorelease];

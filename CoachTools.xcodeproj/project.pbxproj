@@ -220,7 +220,7 @@
 		238C39B81352887D00F7BCB7 /* player2small.png in Resources */ = {isa = PBXBuildFile; fileRef = 238C39B11352887D00F7BCB7 /* player2small.png */; };
 		238C39B91352887D00F7BCB7 /* soccer_ball.png in Resources */ = {isa = PBXBuildFile; fileRef = 238C39B21352887D00F7BCB7 /* soccer_ball.png */; };
 		238C39BA1352887D00F7BCB7 /* soccerField3.png in Resources */ = {isa = PBXBuildFile; fileRef = 238C39B31352887D00F7BCB7 /* soccerField3.png */; };
-		238C39C1135289BD00F7BCB7 /* HelloWorldLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 238C39BC135289BD00F7BCB7 /* HelloWorldLayer.m */; };
+		238C39C1135289BD00F7BCB7 /* ChalkTalkLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 238C39BC135289BD00F7BCB7 /* ChalkTalkLayer.m */; };
 		238C39C2135289BD00F7BCB7 /* ConfigMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 238C39BF135289BD00F7BCB7 /* ConfigMenuViewController.m */; };
 		238C39C3135289BD00F7BCB7 /* ConfigMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 238C39C0135289BD00F7BCB7 /* ConfigMenuViewController.xib */; };
 		238C39C8135291E300F7BCB7 /* CocoaHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 238C39C5135291E300F7BCB7 /* CocoaHelper.m */; };
@@ -370,15 +370,19 @@
 		23F160C713A17B4900408488 /* PlayerListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F160C613A17B4900408488 /* PlayerListViewCell.m */; };
 		23F160CA13A17B5E00408488 /* PlayerListViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23F160C913A17B5E00408488 /* PlayerListViewCell.xib */; };
 		23F1F55A13E8566700E761CE /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23F1F55913E8566700E761CE /* MessageUI.framework */; };
+		23F2BBB214916486004AFD54 /* SeasonFormDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F2BBB114916485004AFD54 /* SeasonFormDataSource.m */; };
 		23F2D5E2138484EE00421AEF /* GameTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F2D5E1138484EE00421AEF /* GameTimer.m */; };
 		23F40AE613C8A55C006EF20B /* GameListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F40AE513C8A55C006EF20B /* GameListViewCell.m */; };
 		23F40B0213C8B05F006EF20B /* DDBadgeViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F40B0113C8B05F006EF20B /* DDBadgeViewCell.m */; };
+		23F4C6FF148EE21900F05EDC /* TrainingListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F4C6FE148EE21900F05EDC /* TrainingListViewCell.m */; };
+		23F4C701148EE25700F05EDC /* TrainingListViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23F4C700148EE25700F05EDC /* TrainingListViewCell.xib */; };
 		23F55BEF13C68C96008733B0 /* SlotSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F55BEE13C68C96008733B0 /* SlotSprite.m */; };
 		23F5ACA51384A5E400B6305E /* GameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F5ACA41384A5E400B6305E /* GameController.m */; };
-		23F5ACA91384A81E00B6305E /* InterfaceLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F5ACA81384A81B00B6305E /* InterfaceLayer.m */; };
 		23F5ACAC1384A83F00B6305E /* BackgroundLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F5ACAB1384A83E00B6305E /* BackgroundLayer.m */; };
 		23F5ACAF1384AA3900B6305E /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F5ACAE1384AA3900B6305E /* GameScene.m */; };
 		23FAFC081479978300C42398 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23FAFC071479978300C42398 /* AddressBookUI.framework */; };
+		23FC68FC149176DB00BADF79 /* ChalkTalkViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FC68FA149176DB00BADF79 /* ChalkTalkViewController.m */; };
+		23FC68FD149176DB00BADF79 /* ChalkTalkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23FC68FB149176DB00BADF79 /* ChalkTalkViewController.xib */; };
 		23FCA81C13DB9ABA00F2923E /* ZAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FCA80F13DB9ABA00F2923E /* ZAction.m */; };
 		23FCA81D13DB9ABA00F2923E /* ZActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FCA81113DB9ABA00F2923E /* ZActionSheet.m */; };
 		23FCA81E13DB9ABA00F2923E /* ZAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 23FCA81313DB9ABA00F2923E /* ZAlertView.m */; };
@@ -802,8 +806,8 @@
 		238C39B11352887D00F7BCB7 /* player2small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = player2small.png; sourceTree = "<group>"; };
 		238C39B21352887D00F7BCB7 /* soccer_ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = soccer_ball.png; sourceTree = "<group>"; };
 		238C39B31352887D00F7BCB7 /* soccerField3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = soccerField3.png; sourceTree = "<group>"; };
-		238C39BB135289BD00F7BCB7 /* HelloWorldLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldLayer.h; sourceTree = "<group>"; };
-		238C39BC135289BD00F7BCB7 /* HelloWorldLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelloWorldLayer.m; sourceTree = "<group>"; };
+		238C39BB135289BD00F7BCB7 /* ChalkTalkLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChalkTalkLayer.h; sourceTree = "<group>"; };
+		238C39BC135289BD00F7BCB7 /* ChalkTalkLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChalkTalkLayer.m; sourceTree = "<group>"; };
 		238C39BD135289BD00F7BCB7 /* GameConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameConfig.h; sourceTree = "<group>"; };
 		238C39BE135289BD00F7BCB7 /* ConfigMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigMenuViewController.h; sourceTree = "<group>"; };
 		238C39BF135289BD00F7BCB7 /* ConfigMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigMenuViewController.m; sourceTree = "<group>"; };
@@ -1085,23 +1089,29 @@
 		23F160C613A17B4900408488 /* PlayerListViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerListViewCell.m; sourceTree = "<group>"; };
 		23F160C913A17B5E00408488 /* PlayerListViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerListViewCell.xib; sourceTree = "<group>"; };
 		23F1F55913E8566700E761CE /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		23F2BBB014916484004AFD54 /* SeasonFormDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeasonFormDataSource.h; sourceTree = "<group>"; };
+		23F2BBB114916485004AFD54 /* SeasonFormDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SeasonFormDataSource.m; sourceTree = "<group>"; };
 		23F2D5DF138484DF00421AEF /* GameTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameTimer.h; sourceTree = "<group>"; };
 		23F2D5E1138484EE00421AEF /* GameTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameTimer.m; sourceTree = "<group>"; };
 		23F40AE413C8A55C006EF20B /* GameListViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameListViewCell.h; sourceTree = "<group>"; };
 		23F40AE513C8A55C006EF20B /* GameListViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameListViewCell.m; sourceTree = "<group>"; };
 		23F40B0013C8B05F006EF20B /* DDBadgeViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDBadgeViewCell.h; sourceTree = "<group>"; };
 		23F40B0113C8B05F006EF20B /* DDBadgeViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDBadgeViewCell.m; sourceTree = "<group>"; };
+		23F4C6FD148EE21900F05EDC /* TrainingListViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrainingListViewCell.h; sourceTree = "<group>"; };
+		23F4C6FE148EE21900F05EDC /* TrainingListViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrainingListViewCell.m; sourceTree = "<group>"; };
+		23F4C700148EE25700F05EDC /* TrainingListViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TrainingListViewCell.xib; sourceTree = "<group>"; };
 		23F55BED13C68C96008733B0 /* SlotSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlotSprite.h; sourceTree = "<group>"; };
 		23F55BEE13C68C96008733B0 /* SlotSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlotSprite.m; sourceTree = "<group>"; };
 		23F5ACA31384A5E300B6305E /* GameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameController.h; sourceTree = "<group>"; };
 		23F5ACA41384A5E400B6305E /* GameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameController.m; sourceTree = "<group>"; };
-		23F5ACA71384A81B00B6305E /* InterfaceLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterfaceLayer.h; sourceTree = "<group>"; };
-		23F5ACA81384A81B00B6305E /* InterfaceLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InterfaceLayer.m; sourceTree = "<group>"; };
 		23F5ACAA1384A83E00B6305E /* BackgroundLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundLayer.h; sourceTree = "<group>"; };
 		23F5ACAB1384A83E00B6305E /* BackgroundLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundLayer.m; sourceTree = "<group>"; };
 		23F5ACAD1384AA3800B6305E /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
 		23F5ACAE1384AA3900B6305E /* GameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameScene.m; sourceTree = "<group>"; };
 		23FAFC071479978300C42398 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
+		23FC68F9149176DB00BADF79 /* ChalkTalkViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChalkTalkViewController.h; sourceTree = "<group>"; };
+		23FC68FA149176DB00BADF79 /* ChalkTalkViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChalkTalkViewController.m; sourceTree = "<group>"; };
+		23FC68FB149176DB00BADF79 /* ChalkTalkViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChalkTalkViewController.xib; sourceTree = "<group>"; };
 		23FCA80E13DB9ABA00F2923E /* ZAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZAction.h; sourceTree = "<group>"; };
 		23FCA80F13DB9ABA00F2923E /* ZAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZAction.m; sourceTree = "<group>"; };
 		23FCA81013DB9ABA00F2923E /* ZActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZActionSheet.h; sourceTree = "<group>"; };
@@ -1475,12 +1485,8 @@
 		2351986A13856AB100A0C978 /* Deprecated */ = {
 			isa = PBXGroup;
 			children = (
-				238C39BB135289BD00F7BCB7 /* HelloWorldLayer.h */,
-				238C39BC135289BD00F7BCB7 /* HelloWorldLayer.m */,
 				2372D63913528180003AEA8D /* TestLayer.h */,
 				2372D63A13528180003AEA8D /* TestLayer.m */,
-				23F5ACA71384A81B00B6305E /* InterfaceLayer.h */,
-				23F5ACA81384A81B00B6305E /* InterfaceLayer.m */,
 			);
 			name = Deprecated;
 			sourceTree = "<group>";
@@ -1509,6 +1515,9 @@
 				236663161443A839002227B7 /* TrainingSummaryViewController.xib */,
 				2381E99F1443C5B10092616B /* TrainingFormDataSource.h */,
 				2381E9A01443C5B10092616B /* TrainingFormDataSource.m */,
+				23F4C6FD148EE21900F05EDC /* TrainingListViewCell.h */,
+				23F4C6FE148EE21900F05EDC /* TrainingListViewCell.m */,
+				23F4C700148EE25700F05EDC /* TrainingListViewCell.xib */,
 			);
 			name = Training;
 			sourceTree = "<group>";
@@ -2032,6 +2041,8 @@
 				238BC0A6140D332300ABBEFF /* SeasonSummaryViewController.h */,
 				238BC0A7140D332300ABBEFF /* SeasonSummaryViewController.m */,
 				238BC0A8140D332300ABBEFF /* SeasonSummaryViewController.xib */,
+				23F2BBB014916484004AFD54 /* SeasonFormDataSource.h */,
+				23F2BBB114916485004AFD54 /* SeasonFormDataSource.m */,
 			);
 			name = Seasons;
 			sourceTree = "<group>";
@@ -2360,6 +2371,11 @@
 		23F0DE1913AABC64004DAD9F /* ChalkTalk */ = {
 			isa = PBXGroup;
 			children = (
+				238C39BB135289BD00F7BCB7 /* ChalkTalkLayer.h */,
+				238C39BC135289BD00F7BCB7 /* ChalkTalkLayer.m */,
+				23FC68F9149176DB00BADF79 /* ChalkTalkViewController.h */,
+				23FC68FA149176DB00BADF79 /* ChalkTalkViewController.m */,
+				23FC68FB149176DB00BADF79 /* ChalkTalkViewController.xib */,
 			);
 			name = ChalkTalk;
 			sourceTree = "<group>";
@@ -2675,6 +2691,8 @@
 				23C2FF6A148584BD002B8350 /* CrittercismRootViewController.xib in Resources */,
 				23C2FF6B148584BD002B8350 /* CrittercismViewController.xib in Resources */,
 				230D8AAD1488521800822774 /* DateTimeSelectionViewController.xib in Resources */,
+				23F4C701148EE25700F05EDC /* TrainingListViewCell.xib in Resources */,
+				23FC68FD149176DB00BADF79 /* ChalkTalkViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2714,7 +2732,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "#!/bin/bash\n# Auto Increment Version Script\nbuildPlist=\"CoachTools/CoachTools-Info.plist\"\nbuildVersion=$(/usr/libexec/PlistBuddy -c \"Print CFBuildVersion\" $buildPlist)\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBuildNumber\" $buildPlist)\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildVersion.$buildNumber\" $buildPlist\n#/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $buildVersion.$buildNumber\" $buildPlist";
+			shellScript = "#!/bin/bash\n# Auto Increment Version Script\nbuildPlist=\"CoachTools/CoachTools-Info.plist\"\nbuildVersion=$(/usr/libexec/PlistBuddy -c \"Print CFBuildVersion\" $buildPlist)\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBuildNumber\" $buildPlist)\nbuildNumber=$(($buildNumber + 1))\nbuilddate=$(date +\"%y.%m.%d %H:%M:%S\")\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $builddate\" $buildPlist\n#/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildVersion.$buildNumber\" $buildPlist\n#/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $buildVersion.$buildNumber\" $buildPlist";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2825,7 +2843,7 @@
 				2372D61613526CF0003AEA8D /* CJSONSerializer.m in Sources */,
 				2372D63713527E03003AEA8D /* GameManagementViewController.m in Sources */,
 				2372D63B13528180003AEA8D /* TestLayer.m in Sources */,
-				238C39C1135289BD00F7BCB7 /* HelloWorldLayer.m in Sources */,
+				238C39C1135289BD00F7BCB7 /* ChalkTalkLayer.m in Sources */,
 				238C39C2135289BD00F7BCB7 /* ConfigMenuViewController.m in Sources */,
 				238C39C8135291E300F7BCB7 /* CocoaHelper.m in Sources */,
 				238C39C9135291E300F7BCB7 /* PlayerSprite.m in Sources */,
@@ -2846,7 +2864,6 @@
 				238A69591382B45C00494480 /* HUDLayer.m in Sources */,
 				23F2D5E2138484EE00421AEF /* GameTimer.m in Sources */,
 				23F5ACA51384A5E400B6305E /* GameController.m in Sources */,
-				23F5ACA91384A81E00B6305E /* InterfaceLayer.m in Sources */,
 				23F5ACAC1384A83F00B6305E /* BackgroundLayer.m in Sources */,
 				23F5ACAF1384AA3900B6305E /* GameScene.m in Sources */,
 				2351986E1385781900A0C978 /* PlayerLayer.m in Sources */,
@@ -2941,6 +2958,9 @@
 				234097AC148DB4DE000B3746 /* AddressBookViewController.m in Sources */,
 				234097BD148DF55E000B3746 /* EmergancyContact.m in Sources */,
 				234097C0148DF573000B3746 /* _EmergancyContact.m in Sources */,
+				23F4C6FF148EE21900F05EDC /* TrainingListViewCell.m in Sources */,
+				23F2BBB214916486004AFD54 /* SeasonFormDataSource.m in Sources */,
+				23FC68FC149176DB00BADF79 /* ChalkTalkViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

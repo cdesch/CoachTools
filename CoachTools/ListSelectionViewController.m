@@ -57,7 +57,6 @@
     //[self.navigationController setToolbarHidden:NO];
     // Set up the Team Selection button.
     
-    
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(doneButton:)];
     
     self.navigationItem.rightBarButtonItem = addButton;
@@ -127,11 +126,11 @@
     Person *selectedPlayer = [self.listArray objectAtIndex:indexPath.row];
     cell.textLabel.text = [selectedPlayer.lastName description];
     
-    NSLog(@"Draw it");
+    //NSLog(@"Draw it");
     
     //Check if this element was in the selectedList array - If so, put a check next to it. 
     if([selectedArray containsObject:selectedPlayer]){
-        NSLog(@"Check Mark!!");
+        //NSLog(@"Check Mark!!");
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
 }

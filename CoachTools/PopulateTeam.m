@@ -17,9 +17,8 @@
 @implementation PopulateTeam
 
 - (void)populate{
-
     
-    NSArray* locationsList = [[NSArray alloc] initWithObjects:@"Hackensack, NJ", @"Lodi, NJ",@"Saddlebrook, NJ",@"Verona, NJ",@"Hoboken,NJ",@"Cedar Grove, NJ",@"East Rutheford NJ",@"Adams, NY",@"Flushing, NY", @"Far Rockaway, NY", @"Miller Place, NY", @"Harlem, NY", @"White Plains, NY", @"New Milford, NJ",@"Belmar, NJ", @"Toms River, NJ", @"Jersey City, NJ",@"Paterson, NJ", @"North Bergen, NJ", @"Newark, NJ", @"Camdem, NJ",@"Elizibeth, NJ", @"Iron Bound, NJ", @"Garfield, NJ", @"Lyndhurst, NJ", nil];
+    NSArray* locationsList = [[NSArray alloc] initWithObjects:@"Hackensack, NJ", @"Lodi, NJ",@"Saddlebrook, NJ",@"Verona, NJ",@"Hoboken,NJ",@"Cedar Grove, NJ",@"East Rutheford NJ",@"Adams, NY",@"Flushing, NY", @"Far Rockaway, NY", @"Miller Place, NY", @"Harlem, NY", @"White Plains, NY", @"New Milford, NJ",@"Belmar, NJ", @"Toms River, NJ", @"Jersey City, NJ",@"Paterson, NJ", @"North Bergen, NJ", @"Newark, NJ", @"Camdem, NJ",@"Elizibeth, NJ", @"Iron Bound, NJ", @"Garfield, NJ", @"Lyndhurst, NJ",@"Ithaca, NY", nil];
     NSArray* opponentsList = [[NSArray alloc] initWithObjects:@"Wolves", @"Titans",@"Bears",@"Knights",@"Mud Hens",@"Hawks",@"Spartans",@"Bobcats",@"Eagles",@"Cougars",@"Bulldogs",@"Lions",@"United Essex",@"Greasers",@"Fighting Irish",@"Jager Bombs",@"Red Bears",@"Bombers",@"Saturday Night Fever",@"Schiltz Scoundrels",@"Bullfrogs",@"Pinkertons",@"Shooting Stars",@"The Monstars",@"Fire Strikers",@"Maroon Madness",@"Sharks",@"Shamrocks",@"Midnight Rage",@"Midnight Rally",@"King and Blood",@"Three Man",@"Strange Brew",@"Sixes",@"Shotgun",@"Pocket Aces",@"Beer League",@"Ed's Bar and Grill", nil];
     
     RootViewController *sharedController = [RootViewController sharedAppController];

@@ -15,7 +15,7 @@
 
 
 // HelloWorldLayer
-@interface HelloWorldLayer : CCLayer
+@interface ChalkTalkLayer : CCLayer
 {
     
     NSInteger timeInt;
@@ -23,7 +23,7 @@
     NSMutableDictionary *myPlayers;
     NSMutableArray *playersList;
     
-    ConfigMenuViewController *configMenuViewController;
+    //ConfigMenuViewController *configMenuViewController;
     
 }
 
@@ -32,7 +32,7 @@
 @property (nonatomic, retain) NSMutableDictionary *myPlayers;
 @property (nonatomic, retain) NSMutableArray *playersList;
 
-@property (nonatomic, retain) ConfigMenuViewController *configMenuViewController;
+//@property (nonatomic, retain) ConfigMenuViewController *configMenuViewController;
 
 
 // returns a CCScene that contains the HelloWorldLayer as the only child

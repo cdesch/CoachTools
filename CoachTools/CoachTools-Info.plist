@@ -2,8 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBuildDate</key>
+	<string>11.12.08 18:19:08</string>
 	<key>CFBuildNumber</key>
-	<string>247</string>
+	<string>308</string>
 	<key>CFBuildVersion</key>
 	<string>1.02.1</string>
 	<key>CFBundleDevelopmentRegion</key>
@@ -34,7 +36,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1.02.1.247</string>
+	<string>1.02.1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSMainNibFile</key>

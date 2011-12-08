@@ -14,11 +14,22 @@
 #import "SeasonListViewController.h"
 #import "iToast.h"
 
+#import <IBAForms/IBAForms.h>
+#import "ItemFormController.h"
+#import "ShowcaseModel.h"
+#import "TeamFormDataSource.h"
+#import "HelpManagement.h"
+#import "FlurryAnalytics.h"
+
 @implementation TeamSummaryViewController
 
 @synthesize popoverController=_myPopoverController;
+
 @synthesize team;
+@synthesize itemModel;
 @synthesize nameTextField;
+@synthesize uniformColorTextField;
+@synthesize locationTextField;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil teamSelected:(Team *)aTeam
 {
@@ -76,55 +87,124 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     
+    [super viewWillAppear:animated];
     //Assign the Team to the View Controller
 
     nameTextField.text = team.name;
+    uniformColorTextField.text = team.uniformColor;
+    locationTextField.text = team.homeLocation;
     
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
 }
 
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     
-    [super setEditing:editing animated:animated];
+    //[super setEditing:editing animated:animated];
     
-    //Set Editing and Hide backbutton
-    nameTextField.enabled = editing;
-	[self.navigationItem setHidesBackButton:editing animated:YES];
+    itemModel = [[NSMutableDictionary alloc] init];
+    ShowcaseModel *showcaseModel = [[[ShowcaseModel alloc] init] autorelease];
+    showcaseModel.shouldAutoRotate = YES;
+    showcaseModel.tableViewStyleGrouped = YES;
+    showcaseModel.displayNavigationToolbar = YES;
+    showcaseModel.modalPresentation = YES;
+    showcaseModel.modalPresentationStyle = UIModalPresentationFormSheet;
     
-    if (!editing) {
-        //Reset the forms
-        nameTextField.borderStyle = UITextBorderStyleNone;
+	// Values set on the model will be reflected in the form fields.
+	//[sampleFormModel setObject:@"A value contained in the model" forKey:@"readOnlyText"];
+    [itemModel setObject:team.name forKey:@"name"];
+    if(team.homeLocation != nil){
+        [itemModel setObject:team.homeLocation  forKey:@"homeLocation"];
+    }
+    
+    if (team.uniformColor != nil) {
+        [itemModel setObject:team.uniformColor forKey:@"uniformColor"];
+    }
+    
+	TeamFormDataSource *sampleFormDataSource = [[[TeamFormDataSource alloc] initWithModel:itemModel] autorelease];
+	ItemFormController *sampleFormController = [[[ItemFormController alloc] initWithNibName:nil bundle:nil formDataSource:sampleFormDataSource] autorelease];
+	sampleFormController.title = @"Edit Team";
+	sampleFormController.shouldAutoRotate = showcaseModel.shouldAutoRotate;
+	sampleFormController.tableViewStyle = showcaseModel.tableViewStyleGrouped ? UITableViewStyleGrouped : UITableViewStylePlain;
+
+    [[IBAInputManager sharedIBAInputManager] setInputNavigationToolbarEnabled:showcaseModel.displayNavigationToolbar];
+
+    
+	UIViewController *rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+	if (showcaseModel.modalPresentation) {
+		UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
+                                                                                     target:self 
+                                                                                     action:@selector(completeEditForm:)] autorelease];
         
-        //Check if the data is validated
-        if ([self validateTeam]){
-                  
-            //form data to the object
-            team.name = nameTextField.text;
-            
-            //Save it to the DB
-            NSManagedObjectContext *context = team.managedObjectContext;
-            NSError *error = nil;
-            if (![context save:&error]) {
-                
-                NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-                abort();
-            }else{
-                //Confirm the Save to the user
-                [[iToast makeText:NSLocalizedString(@"Data Saved", @"")] show];
-                
-            }
-        
-        }else{
-            //Since the data did not validate, reset the form
-            nameTextField.text = team.name;
-        }
-        
-     }else{
-         //Show Form Boxes
-         nameTextField.borderStyle = UITextBorderStyleRoundedRect;
-     }
+        UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel 
+                                                                                       target:self 
+                                                                                       action:@selector(cancelEditForm:)] autorelease];
+		sampleFormController.navigationItem.rightBarButtonItem = doneButton;
+        sampleFormController.navigationItem.leftBarButtonItem = cancelButton;
+		UINavigationController *formNavigationController = [[[UINavigationController alloc] initWithRootViewController:sampleFormController] autorelease];
+		formNavigationController.modalPresentationStyle = showcaseModel.modalPresentationStyle;
+		[rootViewController presentModalViewController:formNavigationController animated:YES];
+	} else {
+        if ([rootViewController isKindOfClass:[UINavigationController class]]) {
+			[(UINavigationController *)rootViewController pushViewController:sampleFormController animated:YES];
+		}
+	}
+    
 }
 
+- (void)completeEditForm:(id)sender{
+    
+    //Deactivate the input requestor if it was currenlty editing
+    [[IBAInputManager sharedIBAInputManager] deactivateActiveInputRequestor];
+    
+    //Validate
+    if ([self.itemModel valueForKey:@"name"] == nil ) {
+        //Check if empty
+        [HelpManagement errorMessage:@"Team Name" error:@"requiredFieldEdit"];
+        
+    }else{
+        
+        //item.gameNumber = [NSNumber numberWithInt:[[self.itemModel valueForKey:@"gameNumber"] intValue]];
+        team.name = [self.itemModel valueForKey:@"name"];
+        team.uniformColor = [self.itemModel valueForKey:@"uniformColor"];
+        team.homeLocation = [self.itemModel valueForKey:@"homeLocation"];
+        
+          //Save the Data.
+        RootViewController *ac = [RootViewController sharedAppController];
+        NSManagedObjectContext *managedObjectContext = [ac managedObjectContext];
+        
+        NSError *error = nil;
+        if (![managedObjectContext save:&error]) {
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            [FlurryAnalytics logError:@"Unresolved Error Updating" message:[team debugDescription] error:error];
+            abort();
+        }
+        [itemModel release];
+        [self viewWillAppear:YES];
+        [self dismissModalViewControllerAnimated:YES];
+    }
+    
+}
+- (void)cancelEditForm:(id)sender{
+    
+    [self dismissModalViewControllerAnimated:YES];
+    
+    [itemModel release];
+}
 
 - (BOOL)validateTeam{
     

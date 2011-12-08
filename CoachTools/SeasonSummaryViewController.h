@@ -14,13 +14,18 @@
     Season *season;
     
      UITextField *seasonNameTextField;
+     NSMutableDictionary *itemModel;
 }
 
 @property (nonatomic, retain) Season *season;
 
 @property (nonatomic, retain) IBOutlet UITextField *seasonNameTextField;
+@property (nonatomic, retain) NSMutableDictionary *itemModel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil seasonSelected:(Season *)aSeason;
+
+- (void)completeEditForm:(id)sender;
+- (void)cancelEditForm:(id)sender;    
 - (IBAction)gamesButton:(id)sender;
 - (IBAction)trainingButton:(id)sender;
 - (BOOL)validateSeason;

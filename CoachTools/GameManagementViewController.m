@@ -61,11 +61,12 @@ static GameManagementViewController *sharedInstance;
 }
 
 
-- (void) startCocos2d
-{
-    //NSLog(@"Entering %s", __PRETTY_FUNCTION__); 
+- (void) startCocos2d{
     
-    //NSLog(@"Running...");
+    
+    NSLog(@"Entering %s", __PRETTY_FUNCTION__);
+    NSLog(@"Running...");
+    
     EAGLView *glview = [EAGLView viewWithFrame:CGRectMake(0, 0, 1024,704)];
     
     [mainView addSubview:glview];
@@ -100,8 +101,8 @@ static GameManagementViewController *sharedInstance;
 
 - (void) endCocos2d
 {
-    //NSLog(@"Entering %s", __PRETTY_FUNCTION__); 
-    //NSLog(@"Ending...");
+    NSLog(@"Entering %s", __PRETTY_FUNCTION__); 
+    NSLog(@"Ending...");
     CCDirector *director = [CCDirector sharedDirector];
 
     // Since v0.99.4 you have to remove the OpenGL View manually
@@ -122,7 +123,7 @@ static GameManagementViewController *sharedInstance;
 }
 //Since Coco is already running, run a new game.   
 - (void)runNewGame{
-    //NSLog(@"Entering %s", __PRETTY_FUNCTION__); 
+    NSLog(@"Entering %s", __PRETTY_FUNCTION__); 
     //Check if the game has been played.
     
     //Run the new game
@@ -147,8 +148,8 @@ static GameManagementViewController *sharedInstance;
 //
 - (void) attachView
 {
-    //NSLog(@"Entering %s", __PRETTY_FUNCTION__); 
-    //NSLog(@"Attaching...");
+    NSLog(@"Entering %s", __PRETTY_FUNCTION__); 
+    NSLog(@"Attaching...");
     CCDirector *director = [CCDirector sharedDirector];
     
     // attach to super view
@@ -185,7 +186,7 @@ static GameManagementViewController *sharedInstance;
 }
 
 - (IBAction)teamManagement:(id)sender{
-    // NSLog(@"Entering %s", __PRETTY_FUNCTION__);
+    NSLog(@"Entering %s", __PRETTY_FUNCTION__);
     
     //[[CCDirector sharedDirector] pause];
     //state = kgamePaused;
@@ -208,7 +209,6 @@ static GameManagementViewController *sharedInstance;
         sheet.identifier = @"EndStarters";
         [sheet showFromBarButtonItem:sender animated:YES];
     }
-
     
 }
 
@@ -258,7 +258,6 @@ static GameManagementViewController *sharedInstance;
     [self dismissModalViewControllerAnimated:YES];
     [self hideGameTimerControls];
     [[RootViewController sharedAppController].gameTimer reset];
-    
     
     [GameScene nilSharedScene];
     

@@ -21,6 +21,7 @@
 @synthesize subjectLine;
 @synthesize emailLine;
 @synthesize bodyMessage;
+@synthesize versionString;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -52,13 +53,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    self.appNameLabel.text = [[[NSBundle mainBundle] infoDictionary]   objectForKey:@"CFBundleName"];
+    self.appNameLabel.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
     self.versionLabel.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+    self.buildVersionLabel = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBuildNumber"];
     
-    subjectLine = [NSString stringWithFormat:@"CoachTools: Contact - Version %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+    versionString = [NSString stringWithFormat:@"V.%@ Build.%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"],[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBuildNumber"]];
+    
+    subjectLine = [NSString stringWithFormat:@"CoachTools: Contact - %@", versionString];
     emailLine = @"coachtoolsapps@gmail.com";
-    bodyMessage = [NSString stringWithFormat:@"CoachTools: Contact - Version %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]];
-    buildVersionLabel = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
+    bodyMessage = [NSString stringWithFormat:@"CoachTools: Contact - %@", versionString];
+    
 }
 
 - (void)viewDidUnload
@@ -66,7 +70,7 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-    
+    self.versionString = nil;
     self.message = nil;
     self.subjectLine = nil;
     self.emailLine = nil;
@@ -82,12 +86,12 @@
 #pragma mark -
 #pragma mark Actions
 
--(IBAction)showPicker:(id)sender
+- (IBAction)showPicker:(id)sender
 {
     //Setup Message
-    subjectLine = [NSString stringWithFormat:@"CoachTools: Contact - Version %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+    subjectLine = [NSString stringWithFormat:@"CoachTools: Contact - %@", versionString];
     emailLine = @"coachtoolsapps@gmail.com";
-    bodyMessage = [NSString stringWithFormat:@"CoachTools: Contact - Version %@ \n\n Email: \n Contact: Purpose \n Subject: \n \n Description:", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+    bodyMessage = [NSString stringWithFormat:@"CoachTools: Contact - %@ \n\n Email: \n Contact: Purpose \n Subject: \n \n Description:", versionString];
     
 	// This sample can run on devices running iPhone OS 2.0 or later  
 	// The MFMailComposeViewController class is only available in iPhone OS 3.0 or later. 
@@ -97,37 +101,54 @@
 	// We launch the Mail application on the device, otherwise.
 	
 	Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
-	if (mailClass != nil)
-	{
+	if (mailClass != nil){
 		// We must always check whether the current device is configured for sending emails
-		if ([mailClass canSendMail])
-		{
+		if ([mailClass canSendMail]){
 			[self displayComposerSheet];
 		}
-		else
-		{
+		else{
 			[self launchMailAppOnDevice];
 		}
 	}
-	else
-	{
+	else{
 		[self launchMailAppOnDevice];
 	}
 }
 
--(IBAction)reportBug:(id)sender
+- (IBAction)reportBug:(id)sender
 {
     //Setup Message
-    subjectLine = [NSString stringWithFormat:@"CoachTools: Report Bug - Version %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+    subjectLine = [NSString stringWithFormat:@"CoachTools: Report Bug - %@", versionString];
     emailLine = @"coachtoolsapps@gmail.com";
-    bodyMessage = [NSString stringWithFormat:@"CoachTools: Report Bug - Version %@ \n \n Error Message: \n \n Error Description: \n \n What steps will reproduce the problem?\n 1. \n 2. \n 3. \n\n\n What is the expected result? \n\n\n What happens instead? \n\n\n Please provide any additional information below. Attach a screenshot if possible.", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+    bodyMessage = [NSString stringWithFormat:@"CoachTools: Report Bug - %@ \n \n Error Message: \n \n Error Description: \n \n What steps will reproduce the problem?\n 1. \n 2. \n 3. \n\n\n What is the expected result? \n\n\n What happens instead? \n\n\n Please provide any additional information below. Attach a screenshot if possible.", versionString];
+    
+    Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
+	if (mailClass != nil){
+		// We must always check whether the current device is configured for sending emails
+		if ([mailClass canSendMail]){
+			[self displayComposerSheet];
+		}
+		else{
+			[self launchMailAppOnDevice];
+		}
+	}
+	else{
+		[self launchMailAppOnDevice];
+	}
+}
+
+- (IBAction)requestEnhancement:(id)sender{
+    
+    //Setup Message
+    subjectLine = [NSString stringWithFormat:@"CoachTools: Request Enhancement -  %@", versionString];
+    emailLine = @"coachtoolsapps@gmail.com";
+    bodyMessage = [NSString stringWithFormat:@"CoachTools:  Request Enhancement - %@ \n\n\n What problem are you trying to resolve with this feature? \n\n\n How do you address this problem now? \n\n\n Please describe the feature in as much detail as possible: \n\n\n Is there anything else you would like to tell us?", versionString];
     
     Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
 	if (mailClass != nil)
 	{
 		// We must always check whether the current device is configured for sending emails
-		if ([mailClass canSendMail])
-		{
+		if ([mailClass canSendMail]){
 			[self displayComposerSheet];
 		}
 		else
@@ -140,50 +161,15 @@
 		[self launchMailAppOnDevice];
 	}
 }
-
--(IBAction)requestEnhancement:(id)sender
-{
-    //Setup Message
-    subjectLine = [NSString stringWithFormat:@"CoachTools: Request Enhancement - Version %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
-    emailLine = @"coachtoolsapps@gmail.com";
-    bodyMessage = [NSString stringWithFormat:@"CoachTools:  Request Enhancement - Version %@ \n\n\n What problem are you trying to resolve with this feature? \n\n\n How do you address this problem now? \n\n\n Please describe the feature in as much detail as possible: \n\n\n Is there anything else you would like to tell us?", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
-    
-    Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
-	if (mailClass != nil)
-	{
-		// We must always check whether the current device is configured for sending emails
-		if ([mailClass canSendMail])
-		{
-			[self displayComposerSheet];
-		}
-		else
-		{
-			[self launchMailAppOnDevice];
-		}
-	}
-	else
-	{
-		[self launchMailAppOnDevice];
-	}
-}
-
-
-
-
 
 #pragma mark -
 #pragma mark Compose Mail
 
 // Displays an email composition interface inside the application. Populates all the Mail fields. 
--(void)displayComposerSheet 
+- (void)displayComposerSheet 
 {
 	MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
 	picker.mailComposeDelegate = self;
-	
-    //subjectLine = [NSString stringWithFormat:@"CoachTools: Contact - Version %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
-    //emailLine = @"coachtoolsapps@gmail.com";
-    //bodyMessage = [NSString stringWithFormat:@"CoachTools: Contact - Version %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
-
     
 	[picker setSubject:subjectLine];
     
@@ -237,15 +223,14 @@
 	[self dismissModalViewControllerAnimated:YES];
 }
 
-
 #pragma mark -
 #pragma mark Workaround
 
 // Launches the Mail application on the device.
--(void)launchMailAppOnDevice
+- (void)launchMailAppOnDevice
 {
 	NSString *recipients = @"coachtoolsapps@gmail.com";
-	NSString *body = [NSString stringWithFormat:@"CoachTools: Contact - Version %@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+	NSString *body = [NSString stringWithFormat:@"CoachTools: Contact - %@", versionString];
 	
 	NSString *email = [NSString stringWithFormat:@"%@%@", recipients, body];
 	email = [email stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -253,8 +238,7 @@
 	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:email]];
 }
 
-
--(IBAction)doneButton:(id)sender {
+- (IBAction)doneButton:(id)sender {
 	if([self.delegate respondsToSelector:@selector(returnView:)]) {
 		[self.delegate returnView:self];
 	}

@@ -19,6 +19,11 @@
 #import "TrainingFormDataSource.h"
 #import "EventManager.h"
 
+
+#import "TrainingListViewCell.h"
+#import "HelpManagement.h"
+#import "FlurryAnalytics.h"
+
 @implementation TrainingListViewController
 
 @synthesize trainingModel;
@@ -43,8 +48,7 @@
 }
 
 
-- (void)dealloc
-{
+- (void)dealloc{
     
     [super dealloc];
 }
@@ -116,6 +120,8 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -136,41 +142,19 @@
 
 - (void)insertItemButton:(id)sender{
     
-    
     trainingModel = [[NSMutableDictionary alloc] init];
-    
-    
+        
     RootViewController *sharedController = [RootViewController sharedAppController];
     NSManagedObjectContext *managedObjectContext = [sharedController managedObjectContext];
     item = [NSEntityDescription insertNewObjectForEntityForName:@"Training" inManagedObjectContext:managedObjectContext];
-       
 
-    //NSLog(@"%@",[newItem description]);
-    
-    
-    //NSDictionary *attributesByName = [[newItem entity] attributesByName];
-    //trainingModel = [[newItem dictionaryWithValuesForKeys:[attributesByName allKeys]] mutableCopy];
-    //NSLog(@"%@",[newItem description]);
-    //NSLog(@"%@",[trainingModel description]);
-
-    
-    //
-    
-    
-    //ShowcaseModel *showcaseModel = [self model];
     ShowcaseModel *showcaseModel = [[[ShowcaseModel alloc] init] autorelease];
     showcaseModel.shouldAutoRotate = YES;
     showcaseModel.tableViewStyleGrouped = YES;
     showcaseModel.displayNavigationToolbar = YES;
-
-    //
     showcaseModel.modalPresentation = YES;
     showcaseModel.modalPresentationStyle = UIModalPresentationFormSheet;
-	
-	//NSMutableDictionary *sampleFormModel = [[[NSMutableDictionary alloc] init] autorelease];
-    
-	// Values set on the model will be reflected in the form fields.
-	//[sampleFormModel setObject:@"A value contained in the model" forKey:@"readOnlyText"];
+
     [trainingModel setObject:[NSString stringWithFormat:@"%d",[self.itemArray count] +1] forKey:@"trainingNumber"];
     
 	TrainingFormDataSource *sampleFormDataSource = [[[TrainingFormDataSource alloc] initWithModel:trainingModel] autorelease];
@@ -200,52 +184,31 @@
 			[(UINavigationController *)rootViewController pushViewController:sampleFormController animated:YES];
 		}
 	}
-
     
 }
 
 - (void)completeSampleForm {
+    
+    //Deactivate the input requestor if it was currenlty editing
+    [[IBAInputManager sharedIBAInputManager] deactivateActiveInputRequestor];
+    
     //Validate
-
     if ([self.trainingModel valueForKey:@"trainingNumber"] == nil || [[self.trainingModel valueForKey:@"trainingNumber"] isEqualToString:@""]) {
         //Check if empty
-        NSMutableArray *msgParams = [[[NSMutableArray alloc] init] autorelease];
-        [msgParams addObject:@"Traning Number"];
         
-        UIAlertView *someError = [[UIAlertView alloc] initWithTitle:[PlistStringUtil retrieveErrorText:@"requiredFieldEdit.title" withParams:msgParams] message:[PlistStringUtil retrieveErrorText:@"requiredFieldEdit.msg" withParams:msgParams] delegate: self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
-        
-        [someError show];
-        [someError release];
+        [HelpManagement errorMessage:@"Training Number" error:@"requiredFieldEdit"];
         
     }else if (![[self.trainingModel valueForKey:@"trainingNumber"] intValue]){
         //Check if number is a number
-        
-        NSMutableArray *msgParams = [[[NSMutableArray alloc] init] autorelease];
-        [msgParams addObject:@"Training Number"];
-        
-        UIAlertView *someError = [[UIAlertView alloc] initWithTitle:[PlistStringUtil retrieveErrorText:@"numOnlyField.title" withParams:msgParams] message:[PlistStringUtil retrieveErrorText:@"numOnlyField.msg" withParams:msgParams] delegate: self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
-        
-        [someError show];
-        [someError release];
-        
+        [HelpManagement errorMessage:@"Training Number" error:@"numOnlyField"];        
     }
     else if ([self.trainingModel valueForKey:@"date"] == nil){
-        NSMutableArray *msgParams = [[[NSMutableArray alloc] init] autorelease];
-        [msgParams addObject:@"Date"];
-        
-        UIAlertView *someError = [[UIAlertView alloc] initWithTitle:[PlistStringUtil retrieveErrorText:@"requiredFieldEdit.title" withParams:msgParams] message:[PlistStringUtil retrieveErrorText:@"requiredFieldEdit.msg" withParams:msgParams] delegate: self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
-        
-        [someError show];
-        [someError release];
+
+        [HelpManagement errorMessage:@"Date " error:@"requiredFieldEdit"];
         
     }else if ([self.trainingModel valueForKey:@"time"] == nil){
-        NSMutableArray *msgParams = [[[NSMutableArray alloc] init] autorelease];
-        [msgParams addObject:@"Time"];
-        
-        UIAlertView *someError = [[UIAlertView alloc] initWithTitle:[PlistStringUtil retrieveErrorText:@"requiredFieldEdit.title" withParams:msgParams] message:[PlistStringUtil retrieveErrorText:@"requiredFieldEdit.msg" withParams:msgParams] delegate: self cancelButtonTitle:@"Ok" otherButtonTitles: nil];
-        
-        [someError show];
-        [someError release];
+
+        [HelpManagement errorMessage:@"Time" error:@"requiredFieldEdit"];
     }
     else{
         
@@ -272,8 +235,6 @@
         [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
         
         // construct new date and return
-        //dateTextField.text = [dateFormatter stringFromDate:[dateCal dateFromComponents:dateComponent]];
-        //self.game.date = [dateCal dateFromComponents:dateComponent];
         tempDate =  [[dateCal dateFromComponents:dateComponent] copy];
         
         [timeCal release];
@@ -281,24 +242,21 @@
         [dateFormatter release];
 
         item.date = tempDate;
-        
-        //NSLog(@"combined date: %@",tempDate);
-        
+
         //Save the Data.
         RootViewController *ac = [RootViewController sharedAppController];
         NSManagedObjectContext *managedObjectContext = [ac managedObjectContext];
         
         NSError *error = nil;
         if (![managedObjectContext save:&error]) {
+
+            [FlurryAnalytics logError:@"Unresolved Error Update" message:[item debugDescription] error:error];
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }		
         
-        
-        
+        [trainingModel release];
         [self dismissModalViewControllerAnimated:YES];
-        //NSLog(@"Dismissed");
-        //NSLog(@"%@", [self.trainingModel description]);
     }
     
     
@@ -314,6 +272,7 @@
 	[sortedItems release];
 	
 	// Update recipe type and ingredients on return.
+    
     [self.tableView reloadData]; 
 
     //Show Training
@@ -334,7 +293,7 @@
 		abort();
 	}		
 
-    
+    [trainingModel release];
     [self dismissModalViewControllerAnimated:YES];
 }
 
@@ -398,19 +357,38 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-    }
-    
-    // Configure the cell...
-    Training *itemSelected =  [self.itemArray objectAtIndex:indexPath.row];
-
-    [self validateDates:itemSelected];
+    //Setup Customer Cell
+    static NSString *kCustomCellID = @"TrainingListViewCell";
+	
+    TrainingListViewCell *cell = (TrainingListViewCell *)[tableView dequeueReusableCellWithIdentifier:kCustomCellID];
+	if (cell == nil)
+	{
+        NSArray *topLevelObjects =[[NSBundle mainBundle] loadNibNamed:@"TrainingListViewCell" owner:nil options:nil];
         
-    cell.textLabel.text =  [itemSelected.trainingNumber stringValue];
+        for(id currentObject in topLevelObjects)
+        {
+            if([currentObject isKindOfClass:[UITableViewCell class]]){
+                cell = (TrainingListViewCell *) currentObject;
+            }
+        }
+        
+	}
+    //Formats
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+    [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
+    
+    //Set Cell Data
+    Training *itemSelected = [self.itemArray objectAtIndex:indexPath.row];
+    cell.itemNameLabel.text = [itemSelected.trainingNumber description];
+    cell.dateLabel.text =  [dateFormatter stringFromDate:itemSelected.date];
+    cell.locationLabel.text = [itemSelected.trainingLocation description];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    
+    [dateFormatter release];
+    // Configure the cell...
+    //[self configureCell:cell atIndexPath:indexPath];
     
     return cell;
 }
@@ -424,9 +402,7 @@
         if(![EventManager checkCalendarEntryExists:itemSelected.eventIdentifier]){
             //Does Not Exist
             itemSelected.date = nil;
-            
-            //Save
-            
+
             //Save the Data.
             
             NSManagedObjectContext *managedObjectContext = itemSelected.managedObjectContext;
@@ -453,7 +429,6 @@
         
     }
 }
-
 
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath

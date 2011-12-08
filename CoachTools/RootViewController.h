@@ -23,8 +23,8 @@
     
     IBOutlet UIImageView *background;
     IBOutlet UILabel *titleLabel;
-
 }
+
 @property (nonatomic, retain) NSArray *menuSectionsArray;
 @property (nonatomic, retain) NSMutableArray *menuOptionsArray;
 
@@ -43,11 +43,9 @@
 - (IBAction)pushThis:(id)sender;
 - (IBAction)crittercismPressed:(id)sender;
 - (IBAction)infoButton:(id)sender;
-
+- (IBAction)chalkTalk:(id)sender;
 - (IBAction)IAPManagerButton:(id)sender;
 - (IBAction)notAvailable:(id)sender;
-
-- (void)testPredicate;
 - (IBAction)testButton:(id)sender;
 
 

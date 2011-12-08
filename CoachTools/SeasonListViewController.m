@@ -12,10 +12,20 @@
 #import "RootViewController.h"
 #import "SeasonSummaryViewController.h"
 
+#import "TeamListViewCell.h"
+#import "FlurryAnalytics.h"
+#import "SeasonFormDataSource.h"
+#import <IBAForms/IBAForms.h>
+#import "ItemFormController.h"
+#import "ShowcaseModel.h"
+#import "HelpManagement.h"
+
 @implementation SeasonListViewController
 
-@synthesize seasonArray;
+@synthesize itemArray;
 @synthesize team;
+@synthesize item;
+@synthesize itemModel;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil teamSelected:(Team *)aTeam
@@ -32,7 +42,7 @@
 
 - (void)dealloc
 {
-    [seasonArray release];
+    [itemArray release];
     [super dealloc];
 }
 
@@ -72,7 +82,6 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-
     
 }
 
@@ -84,7 +93,7 @@
 	
 	NSMutableArray *sortedSeasons = [[NSMutableArray alloc] initWithArray:[team.seasons allObjects]];
 	[sortedSeasons sortUsingDescriptors:sortDescriptors];
-	self.seasonArray = sortedSeasons;
+	self.itemArray = sortedSeasons;
     
 	[sortDescriptor release];
 	[sortDescriptors release];
@@ -121,36 +130,107 @@
 
 
 - (void)add:(id)sender {
-    // To add a new recipe, create a RecipeAddViewController.  Present it as a modal view so that the user's focus is on the task of adding the recipe; wrap the controller in a navigation controller to provide a navigation bar for the Done and Save buttons (added by the RecipeAddViewController in its viewDidLoad method).
-    SeasonAddViewController *addController = [[SeasonAddViewController alloc] initWithNibName:@"SeasonAddViewController" bundle:nil teamSelected:team];
-    addController.delegate = self;
-	
     RootViewController *sharedController = [RootViewController sharedAppController];
     NSManagedObjectContext *managedObjectContext = [sharedController managedObjectContext];
-	Season* newSeason = [NSEntityDescription insertNewObjectForEntityForName:@"Season" inManagedObjectContext:managedObjectContext];
-	addController.season = newSeason;
+    item = [NSEntityDescription insertNewObjectForEntityForName:@"Season" inManagedObjectContext:managedObjectContext];
     
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:addController];
-    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-    navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    itemModel = [[NSMutableDictionary alloc] init];
     
-    [self presentModalViewController:navigationController animated:YES];
+    ShowcaseModel *showcaseModel = [[[ShowcaseModel alloc] init] autorelease];
+    showcaseModel.shouldAutoRotate = YES;
+    showcaseModel.tableViewStyleGrouped = YES;
+    showcaseModel.displayNavigationToolbar = YES;
+    showcaseModel.modalPresentation = YES;
+    showcaseModel.modalPresentationStyle = UIModalPresentationFormSheet;
     
-    [navigationController release];
-    [addController release];
+	SeasonFormDataSource *sampleFormDataSource = [[[SeasonFormDataSource alloc] initWithModel:itemModel] autorelease];
+	ItemFormController *sampleFormController = [[[ItemFormController alloc] initWithNibName:nil bundle:nil formDataSource:sampleFormDataSource] autorelease];
+	sampleFormController.title = @"Add Season";
+	sampleFormController.shouldAutoRotate = showcaseModel.shouldAutoRotate;
+	sampleFormController.tableViewStyle = showcaseModel.tableViewStyleGrouped ? UITableViewStyleGrouped : UITableViewStylePlain;
+    
+    [[IBAInputManager sharedIBAInputManager] setInputNavigationToolbarEnabled:showcaseModel.displayNavigationToolbar];
+    
+	UIViewController *rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+	if (showcaseModel.modalPresentation) {
+		UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
+																					 target:self 
+																					 action:@selector(completeForm)] autorelease];
+        UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel 
+                                                                                       target:self 
+                                                                                       action:@selector(cancelForm)] autorelease];
+		sampleFormController.navigationItem.rightBarButtonItem = doneButton;
+        sampleFormController.navigationItem.leftBarButtonItem = cancelButton;
+		UINavigationController *formNavigationController = [[[UINavigationController alloc] initWithRootViewController:sampleFormController] autorelease];
+		formNavigationController.modalPresentationStyle = showcaseModel.modalPresentationStyle;
+		[rootViewController presentModalViewController:formNavigationController animated:YES];
+	} else {
+        if ([rootViewController isKindOfClass:[UINavigationController class]]) {
+			[(UINavigationController *)rootViewController pushViewController:sampleFormController animated:YES];
+		}
+	}
 }
 
+
+- (void)completeForm{
+    
+    //Deactivate the input requestor if it was currenlty editing
+    [[IBAInputManager sharedIBAInputManager] deactivateActiveInputRequestor];
+    
+    //Team validators
+    if  ([self.itemModel valueForKey:@"name"] == nil ||  [[self.itemModel valueForKey:@"name"] isEqualToString:@""]){
+        //Check if empty
+        [HelpManagement errorMessage:@"Season Name" error:@"requiredField"];
+        
+    }else {
+        item.name = [self.itemModel valueForKey:@"name"];
+        item.team = team;
+        //Save the Data.
+        RootViewController *ac = [RootViewController sharedAppController];
+        NSManagedObjectContext *managedObjectContext = [ac managedObjectContext];
+        
+        NSError *error = nil;
+        if (![managedObjectContext save:&error]) {
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            [FlurryAnalytics logError:@"Unresolved Error Inserting" message:[item debugDescription] error:error];
+            abort();
+        }		
+        
+        [itemModel release];
+        [self showSeason:item animated:YES];
+        [self dismissModalViewControllerAnimated:YES];
+        
+    }
+    
+}
+
+- (void)cancelForm{
+    
+    RootViewController *ac = [RootViewController sharedAppController];
+    NSManagedObjectContext *managedObjectContext = [ac managedObjectContext];
+    
+	[managedObjectContext deleteObject:item];
+    
+	NSError *error = nil;
+	if (![managedObjectContext save:&error]) {
+        
+		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        [FlurryAnalytics logError:@"Unresolved Error Deleting" message:[item debugDescription] error:error];
+		abort();
+	}		
+    [itemModel release];
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+
+//Push the new Season after it has been added
 - (void)seasonAddViewController:(SeasonAddViewController *)seasonAddViewController didAddSeason:(Season *)aSeason {
 
     if(aSeason){
         //Show the season
-        
-        
         [self showSeason:aSeason animated:NO];
     }
-    
-    // Dismiss the modal add recipe view controller
-    NSLog(@"here");
+
     [self dismissModalViewControllerAnimated:YES];
 }
 
@@ -166,9 +246,13 @@
 
 #pragma mark - Table view data source
 
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return @"Team Name                 Win   Loss   Draw  Scheduled";
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-
     // Return the number of sections.
     return 1;
 }
@@ -177,7 +261,7 @@
 {
 
     // Return the number of rows in the section.
-    return [self.seasonArray count];
+    return [self.itemArray count];
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath
@@ -191,21 +275,32 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+   static NSString *kCustomCellID = @"TeamListViewCell";
+	
+    TeamListViewCell *cell = (TeamListViewCell *)[tableView dequeueReusableCellWithIdentifier:kCustomCellID];
+	if (cell == nil)
+	{
+        NSArray *topLevelObjects =[[NSBundle mainBundle] loadNibNamed:@"TeamListViewCell" owner:nil options:nil];
+        
+        for(id currentObject in topLevelObjects)
+        {
+            if([currentObject isKindOfClass:[UITableViewCell class]]){
+                cell = (TeamListViewCell *) currentObject;
+            }
+        }
+        
+	}
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-    }
-    
-    // Configure the cell...
-    Season *selectedSeason = [self.seasonArray objectAtIndex:indexPath.row];
-    cell.textLabel.text = [selectedSeason.name description];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    Season *itemSelected = [self.itemArray objectAtIndex:indexPath.row];   
+    cell.teamNameLabel.text = [itemSelected.name description];
+    NSArray *objectStats = [self fetchObjectStats:itemSelected.name];
+    cell.winLabel.text = [[objectStats objectAtIndex:0] description];
+    cell.lossLabel.text = [[objectStats objectAtIndex:1] description];
+    cell.drawLabel.text = [[objectStats objectAtIndex:2] description];
+    cell.notPlayedLabel.text = [[objectStats objectAtIndex:3] description];
     
     return cell;
 }
-
 
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -213,8 +308,6 @@
     // Return NO if you do not want the specified item to be editable.
     return YES;
 }
-
-
 
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -224,12 +317,11 @@
         RootViewController *ac = [RootViewController sharedAppController];
         NSManagedObjectContext *managedObjectContext = [ac managedObjectContext];
         
-        Person *selectedPlayer = [self.seasonArray objectAtIndex:indexPath.row];
+        Person *selectedPlayer = [self.itemArray objectAtIndex:indexPath.row];
         [managedObjectContext deleteObject:selectedPlayer];
         
         // Delete the managed object for the given index path
-        [seasonArray removeObject:selectedPlayer];
-        
+        [itemArray removeObject:selectedPlayer];
         
         // Delete the row from the data source
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
@@ -237,19 +329,53 @@
         // Save the context.
 		NSError *error;
 		if (![managedObjectContext save:&error]) {
-			/*
-			 Replace this implementation with code to handle the error appropriately.
-			 
-			 abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
-			 */
+            [FlurryAnalytics logError:@"Unresolved Error Deleting" message:[selectedPlayer debugDescription] error:error];
 			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 			abort();
 		}
-        
-    }   
+
+    }
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    }
+}
+
+
+//Get the stats of the team
+- (NSArray*)fetchObjectStats:(NSString*)objectName{    
+    
+    int wins = 0; 
+    int losses = 0;
+    int draw = 0;
+    int notPlayed = 0;
+    
+    RootViewController *appController = [RootViewController sharedAppController];
+    
+    NSManagedObjectContext *moc = [appController managedObjectContext];
+    NSFetchRequest *request = [[[NSFetchRequest alloc] init] autorelease];
+    [request setEntity:[NSEntityDescription entityForName:@"Game" inManagedObjectContext:moc]];
+    [request setPredicate:[NSPredicate predicateWithFormat:@"ANY season.name like %@", objectName]];
+    NSArray *singleEmployeeDepartments = [moc executeFetchRequest:request error:NULL];
+    
+    for(Game* game in singleEmployeeDepartments){
+        if([game.played boolValue] == FALSE){
+            notPlayed ++;
+        }else{
+            if([game.homeScore intValue] == [game.opponentScore intValue]){
+                //NSLog(@"Draw");
+                draw ++;
+            }else if([game.homeScore intValue] > [game.opponentScore intValue]){
+                //NSLog(@"Win");
+                wins ++;
+            }else{
+                //NSLog(@"Loss");        
+                losses++;
+            }
+        }
+    }
+    
+    //Wins - Loss - Draw - Not Played
+    return [[[NSArray alloc] initWithObjects:[NSNumber numberWithInt:wins],[NSNumber numberWithInt:losses],[NSNumber numberWithInt:draw],[NSNumber numberWithInt:notPlayed], nil] autorelease];
 }
 
 
@@ -277,12 +403,8 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     // Navigation logic may go here. Create and push another view controller.
-    SeasonSummaryViewController *detailViewController = [[SeasonSummaryViewController alloc] initWithNibName:@"SeasonSummaryViewController" bundle:nil seasonSelected:[self.seasonArray objectAtIndex:indexPath.row]];
-    // ...
-    // Pass the selected object to the new view controller.
-    //Team *selectedTeam = [self.teamArray objectAtIndex:indexPath.row];
-    
-    //((TeamSummaryViewController *)detailViewController).team = selectedTeam;
+    SeasonSummaryViewController *detailViewController = [[SeasonSummaryViewController alloc] initWithNibName:@"SeasonSummaryViewController" bundle:nil seasonSelected:[self.itemArray objectAtIndex:indexPath.row]];
+
     [self.navigationController pushViewController:detailViewController animated:YES];
     
     [detailViewController release];

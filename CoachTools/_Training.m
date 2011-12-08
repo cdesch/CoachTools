@@ -29,6 +29,10 @@
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
+	if ([key isEqualToString:@"completedValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"completed"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
 	if ([key isEqualToString:@"trainingNumberValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"trainingNumber"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -36,6 +40,46 @@
 
 	return keyPaths;
 }
+
+
+
+
+@dynamic trainingDescription;
+
+
+
+
+
+
+@dynamic trainingNotes;
+
+
+
+
+
+
+@dynamic completed;
+
+
+
+- (BOOL)completedValue {
+	NSNumber *result = [self completed];
+	return [result boolValue];
+}
+
+- (void)setCompletedValue:(BOOL)value_ {
+	[self setCompleted:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveCompletedValue {
+	NSNumber *result = [self primitiveCompleted];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveCompletedValue:(BOOL)value_ {
+	[self setPrimitiveCompleted:[NSNumber numberWithBool:value_]];
+}
+
 
 
 
@@ -48,20 +92,6 @@
 
 
 @dynamic date;
-
-
-
-
-
-
-@dynamic trainingLocation;
-
-
-
-
-
-
-@dynamic trainingDescription;
 
 
 
@@ -94,7 +124,7 @@
 
 
 
-@dynamic trainingNotes;
+@dynamic trainingLocation;
 
 
 

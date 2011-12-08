@@ -12,20 +12,18 @@
 
 @interface TrainingListViewController : UITableViewController <AddTrainingDelegate> {
     
-    
     NSMutableDictionary *trainingModel;
-    Training          *item;
-    NSMutableArray    *itemArray;
-    Season            *Season;
-    NSDate *tempDate;
-
-    
+    Training            *item;
+    NSMutableArray      *itemArray;
+    Season              *Season;
+    NSDate              *tempDate;
 }
-@property (nonatomic, retain) NSMutableDictionary *trainingModel;
-@property (nonatomic, retain) Training          *item;
-@property (nonatomic, retain) NSMutableArray    *itemArray;
-@property (nonatomic, retain) Season          *season;
-@property (nonatomic, retain) NSDate    *tempDate;
+
+@property (nonatomic, retain) NSMutableDictionary   *trainingModel;
+@property (nonatomic, retain) Training              *item;
+@property (nonatomic, retain) NSMutableArray        *itemArray;
+@property (nonatomic, retain) Season                *season;
+@property (nonatomic, retain) NSDate                *tempDate;
  
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil seasonSelected:(Season *)aSeason;

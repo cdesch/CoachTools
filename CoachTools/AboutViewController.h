@@ -23,6 +23,8 @@
     NSString *subjectLine;
     NSString *emailLine;
     NSString *bodyMessage;
+    
+    NSString *versionString;
 
 }
 
@@ -35,20 +37,20 @@
 @property (nonatomic, retain) NSString *subjectLine;
 @property (nonatomic, retain) NSString *emailLine;
 @property (nonatomic, retain) NSString *bodyMessage;
+@property (nonatomic, retain) NSString *versionString;
 
--(IBAction)showPicker:(id)sender;
--(IBAction)reportBug:(id)sender;
--(IBAction)requestEnhancement:(id)sender;
--(IBAction)doneButton:(id)sender;
+- (IBAction)showPicker:(id)sender;
+- (IBAction)reportBug:(id)sender;
+- (IBAction)requestEnhancement:(id)sender;
+- (IBAction)doneButton:(id)sender;
 - (IBAction)crittercismPressed:(id)sender;
--(void)displayComposerSheet;
--(void)launchMailAppOnDevice;
-
+- (void)displayComposerSheet;
+- (void)launchMailAppOnDevice;
 
 @end
 
 @protocol AboutDelegate <NSObject>
 
--(void)returnView:(AboutViewController*)viewController;
+- (void)returnView:(AboutViewController*)viewController;
 
 @end

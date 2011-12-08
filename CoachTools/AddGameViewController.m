@@ -160,9 +160,6 @@
     self.game.location = locationTextField.text;
     self.game.opponent = opponentTextField.text;
     self.game.date = tempDate;
-
-    //NSLog(@"combined date: %@",tempDate);
-    
     //Check Number of active players
     if([self validateGame])
     {

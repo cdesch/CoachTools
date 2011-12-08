@@ -83,40 +83,7 @@
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
 
     self.navigationItem.leftBarButtonItem = nil;
-    gameNumberTextField.text = game.gameNumber;
-    opponentTextField.text = game.opponent;
-    locationTextField.text = game.location;
-    
-    //
-    /*
-    if(game.eventIdentifier == nil){
-        
-        intergrateCalendarSwitch.on = FALSE;
-    
-    }else{
-        
-        intergrateCalendarSwitch.on = TRUE;
-    }
-    */
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd 'at' HH:mm"];
-    
-    dateTextField.text = [dateFormatter stringFromDate:game.date];
-    [dateFormatter release];
-    
-    //Check if the game has been played
-    if([game.played boolValue] == FALSE)
-    {
-        startGameButton.titleLabel.text = @"Start Game";
-        
-    }else{
-        startGameButton.titleLabel.text = @"Game Played";
-        startGameButton.userInteractionEnabled = NO;
-    }
-    
-    self.game.gameIntervalTime = [NSNumber numberWithInteger:30]; 
-    
+
 }
 
 - (void)viewDidUnload
@@ -134,6 +101,27 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     
+    [super viewWillAppear:animated];
+    
+    gameNumberTextField.text = game.gameNumber;
+    opponentTextField.text = game.opponent;
+    locationTextField.text = game.location;
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd 'at' HH:mm"];
+    
+    dateTextField.text = [dateFormatter stringFromDate:game.date];
+    [dateFormatter release];
+    
+    //Check if the game has been played
+    if([game.played boolValue] == FALSE)
+    {
+        startGameButton.titleLabel.text = @"Start Game";
+        
+    }else{
+        startGameButton.titleLabel.text = @"Game Played";
+        startGameButton.userInteractionEnabled = NO;
+    }
     
 }
 
@@ -147,8 +135,6 @@
     showcaseModel.shouldAutoRotate = YES;
     showcaseModel.tableViewStyleGrouped = YES;
     showcaseModel.displayNavigationToolbar = YES;
-    
-    //
     showcaseModel.modalPresentation = YES;
     showcaseModel.modalPresentationStyle = UIModalPresentationFormSheet;
     
@@ -240,8 +226,10 @@
 }
 
 - (void)completeStartGameForm{
+    
+    //Deactivate the input requestor if it was currenlty editing
+    [[IBAInputManager sharedIBAInputManager] deactivateActiveInputRequestor];
 
-  
     int maxPlayers = 22;
 
     //Check Number of active players
@@ -253,7 +241,6 @@
         NSSet* myNumPlayersSet = [self.itemModel valueForKey:@"numPlayers"];
         NSArray *myNumPlayersArray = [myNumPlayersSet allObjects];
         NSString* numPlayers = [myNumPlayersArray objectAtIndex:0];
-
         
         if( [self numActivePlayers:game.season.team] < [numPlayers intValue])
         {
@@ -304,13 +291,15 @@
             [self dismissModalViewControllerAnimated:NO];
             
             //Display the GameManagement with the new Game;
-            GameManagementViewController *gameManagementViewController = appController.gameManagementViewController;
+            //GameManagementViewController *gameManagementViewController = appController.gameManagementViewController;
+            GameManagementViewController *gameManagementViewController = [[GameManagementViewController alloc] initWithNibName:@"GameManagementViewController" bundle:nil];
             gameManagementViewController.game = game;
             //FIXME Num players - Fix the datamodel
             
             gameManagementViewController.numPlayers = [numPlayers intValue];
             gameManagementViewController.modalPresentationStyle = UIModalPresentationFullScreen;
             [self presentModalViewController:gameManagementViewController animated:YES];
+            [gameManagementViewController release];
             
             startGameButton.userInteractionEnabled = NO;
         }
@@ -326,6 +315,10 @@
 }
 
 - (void)completeEditGameForm:(id)sender{
+        
+    //Deactivate the input requestor if it was currenlty editing
+    [[IBAInputManager sharedIBAInputManager] deactivateActiveInputRequestor];
+
     
     //Validate
     
@@ -393,9 +386,10 @@
             abort();
         }
         
+        [self viewWillAppear:YES];
+        [itemModel release];
         [self dismissModalViewControllerAnimated:YES];
-        //NSLog(@"Dismissed");
-        //NSLog(@"%@", [self.trainingModel description]);
+
     }
     
 }
@@ -405,8 +399,6 @@
     
     [itemModel release];
 }
-
-
 
 - (BOOL)validateGame{
     

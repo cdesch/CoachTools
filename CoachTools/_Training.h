@@ -14,6 +14,7 @@
 
 
 
+
 @interface TrainingID : NSManagedObjectID {}
 @end
 
@@ -22,6 +23,28 @@
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (TrainingID*)objectID;
+
+
+
+@property (nonatomic, retain) NSString *trainingDescription;
+
+//- (BOOL)validateTrainingDescription:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *trainingNotes;
+
+//- (BOOL)validateTrainingNotes:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSNumber *completed;
+
+@property BOOL completedValue;
+- (BOOL)completedValue;
+- (void)setCompletedValue:(BOOL)value_;
+
+//- (BOOL)validateCompleted:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -37,18 +60,6 @@
 
 
 
-@property (nonatomic, retain) NSString *trainingLocation;
-
-//- (BOOL)validateTrainingLocation:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSString *trainingDescription;
-
-//- (BOOL)validateTrainingDescription:(id*)value_ error:(NSError**)error_;
-
-
-
 @property (nonatomic, retain) NSNumber *trainingNumber;
 
 @property short trainingNumberValue;
@@ -59,9 +70,9 @@
 
 
 
-@property (nonatomic, retain) NSString *trainingNotes;
+@property (nonatomic, retain) NSString *trainingLocation;
 
-//- (BOOL)validateTrainingNotes:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateTrainingLocation:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -91,6 +102,27 @@
 @interface _Training (CoreDataGeneratedPrimitiveAccessors)
 
 
+- (NSString*)primitiveTrainingDescription;
+- (void)setPrimitiveTrainingDescription:(NSString*)value;
+
+
+
+
+- (NSString*)primitiveTrainingNotes;
+- (void)setPrimitiveTrainingNotes:(NSString*)value;
+
+
+
+
+- (NSNumber*)primitiveCompleted;
+- (void)setPrimitiveCompleted:(NSNumber*)value;
+
+- (BOOL)primitiveCompletedValue;
+- (void)setPrimitiveCompletedValue:(BOOL)value_;
+
+
+
+
 - (NSString*)primitiveEventIdentifier;
 - (void)setPrimitiveEventIdentifier:(NSString*)value;
 
@@ -99,18 +131,6 @@
 
 - (NSDate*)primitiveDate;
 - (void)setPrimitiveDate:(NSDate*)value;
-
-
-
-
-- (NSString*)primitiveTrainingLocation;
-- (void)setPrimitiveTrainingLocation:(NSString*)value;
-
-
-
-
-- (NSString*)primitiveTrainingDescription;
-- (void)setPrimitiveTrainingDescription:(NSString*)value;
 
 
 
@@ -124,8 +144,8 @@
 
 
 
-- (NSString*)primitiveTrainingNotes;
-- (void)setPrimitiveTrainingNotes:(NSString*)value;
+- (NSString*)primitiveTrainingLocation;
+- (void)setPrimitiveTrainingLocation:(NSString*)value;
 
 
 

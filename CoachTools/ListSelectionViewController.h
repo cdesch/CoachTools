@@ -14,14 +14,14 @@
     
     id<ListSelectionDelegate> delegate;
     
-    NSMutableArray *listArray;
+    NSArray *listArray;
     NSMutableArray *selectedArray;
 
 }
 
 @property (nonatomic,assign)id <ListSelectionDelegate> delegate;
 
-@property (nonatomic, retain) NSMutableArray *listArray;
+@property (nonatomic, retain) NSArray *listArray;
 @property (nonatomic, retain) NSMutableArray *selectedArray;
 
 

@@ -26,7 +26,8 @@
 //Flurr Excepption Handler
 void uncaughtExceptionHandler(NSException *exception) {
     [FlurryAnalytics logError:@"uncaughtExceptionHandler" message:@"Crash!" exception:exception];
-    //NSLog(@"uncaughtExceptionHandler");
+    NSLog(@"uncaughtExceptionHandler");
+    NSLog(@"Unresolved error %@, %@", exception, [exception debugDescription] );
     //NSLog(@"This is where we save the application data during a exception");
 }
 
@@ -80,13 +81,8 @@ void SignalHandler(int sig) {
     NSString * buildDate = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBuildDate"];
     NSLog(@"Application Version: %@ Build No: %@ Build Date: %@",version,buildNo,buildDate);
     
-
-    
-    
-    
     if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
 		[CCDirector setDirectorType:kCCDirectorTypeThreadMainLoop];
-    
     
 	CCDirector *director = [CCDirector sharedDirector];
     [director setAnimationInterval:1.0/60];
@@ -98,7 +94,6 @@ void SignalHandler(int sig) {
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
     */
-
     
     // Override point for customization after application launch.
     // Add the split view controller's view to the window and display.

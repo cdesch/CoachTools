@@ -8,9 +8,9 @@
 
 
 // Import the interfaces
-#import "HelloWorldLayer.h"
+#import "ChalkTalkLayer.h"
 #import "PlayerSprite.h"
-#import "ConfigMenuViewController.h"
+//#import "ConfigMenuViewController.h"
 #import "CocoaHelper.h"
 #import "HUDLayer.h"
 
@@ -20,7 +20,7 @@ CCSprite *homeGoalEvent;
 CCSprite *awayGoalEvent;
 PlayerSprite *soccerBall;
 
-CCLayer *hudLayer;
+//CCLayer *hudLayer;
 
 CCLabelTTF *text;
 CCLabelTTF *timeLabel;
@@ -40,11 +40,11 @@ CGPoint benchHidePosition;
 float SWIPE_Horizontal_THRESHOLD = 10;
 
 // HelloWorldLayer implementation
-@implementation HelloWorldLayer
+@implementation ChalkTalkLayer
 
 @synthesize timeInt = _timeInt;
 @synthesize playersList;
-@synthesize configMenuViewController;
+//@synthesize configMenuViewController;
 @synthesize myPlayers;
 
 /*
@@ -98,7 +98,7 @@ float SWIPE_Horizontal_THRESHOLD = 10;
         
         // --- Game Management Config Menu --- // Modal View Controll
         // allocate for later display
-        configMenuViewController = [[ConfigMenuViewController alloc] initWithNibName:@"ConfigMenuViewController" bundle:nil];
+        //configMenuViewController = [[ConfigMenuViewController alloc] initWithNibName:@"ConfigMenuViewController" bundle:nil];
         
         // --- Scene Title -----//
 		// Create and initialize a Title Label
@@ -129,7 +129,7 @@ float SWIPE_Horizontal_THRESHOLD = 10;
 		menu.position=ccp(0,0);
         
         // ---- Scene Game Timer (Game Clock) --- // 
-        
+        /*
         NSInteger mins = 0;
         NSInteger secs = 0;
         _timeInt = 0;
@@ -143,7 +143,7 @@ float SWIPE_Horizontal_THRESHOLD = 10;
 		timeLabel.position = ccp(size.width/2,675);  //750
         
 		[self addChild:timeLabel z:1 tag:timeInt];
-        
+        */
         // ---- Add an array of objects with names ---- // 
         // This information is what will be retrieved from coreData 
         // playerName, playerNumber
@@ -178,7 +178,9 @@ float SWIPE_Horizontal_THRESHOLD = 10;
         //[soccerBall setPlayerName:@"Larry"];
         soccerBall.position=ccp(size.width/2, 42);
         [self addChild:soccerBall];
+       
         
+        /*
         hudLayer = [HUDLayer node];
         // add layer as a child to scene
         [self addChild: hudLayer];
@@ -188,7 +190,7 @@ float SWIPE_Horizontal_THRESHOLD = 10;
         benchHidePosition = CGPointMake(- benchSize.width , size.height/2 ); 
 
         benchState = FALSE;
-        
+        */
 	}
 	return self;
 }
@@ -225,7 +227,7 @@ float SWIPE_Horizontal_THRESHOLD = 10;
 //Pause 'game' and go to the ConfiguMenuViewController -- Animated
 //May not need
 -(void)gameManagementConfigMenu{
-    [CocoaHelper showUIViewController:configMenuViewController];
+    //[CocoaHelper showUIViewController:configMenuViewController];
 }
 
 
@@ -253,10 +255,10 @@ float SWIPE_Horizontal_THRESHOLD = 10;
 - (void) moveLayer:(id)sender{
     NSLog(@"Moving the Layer");
    // hudLayer.position(
-    NSLog(@"x: %02f y: %02f", hudLayer.position.x, hudLayer.position.y);                  
-    CGPoint touchPoint = CGPointMake( hudLayer.position.x +5, hudLayer.position.y);
-    hudLayer.position = touchPoint;
-    NSLog(@"x: %02f y: %02f", hudLayer.position.x, hudLayer.position.y);       
+//    NSLog(@"x: %02f y: %02f", hudLayer.position.x, hudLayer.position.y);                  
+//    CGPoint touchPoint = CGPointMake( hudLayer.position.x +5, hudLayer.position.y);
+//    hudLayer.position = touchPoint;
+//    NSLog(@"x: %02f y: %02f", hudLayer.position.x, hudLayer.position.y);       
 }
 
 // Game Counter

@@ -9,19 +9,28 @@
 #import <UIKit/UIKit.h>
 #import "SeasonAddViewController.h"
 #import "Team.h"
+#import "Season.h"
 
 @interface SeasonListViewController : UITableViewController <SeasonAddDelegate> {
     
-    NSMutableArray  *seasonArray;
+    NSMutableArray  *itemArray;
     Team            *team;
+    
+    Season          *item;
+    NSMutableDictionary *itemModel;
 }
 
-
-@property (nonatomic, retain) NSMutableArray    *seasonArray;
+@property (nonatomic, retain) NSMutableArray    *itemArray;
 @property (nonatomic, retain) Team              *team;
+@property (nonatomic, retain) Season          *item;
+@property (nonatomic, retain) NSMutableDictionary *itemModel;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil teamSelected:(Team *)aTeam;
+
+- (void)completeForm;
+- (void)cancelForm;
 - (void)showSeason:(Season *)season animated:(BOOL)animated;
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
+- (NSArray*)fetchObjectStats:(NSString*)objectName;
 
 @end

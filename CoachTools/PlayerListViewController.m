@@ -220,6 +220,7 @@
     UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:detailViewController];
     navigation.modalPresentationStyle = UIModalPresentationFormSheet;
     [self presentModalViewController:navigation animated:YES];
+    [navigation release];
     [detailViewController release];
     
 }

@@ -104,6 +104,7 @@
 // Displays the information of a selected person
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person{
 
+
     [super setModelValue:(NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty) forKeyPath:@"firstName"];
     [super setModelValue:(NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty) forKeyPath:@"lastName"];
     [super setModelValue:[NSNumber numberWithInt:ABRecordGetRecordID(person)]	 forKeyPath:@"contactIdentifier"];

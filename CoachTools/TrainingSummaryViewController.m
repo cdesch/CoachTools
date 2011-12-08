@@ -14,14 +14,24 @@
 #import "ListSelectionViewController.h"
 #import "Person.h"
 
+#import <IBAForms/IBAForms.h>
+#import "ItemFormController.h"
+#import "ShowcaseModel.h"
+#import "TrainingFormDataSource.h"
+#import "FlurryAnalytics.h"
+#import "HelpManagement.h"
+
+
 @implementation TrainingSummaryViewController
 
 @synthesize training;
+@synthesize itemModel;
 @synthesize trainingNumberTextField;
 @synthesize locationTextField;
 @synthesize dateTextField;
+@synthesize notesView;
+@synthesize descriptionView;
 @synthesize tempDate;
-@synthesize intergrateCalendarSwitch;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil trainingSelected:(Training *)aTraining
 {
@@ -32,8 +42,6 @@
         
         //Initialize
         training = aTraining;
-        
-        
     }
     return self;
 }
@@ -65,29 +73,43 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     UINavigationItem *navigationItem = self.navigationItem;
-    navigationItem.title = @"Game Summary";
+    navigationItem.title = @"Training Summary";
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
     self.navigationItem.leftBarButtonItem = nil;
-    //self.navigationItem.backBarButtonItem = self.backButtonItem;
+
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    
+    [super viewWillAppear:animated];
+
     trainingNumberTextField.text = [training.trainingNumber stringValue];
     locationTextField.text = training.trainingLocation;
-    
-    //
-    if(training.eventIdentifier == nil){
-        
-        intergrateCalendarSwitch.on = FALSE;
-        
-    }else{
-        
-        intergrateCalendarSwitch.on = TRUE;
-    }
+    descriptionView.text = training.trainingDescription;
+    notesView.text = training.trainingNotes;
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd 'at' HH:mm"];
     
     dateTextField.text = [dateFormatter stringFromDate:training.date];
     [dateFormatter release];
+}
+
+
+- (void)viewDidDisappear:(BOOL)animated{
+    
+    [super viewWillDisappear:animated];
+    
+    training.trainingNotes = notesView.text;
+    
+    //Save the changes
+    NSManagedObjectContext *managedObjectContext = training.managedObjectContext;
+    NSError *error = nil;
+    if (![managedObjectContext save:&error]) {
+        [FlurryAnalytics logError:@"Unresolved Error Update" message:[training debugDescription] error:error];
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }		
 }
 
 - (void)viewDidUnload
@@ -97,72 +119,147 @@
     // e.g. self.myOutlet = nil;
 }
 
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated {
+    
+    //[super setEditing:editing animated:animated];
+    
+    itemModel = [[NSMutableDictionary alloc] init];
+    ShowcaseModel *showcaseModel = [[[ShowcaseModel alloc] init] autorelease];
+    showcaseModel.shouldAutoRotate = YES;
+    showcaseModel.tableViewStyleGrouped = YES;
+    showcaseModel.displayNavigationToolbar = YES;
+    showcaseModel.modalPresentation = YES;
+    showcaseModel.modalPresentationStyle = UIModalPresentationFormSheet;
+    
+	// Values set on the model will be reflected in the form fields.
+	//[sampleFormModel setObject:@"A value contained in the model" forKey:@"readOnlyText"];
+    [itemModel setObject:training.trainingNumber forKey:@"trainingNumber"];
+    if(training.trainingLocation != nil){
+        [itemModel setObject:training.trainingLocation forKey:@"trainingLocation"];
+    }
+    
+    if (training.trainingDescription != nil) {
+        [itemModel setObject:training.trainingDescription forKey:@"trainingDescription"];
+    }
+
+    [itemModel setObject:training.date forKey:@"date"];    
+    [itemModel setObject:training.date forKey:@"time"];
+    
+	TrainingFormDataSource *sampleFormDataSource = [[[TrainingFormDataSource alloc] initWithModel:itemModel] autorelease];
+	ItemFormController *sampleFormController = [[[ItemFormController alloc] initWithNibName:nil bundle:nil formDataSource:sampleFormDataSource] autorelease];
+	sampleFormController.title = @"Edit Training";
+	sampleFormController.shouldAutoRotate = showcaseModel.shouldAutoRotate;
+	sampleFormController.tableViewStyle = showcaseModel.tableViewStyleGrouped ? UITableViewStyleGrouped : UITableViewStylePlain;
+    
+    [[IBAInputManager sharedIBAInputManager] setInputNavigationToolbarEnabled:showcaseModel.displayNavigationToolbar];
+    
+	UIViewController *rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+	if (showcaseModel.modalPresentation) {
+		UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
+                                                                                     target:self 
+                                                                                     action:@selector(completeEditForm:)] autorelease];
+        
+        UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel 
+                                                                                       target:self 
+                                                                                       action:@selector(cancelEditForm:)] autorelease];
+		sampleFormController.navigationItem.rightBarButtonItem = doneButton;
+        sampleFormController.navigationItem.leftBarButtonItem = cancelButton;
+		UINavigationController *formNavigationController = [[[UINavigationController alloc] initWithRootViewController:sampleFormController] autorelease];
+		formNavigationController.modalPresentationStyle = showcaseModel.modalPresentationStyle;
+		[rootViewController presentModalViewController:formNavigationController animated:YES];
+	} else {
+        if ([rootViewController isKindOfClass:[UINavigationController class]]) {
+			[(UINavigationController *)rootViewController pushViewController:sampleFormController animated:YES];
+		}
+	}
+    
+}
+
+- (void)completeEditForm:(id)sender{
+    
+    //Deactivate the input requestor if it was currenlty editing
+    [[IBAInputManager sharedIBAInputManager] deactivateActiveInputRequestor];
+    
+    //Validate
+    if ([self.itemModel valueForKey:@"trainingNumber"] == nil ) {
+        //Check if empty
+        [HelpManagement errorMessage:@"Training Number" error:@"requiredFieldEdit"];
+        
+    }
+    else if (![[self.itemModel valueForKey:@"trainingNumber"] intValue]){
+        //Check if number is a number
+        [HelpManagement errorMessage:@"Training Number" error:@"numOnlyField"];
+    }
+    else if ([self.itemModel valueForKey:@"date"] == nil){
+        
+        [HelpManagement errorMessage:@"Date" error:@"requiredFieldEdit"];
+        
+    }else if ([self.itemModel valueForKey:@"time"] == nil){
+        
+        [HelpManagement errorMessage:@"Time" error:@"requiredFieldEdit"];
+        
+    }else{
+        
+        //item.gameNumber = [NSNumber numberWithInt:[[self.itemModel valueForKey:@"gameNumber"] intValue]];
+        training.trainingNumber = [NSNumber numberWithInt: [[self.itemModel valueForKey:@"trainingNumber"] intValue]] ;
+        training.trainingLocation = [self.itemModel valueForKey:@"trainingLocation"];
+        
+        //Date
+        //Retrieve Components of the date
+        NSCalendar *dateCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSDateComponents *dateComponent = [dateCal components:( NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekCalendarUnit | NSWeekdayCalendarUnit |NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:[self.itemModel valueForKey:@"date"]];
+        
+        NSCalendar *timeCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSDateComponents *timeComponent = [timeCal components:( NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:[self.itemModel valueForKey:@"time"]];
+        
+        // adjust them for first day of previous week (Monday)
+        [dateComponent setHour:[timeComponent hour]];
+        [dateComponent setMinute:[timeComponent minute]];
+        
+        //Format Date for display
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+        [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
+        
+        // construct new date and return
+        //dateTextField.text = [dateFormatter stringFromDate:[dateCal dateFromComponents:dateComponent]];
+        //self.game.date = [dateCal dateFromComponents:dateComponent];
+        tempDate =  [[dateCal dateFromComponents:dateComponent] copy];
+        
+        [timeCal release];
+        [dateCal release];
+        [dateFormatter release];
+        
+        training.date = tempDate;
+        
+        //Save the Data.
+        RootViewController *ac = [RootViewController sharedAppController];
+        NSManagedObjectContext *managedObjectContext = [ac managedObjectContext];
+        
+        NSError *error = nil;
+        if (![managedObjectContext save:&error]) {
+            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            [FlurryAnalytics logError:@"Unresolved Error Updating" message:[training debugDescription] error:error];
+            abort();
+        }
+        
+        //Release and refresh the views
+        [self viewWillAppear:YES];
+        [itemModel release];
+        [self dismissModalViewControllerAnimated:YES];
+    }
+    
+}
+- (void)cancelEditForm:(id)sender{
+    
+    [self dismissModalViewControllerAnimated:YES];
+    [itemModel release];
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
 	return YES;
-}
-
-
-- (IBAction)dateTextFieldClicked:(id)sender {
-	DateTimeSelectionViewController *dateSelection = [[DateTimeSelectionViewController alloc] initWithNibName:@"DateTimeSelectionViewController" bundle:nil];
-    dateSelection.delegate = self;
-    dateSelection.modalPresentationStyle = UIModalPresentationFormSheet;
-    dateSelection.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    [self presentModalViewController:dateSelection animated:YES];
-    
-    [dateSelection release];
-}
-
-
-#pragma mark -
-#pragma mark Date Picker Delegate
-
-- (void)datePickerSetDate:(DateTimeSelectionViewController*)viewController {
-    
-    //Retrieve Components of the date
-    NSCalendar *dateCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *dateComponent = [dateCal components:( NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekCalendarUnit | NSWeekdayCalendarUnit |NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:viewController.datePicker.date];
-    
-    NSCalendar *timeCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    NSDateComponents *timeComponent = [timeCal components:( NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:viewController.timePicker.date];
-    
-    // adjust them for first day of previous week (Monday)
-    [dateComponent setHour:[timeComponent hour]];
-    [dateComponent setMinute:[timeComponent minute]];
-    
-    //Format Date for display
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
-    [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
-    
-    // construct new date and return
-    dateTextField.text = [dateFormatter stringFromDate:[dateCal dateFromComponents:dateComponent]];
-	//self.game.date = [dateCal dateFromComponents:dateComponent];
-    tempDate =  [[dateCal dateFromComponents:dateComponent] copy];
-    
-    [timeCal release];
-    [dateCal release];
-    [dateFormatter release];
-    
-    [self dismissModalViewControllerAnimated:YES];
-    
-}
-
-- (void)datePickerClearDate:(DateTimeSelectionViewController*)viewController {
-	
-    dateTextField.text = nil;
-	
-    [self dismissModalViewControllerAnimated:YES];
-}
-
-- (void)datePickerCancel:(DateTimeSelectionViewController*)viewController {
-    
-    [self dismissModalViewControllerAnimated:YES];
-}
-
-- (IBAction)intergrateCalendarSwitchChanged:(id)sender{
-    
 }
 
 - (BOOL)validateItem{
@@ -175,19 +272,15 @@
     
     ListSelectionViewController *listController = [[ListSelectionViewController alloc] initWithNibName:@"ListSelectionViewController" bundle:nil];
     listController.delegate = self;
-	
     
     Team* team = self.training.season.team;
-    listController.listArray = [[team.players allObjects] copy];
-    
-    if (training.playersAttendedSet.count > 0) {
-        NSLog(@"assign Existing array");
+    listController.listArray = [team.players allObjects];
+
+    if (self.training.playersAttendedSet.count > 0) {
         listController.selectedArray = [[training.playersAttended allObjects] mutableCopy];
         //listController.selectedArray = [training.playersAttended allObjects];
-        
     }
-    
-    
+
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:listController];
     navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
     navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
@@ -199,15 +292,11 @@
     
 }
 
-- (void)selectList:(ListSelectionViewController *)viewController list:(NSArray*)listSelected;
-{
-
+- (void)selectList:(ListSelectionViewController *)viewController list:(NSArray*)listSelected;{
 
     //List of players selected
-    NSLog(@"Selected Player");
     
     Team* team = self.training.season.team;
-    //NSArray* teamPlayers = [team.players allObjects];
     //Remove all players from that training sessino
     for(Person *player in [team.players allObjects] ){
     
@@ -231,14 +320,13 @@
     NSManagedObjectContext *managedObjectContext = training.managedObjectContext;
     NSError *error = nil;
     if (![managedObjectContext save:&error]) {
+        [FlurryAnalytics logError:@"Unresolved Error Update" message:[training debugDescription] error:error];
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }		
     
     [listSelected release];
-    
     [self dismissModalViewControllerAnimated:YES];
-
     
 }
 

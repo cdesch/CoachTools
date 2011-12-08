@@ -307,25 +307,26 @@
 
 
 - (void)completeSampleForm {
-    //Validate
     
+    //Deactivate the input requestor if it was currenlty editing
+    [[IBAInputManager sharedIBAInputManager] deactivateActiveInputRequestor];
+    
+    //Validate
     if ([self.itemModel valueForKey:@"gameNumber"] == nil || [[self.itemModel valueForKey:@"gameNumber"] isEqualToString:@""]) {
         //Check if empty
-        
         [HelpManagement errorMessage:@"Game Number" error:@"requiredFieldEdit"];
         
     }else if (![[self.itemModel valueForKey:@"gameNumber"] intValue]){
         //Check if number is a number
         [HelpManagement errorMessage:@"Game Number" error:@"numOnlyField"];
-
         
     }
     else if ([self.itemModel valueForKey:@"date"] == nil){
-        
+        //Required field
         [HelpManagement errorMessage:@"Date" error:@"requiredFieldEdit"];
         
     }else if ([self.itemModel valueForKey:@"time"] == nil){
-        
+        //Required field
         [HelpManagement errorMessage:@"Time" error:@"requiredFieldEdit"];
         
     }
@@ -365,7 +366,6 @@
         
         item.date = tempDate;
         
-        
         //Save the Data.
         RootViewController *ac = [RootViewController sharedAppController];
         NSManagedObjectContext *managedObjectContext = [ac managedObjectContext];
@@ -378,10 +378,7 @@
         }		
         
         [self dismissModalViewControllerAnimated:YES];
-        //NSLog(@"Dismissed");
-        //NSLog(@"%@", [self.trainingModel description]);
     }
-    
     
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"gameNumber" ascending:YES];
 	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:&sortDescriptor count:1];
@@ -398,6 +395,7 @@
     [self.tableView reloadData]; 
     
     //Show Training
+    [itemModel release];
     
 }
 
@@ -416,7 +414,8 @@
         
 		abort();
 	}		
-    
+
+    [itemModel release];
     
     [self dismissModalViewControllerAnimated:YES];
 }
@@ -623,8 +622,7 @@
         }
         
     }else {
-        
-        
+
         //NSLog(@"Does Not Exist");
         //Event Does Not exist
         //Remove the event

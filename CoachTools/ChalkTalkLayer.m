@@ -9,43 +9,28 @@
 
 // Import the interfaces
 #import "ChalkTalkLayer.h"
-#import "PlayerSprite.h"
-//#import "ConfigMenuViewController.h"
-#import "CocoaHelper.h"
-#import "HUDLayer.h"
+#import "DragSprite.h"
+
+//#import "DrawMyTouch.h"
+#import "TouchDraw.h"
 
 CCSprite *bg;
-CCSprite *bench;
 CCSprite *homeGoalEvent;
 CCSprite *awayGoalEvent;
-PlayerSprite *soccerBall;
 
-//CCLayer *hudLayer;
-
-CCLabelTTF *text;
-CCLabelTTF *timeLabel;
-
-PlayerSprite *home1;
-PlayerSprite *away1;
+DragSprite *soccerBall;
 
 CGPoint touchOrigin;
 CGPoint touchStop;
+NSMutableArray* naughtyTouchArray;
 
-// HUD Layer - Bench
-BOOL benchState = FALSE;
-CGPoint benchShowPosition;
-CGPoint benchHidePosition;
+NSMutableArray* drawPoints;
 
-
-float SWIPE_Horizontal_THRESHOLD = 10;
+NSInteger TOUCH_DRAWER_TAG = 99;
+NSInteger ICONS_TAG = 98;
 
 // HelloWorldLayer implementation
 @implementation ChalkTalkLayer
-
-@synthesize timeInt = _timeInt;
-@synthesize playersList;
-//@synthesize configMenuViewController;
-@synthesize myPlayers;
 
 /*
 +(CCScene *) scene
@@ -76,12 +61,10 @@ float SWIPE_Horizontal_THRESHOLD = 10;
         // ask director the the window size
         CGSize size = [[CCDirector sharedDirector] winSize];
         
-
         // --- Scene Background --- //
         //create background sprite
         bg = [CCSprite spriteWithFile:@"soccerField3.png"];
         [bg setPosition:ccp(size.width/2 , size.height/2 )];
-        //Add Background to scene
         [self addChild:bg z:0];
         
         //HomeGoal
@@ -95,17 +78,8 @@ float SWIPE_Horizontal_THRESHOLD = 10;
         [awayGoalEvent setPosition:ccp(982, size.height/2+ 23 )];
         [self addChild:awayGoalEvent z:0];
         awayGoalEvent.visible = FALSE;
-        
-        // --- Game Management Config Menu --- // Modal View Controll
-        // allocate for later display
-        //configMenuViewController = [[ConfigMenuViewController alloc] initWithNibName:@"ConfigMenuViewController" bundle:nil];
-        
-        // --- Scene Title -----//
-		// Create and initialize a Title Label
-		//CCLabelTTF *label = [CCLabelTTF labelWithString:@"CoachTools" fontName:@"Helvetica" fontSize:40];
-		//label.position =  ccp( size.width/10 , 675 ); //size.height/2 // 750
-		// add the label as a child to this Layer
-		//[self addChild: label];
+
+        iconsArray = [[NSMutableArray alloc] init];
         
         // --- Scene Menu ---- //
         // Button to add more sprites to the layer
@@ -115,82 +89,31 @@ float SWIPE_Horizontal_THRESHOLD = 10;
 		addHP.position=ccp(915,30);
 		
         CCMenuItemFont *addAP = [CCMenuItemFont itemFromString:@"Add Away Player" target:self selector:@selector(addAwayPlayer:)];
-		addAP.position=ccp(675,30);
+		addAP.position=ccp(150,30);
         
-        CCMenuItemFont *playerFormation = [CCMenuItemFont itemFromString:@"Player Formation" target:self selector:@selector(playerConfig:)];
-		playerFormation.position=ccp(675,65);
+        CCMenuItemFont *clearLines = [CCMenuItemFont itemFromString:@"Clear Lines" target:self selector:@selector(cleanLines:)];
+		clearLines.position=ccp(425,30);
         
-        CCMenuItemFont *moveLayer = [CCMenuItemFont itemFromString:@"move Layer" target:self selector:@selector(moveLayer:)];
-		moveLayer.position=ccp(915,65);
-        
-        
-        CCMenu *menu = [CCMenu menuWithItems:addHP,addAP,playerFormation,moveLayer, nil];
+        CCMenuItemFont *clearAll = [CCMenuItemFont itemFromString:@"Clear All" target:self selector:@selector(cleanAll:)];
+		clearAll.position=ccp(650,30);
+
+        CCMenu *menu = [CCMenu menuWithItems:addHP,addAP,clearLines,clearAll, nil];
 		[self addChild:menu];
 		menu.position=ccp(0,0);
         
-        // ---- Scene Game Timer (Game Clock) --- // 
-        /*
-        NSInteger mins = 0;
-        NSInteger secs = 0;
-        _timeInt = 0;
-        
-        //Set Game Timer Schedule with interval of 1 second
-        [self schedule: @selector(gameCounter:) interval:1.0f];
-        //initialize label and set format 
-        timeLabel =[CCLabelTTF labelWithString:[NSString stringWithFormat:@"%02d:%02d", mins, secs]  fontName:@"Helvetica" fontSize:40];
-        
-		//[timeLabel setAnchorPoint:ccp(0, 0)];   // Not Needed
-		timeLabel.position = ccp(size.width/2,675);  //750
-        
-		[self addChild:timeLabel z:1 tag:timeInt];
-        */
-        // ---- Add an array of objects with names ---- // 
-        // This information is what will be retrieved from coreData 
-        // playerName, playerNumber
-        
-        // Create random list of names for demo purposes
-        playersList = [NSMutableArray arrayWithObjects:@"Matt", @"Jack", @"Larry", @"Maureen", @"Ally", @"Shannon", nil];
-        
-        //Intialize Sprites
-        
-        myPlayers = [[NSMutableDictionary alloc] init];
-        
-        for(NSString *nameString in playersList)
-        {
-            PlayerSprite *s = [PlayerSprite spriteWithFile:@"player1small2.png" ];
-            [s setPlayerName:nameString];
-            s.position=ccp(arc4random() % 480,arc4random() % 320);
-            [myPlayers setObject:s forKey:nameString];
-            [self addChild:[myPlayers objectForKey:nameString]];
-        }
-        
+
         // ---- Scene Collision Detection --- //
-        
         // use schedule update to detect for collisions with every frame
         // detect collisions with every frame
-        // TODO: Each object will have to check for collisions with each other -- Must update for performance later to only have the touched object check for collisions with others
         [self scheduleUpdate];
-        
-        // ---- Set Player Formations ---- //
-        
-        // ---- SoccerBall ----- //
-        soccerBall = [PlayerSprite spriteWithFile:@"soccer_ball.png" ];
-        //[soccerBall setPlayerName:@"Larry"];
-        soccerBall.position=ccp(size.width/2, 42);
-        [self addChild:soccerBall];
-       
-        
-        /*
-        hudLayer = [HUDLayer node];
-        // add layer as a child to scene
-        [self addChild: hudLayer];
-        
-        CGSize benchSize = [hudLayer contentSize];
-        benchShowPosition = CGPointMake(benchSize.width / 2, size.height/2 ); 
-        benchHidePosition = CGPointMake(- benchSize.width , size.height/2 ); 
 
-        benchState = FALSE;
-        */
+        // ---- SoccerBall ----- //
+        soccerBall = [DragSprite spriteWithFile:@"soccer_ball.png" ];
+        soccerBall.position=ccp(150, 150);
+        [self addChild:soccerBall];
+
+        naughtyTouchArray = [[NSMutableArray alloc] init];
+       
 	}
 	return self;
 }
@@ -201,13 +124,8 @@ float SWIPE_Horizontal_THRESHOLD = 10;
 	//
 	//	Add a sprite and position it randomly on the screen
 	//
-	PlayerSprite *s = [PlayerSprite spriteWithFile:@"player1small2.png"];
-    [s setPlayerName:@"Home Player"];
-    NSInteger mins = self.timeInt %  60;
-    [s setPlayerNumber:[NSString stringWithFormat:@"%02d", mins]];
-    s.position=ccp(arc4random() % 480,arc4random() % 320);
-	[self addChild:s];
-    
+
+    [self spawnSpriteWithImage:@"player1small2.png"];    
 }
 
 //Testing -- add a Away Player
@@ -215,73 +133,53 @@ float SWIPE_Horizontal_THRESHOLD = 10;
 	//
 	//	Add a sprite and position it randomly on the screen
 	//
-	PlayerSprite *s = [PlayerSprite spriteWithFile:@"player2small.png"];
-	//[s setPlayerName:@"Ally"];
-    //NSInteger mins = self.timeInt %  60;
-    //[s setPlayerNumber:[NSString stringWithFormat:@"%02d", mins]];
-    s.position=ccp(arc4random() % 480,arc4random() % 320);
-	[self addChild:s];
-    
+    [self spawnSpriteWithImage:@"player2small.png"];
+
 }
 
-//Pause 'game' and go to the ConfiguMenuViewController -- Animated
-//May not need
--(void)gameManagementConfigMenu{
-    //[CocoaHelper showUIViewController:configMenuViewController];
+- (void)spawnSpriteWithImage:(NSString*)image{
+    
+    CGSize size = [[CCDirector sharedDirector] winSize];
+    float offsetX = [self randomFloatBetween:.4 and:1.5];
+    float offsetY = [self randomFloatBetween:.4 and:1.5];
+    
+    DragSprite *spriteIcon = [DragSprite spriteWithFile:image];
+    spriteIcon.position=ccp( (size.width/2)*offsetX, (size.height/2)*offsetY);
+    [spriteIcon setTag:ICONS_TAG];
+	[self addChild:spriteIcon];
+    [iconsArray addObject:spriteIcon];
 }
 
-
-//Testing - Player Formation
-- (void) playerConfig:(id)sender{
+- (void)cleanLines:(id)sender{
+    // remove points from the line array
+    [drawPoints removeAllObjects];
     
-    //TODO: Fix
-    NSMutableArray *b = [NSMutableArray arrayWithObjects:@"Matt", @"Jack", @"Larry", @"Maureen", @"Ally", @"Shannon", nil];
-    
-    CGPoint vertices2[] = { ccp(460, 600), ccp(460, 410), ccp(460, 245), ccp(285, 600), ccp(285,245), ccp(62,410) }; 
-    int i = 0;
+    // remove the node from the scene
+    CCNode *drawer = [self getChildByTag:TOUCH_DRAWER_TAG];
+    [self removeChild:drawer cleanup:YES];
 
-    for(NSString *nameString in b)
-    {
-        //NSLog(@"Moving Sprites");
-        //CGPoint location = [self convertTouchToNodeSpace: touch];
-        
-        [[myPlayers objectForKey:nameString] stopAllActions];
-        [[myPlayers objectForKey:nameString] runAction: [CCMoveTo actionWithDuration:1 position:vertices2[i]]];
-        i++;
+}
+- (void)cleanAll:(id)sender{
+    // remove points from the line array
+    [drawPoints removeAllObjects];
+    
+    // remove the node from the scene
+    CCNode *drawer = [self getChildByTag:TOUCH_DRAWER_TAG];
+    [self removeChild:drawer cleanup:YES];
+    
+    for (DragSprite* icon in iconsArray){
+        [self removeChild:icon cleanup:YES];    
     }
     
+    [iconsArray removeAllObjects];    
 }
 
-- (void) moveLayer:(id)sender{
-    NSLog(@"Moving the Layer");
-   // hudLayer.position(
-//    NSLog(@"x: %02f y: %02f", hudLayer.position.x, hudLayer.position.y);                  
-//    CGPoint touchPoint = CGPointMake( hudLayer.position.x +5, hudLayer.position.y);
-//    hudLayer.position = touchPoint;
-//    NSLog(@"x: %02f y: %02f", hudLayer.position.x, hudLayer.position.y);       
-}
 
-// Game Counter
-- (void) gameCounter: (ccTime)dt
-{	
-    //TODO: Change Label from String to LabelAtlas - Since this is updated frequently, the label takes long to draw and consumes resources. Use Hiero to make font atlas
-    //TODO: Game Counter stops when entering GameManagementConfigMenu -- Game Counter may need to be moved outside of scene and into world. Need to explor this issue. 
-    
-    //Increment the for every second of the game
-	self.timeInt++;
-    
-    //Find the minutes and seconds based on the seconds counted
-	NSInteger secs = self.timeInt %  60;
-	NSInteger mins = self.timeInt /  60;
-    
-    //Update the Game Clock on the screen with 00:00 format.
-	[timeLabel setString:[NSString stringWithFormat:@"%02d:%02d", mins, secs]];
-    
-}
+
+
 //update - ScheduleUpdate runs every frame
 - (void)update:(ccTime)dt{
-    
-    
+
     //Check if sprite collided with any other sprites
     //Check if sprite collided with any standing objects (sub box, goal)
     
@@ -325,138 +223,106 @@ float SWIPE_Horizontal_THRESHOLD = 10;
         {
             awayGoalEvent.visible = FALSE;
         }
-    }
-    
-    //TODO:Animate the process of the assist or Goal achivement
-    
+    }    
 }
-
-- (void) stopGameCounter:(id)sender{
-    //Pause/Stop Game Counter
-    [self unschedule:@selector(gameCounter:)];
-}
-
-- (void) resumeGameCounter:(id)sender{
-    [self schedule: @selector(gameCounter:) interval:1.0f];
-    
-}
-
 
 - (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     NSSet *set = [event allTouches];
     
-    if(set.count == 2)
+    if(set.count == 1)
+    {       
+    }
+    
+    
+    if (drawPoints == nil)
     {
-        NSArray *array = [set allObjects];
-       	CGPoint touch1GL = [[array objectAtIndex:0] locationInView:[[array objectAtIndex:0] view]];
-       	CGPoint touch2GL = [[array objectAtIndex:1] locationInView:[[array objectAtIndex:1] view]];
-        touch1GL = [[CCDirector sharedDirector] convertToGL:touch1GL];
-        touch2GL = [[CCDirector sharedDirector] convertToGL:touch2GL];
-        
-        // calculate the distance between the two points
-        //GLfloat currentDistance = ccpDistance(touch1GL, touch2GL);
-        
-        // calculate the new mid point between the two touches
-        touchOrigin = CGPointMake((touch1GL.x + touch2GL.x) / 2, (touch1GL.y + touch2GL.y) / 2);
+        drawPoints = [[NSMutableArray alloc] initWithCapacity:2];
+    }
+    
+    // add the drawer node to the game view
+    TouchDraw *drawer = [TouchDraw node];
+    [drawer setDrawPoints:drawPoints];
+    [drawer setTag:TOUCH_DRAWER_TAG];
 
-        //NSLog(@"Multi Touch! Began");
-    }
-    
-    /*
-    if(set.count == 2)
-    {
-        //DONE --> TODO: When in Game Config Menu - If multi touch is received again, the game menu should dissappear
-        if([CocoaHelper isViewControllerInUse]){
-            [CocoaHelper hideUIViewController];
-        }else{
-            [CocoaHelper showUIViewController:configMenuViewController]; 
-        }
-        
-        NSLog(@"Multi Touch! Began");
-    }
-     */
-    
+    [self addChild:drawer];
     
 }
 
 - (void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
     NSSet *set = [event allTouches];
-    
-    if(set.count == 2)
+
+    if(set.count == 1)
     {
-        NSArray *array = [set allObjects];
-       	CGPoint touch1GL = [[array objectAtIndex:0] locationInView:[[array objectAtIndex:0] view]];
-       	CGPoint touch2GL = [[array objectAtIndex:1] locationInView:[[array objectAtIndex:1] view]];
-        touch1GL = [[CCDirector sharedDirector] convertToGL:touch1GL];
-        touch2GL = [[CCDirector sharedDirector] convertToGL:touch2GL];
-        
-        // calculate the distance between the two points
-        GLfloat currentDistance = ccpDistance(touch1GL, touch2GL);
-        
-        // calculate the new mid point between the two touches
-        touchStop = CGPointMake((touch1GL.x + touch2GL.x) / 2, (touch1GL.y + touch2GL.y) / 2);
-        
-        float deltaX = touchStop.x - touchOrigin.x;
-        NSLog(@"delta x %f", deltaX);
-        NSLog(@"current x %f", currentDistance);
-        if (deltaX>SWIPE_Horizontal_THRESHOLD) {
-			//distanceX = touchStop.x - touchOrigin.x;
-			NSLog(@"good swipe");
-            
-            
-             if(benchState == FALSE){
-                 //hudLayer.position = CGPointMake((hudLayer.position.x + 120), hudLayer.position.y);;
-                 //[hudLayer showBench];
-                 self.position = CGPointMake((self.position.x + 120), self.position.y);
-                 benchState = TRUE;
-             }else{
-                 NSLog(@"Bench Showing");
-             }
-
-		}
-        
-        else if (deltaX<SWIPE_Horizontal_THRESHOLD){
-            if(benchState == TRUE){
-                //hudLayer.position = CGPointMake((hudLayer.position.x - 120), hudLayer.position.y);;
-                //[hudLayer showBench];
-                self.position = CGPointMake((self.position.x - 120), self.position.y);
-                benchState = FALSE;
-            }else{
-                NSLog(@"Bench Showing");
-            }
-
-        }
-        //NSLog(@"Multi Touch! Began");
-    }
-    
-    
-    
-    
+    }    
     /*
-    if(set.count == 2)
-    {
-        NSLog(@"Multi Touch! Moved");
-        
-    }
-    */
+    UITouch *touchMyMinge = [touches anyObject];
+    
+    CGPoint currentTouchArea = [touchMyMinge locationInView:[touchMyMinge view] ];
+    CGPoint lastTouchArea = [touchMyMinge previousLocationInView:[touchMyMinge view]];
+    
+    // flip belly up. no one likes being entered from behind.
+    currentTouchArea = [[CCDirector sharedDirector] convertToGL:currentTouchArea];
+    lastTouchArea = [[CCDirector sharedDirector] convertToGL:lastTouchArea];
+    
+    // throw to console my inappropriate touches
+    NSLog(@"current x=%2f,y=%2f",currentTouchArea.x, currentTouchArea.y);
+    NSLog(@"last x=%2f,y=%2f",lastTouchArea.x, lastTouchArea.y);  
+    
+    // add my touches to the naughty touch array 
+    [naughtyTouchArray addObject:NSStringFromCGPoint(currentTouchArea)];
+    [naughtyTouchArray addObject:NSStringFromCGPoint(lastTouchArea)];
+     */
+    // add the point to the drawer
+    UITouch *touch = [touches anyObject];
+    CGPoint currentLocation = [touch locationInView:[touch view]];
+    CGPoint previousLocation = [touch previousLocationInView:[touch view]];
+    currentLocation = [[CCDirector sharedDirector] convertToGL:currentLocation];
+    previousLocation = [[CCDirector sharedDirector] convertToGL:previousLocation];
+    currentLocation = [self convertToNodeSpace:currentLocation];
+    previousLocation = [self convertToNodeSpace:previousLocation];
+    
+    [drawPoints addObject:NSStringFromCGPoint(currentLocation)];
+    [drawPoints addObject:NSStringFromCGPoint(previousLocation)];
 }
 
+
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
-    // NSLog(@"Background Touch Ended");
+    
+    
+    //DrawMyTouch *line = [DrawMyTouch node];
+    //[self addChild: line];
     
     touchStop.x = 0;
     touchStop.y = 0;
 }
 
+- (float)randomFloatBetween:(float)smallNumber and:(float)bigNumber {
+    float diff = bigNumber - smallNumber;
+    return (((float) (arc4random() % ((unsigned)RAND_MAX + 1)) / RAND_MAX) * diff) + smallNumber;
+}
+
+
 
 // on "dealloc" you need to release all your retained objects
 - (void) dealloc
-{
-	// in case you have something to dealloc, do it in this method
+{    [naughtyTouchArray release];
+    naughtyTouchArray = nil;
+    
+    [iconsArray release];
+    iconsArray = nil;
+    
+    // remove points from the line array
+    [drawPoints removeAllObjects];
+    
+    // remove the node from the scene
+    CCNode *drawer = [self getChildByTag:TOUCH_DRAWER_TAG];
+    [self removeChild:drawer cleanup:YES];	// in case you have something to dealloc, do it in this method
 	// in this particular example nothing needs to be released.
 	// cocos2d will automatically release all the children (Label)
 	
 	// don't forget to call "super dealloc"
 	[super dealloc];
+    
+
 }
 @end

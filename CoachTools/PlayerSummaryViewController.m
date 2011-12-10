@@ -21,6 +21,8 @@
 #import <IBAForms/IBAForms.h>
 #import "ShowcaseModel.h"
 
+#import "EmergencyContactViewController.h"
+
 @implementation PlayerSummaryViewController
 
 @synthesize player;
@@ -313,6 +315,19 @@
     }else{
                 
     }
+    
+}
+
+- (IBAction)emergancyContactButton:(id)sender{
+    
+    EmergencyContactViewController *detailViewController = [[EmergencyContactViewController alloc] initWithStyle:UITableViewStyleGrouped player:player];
+    //detailViewController.delegate = self;
+    
+    UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:detailViewController];
+    navigation.modalPresentationStyle = UIModalPresentationFormSheet;
+    [self presentModalViewController:navigation animated:YES];
+    [navigation release];
+    [detailViewController release];
     
 }
 

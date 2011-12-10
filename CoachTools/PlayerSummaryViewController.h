@@ -51,7 +51,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil playerSelected:(Person *)aPlayer;
 - (void)editItem:(id)sender;
 - (IBAction)activeSwitchChanged:(id)sender;
-
+- (IBAction)emergancyContactButton:(id)sender;
 // Build the graph
 - (void)buildGraph:(NSInteger)type:(NSInteger)season;
 //- (void)constructBarChart;

@@ -367,6 +367,10 @@
 		23EB6ED31409AD9A00D9B45A /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23EB6ED21409AD9A00D9B45A /* iAd.framework */; };
 		23EFC85B139455B50069EF0F /* _GameScore.m in Sources */ = {isa = PBXBuildFile; fileRef = 23EFC858139455B50069EF0F /* _GameScore.m */; };
 		23EFC85C139455B50069EF0F /* _GameSub.m in Sources */ = {isa = PBXBuildFile; fileRef = 23EFC85A139455B50069EF0F /* _GameSub.m */; };
+		23F0019F1492B75B000294AF /* EmergencyContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F0019E1492B75B000294AF /* EmergencyContactViewController.m */; };
+		23F001A21492E345000294AF /* DragSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F001A11492E345000294AF /* DragSprite.m */; };
+		23F001A91492E9B4000294AF /* DrawMyTouch.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F001A81492E9B4000294AF /* DrawMyTouch.m */; };
+		23F001AC1492F130000294AF /* TouchDraw.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F001AB1492F130000294AF /* TouchDraw.m */; };
 		23F160C713A17B4900408488 /* PlayerListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F160C613A17B4900408488 /* PlayerListViewCell.m */; };
 		23F160CA13A17B5E00408488 /* PlayerListViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23F160C913A17B5E00408488 /* PlayerListViewCell.xib */; };
 		23F1F55A13E8566700E761CE /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23F1F55913E8566700E761CE /* MessageUI.framework */; };
@@ -1085,6 +1089,14 @@
 		23EFC858139455B50069EF0F /* _GameScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _GameScore.m; sourceTree = "<group>"; };
 		23EFC859139455B50069EF0F /* _GameSub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _GameSub.h; sourceTree = "<group>"; };
 		23EFC85A139455B50069EF0F /* _GameSub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _GameSub.m; sourceTree = "<group>"; };
+		23F0019D1492B75B000294AF /* EmergencyContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmergencyContactViewController.h; sourceTree = "<group>"; };
+		23F0019E1492B75B000294AF /* EmergencyContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmergencyContactViewController.m; sourceTree = "<group>"; };
+		23F001A01492E345000294AF /* DragSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DragSprite.h; sourceTree = "<group>"; };
+		23F001A11492E345000294AF /* DragSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DragSprite.m; sourceTree = "<group>"; };
+		23F001A71492E9B3000294AF /* DrawMyTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawMyTouch.h; sourceTree = "<group>"; };
+		23F001A81492E9B4000294AF /* DrawMyTouch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawMyTouch.m; sourceTree = "<group>"; };
+		23F001AA1492F130000294AF /* TouchDraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchDraw.h; sourceTree = "<group>"; };
+		23F001AB1492F130000294AF /* TouchDraw.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchDraw.m; sourceTree = "<group>"; };
 		23F160C513A17B4900408488 /* PlayerListViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerListViewCell.h; sourceTree = "<group>"; };
 		23F160C613A17B4900408488 /* PlayerListViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerListViewCell.m; sourceTree = "<group>"; };
 		23F160C913A17B5E00408488 /* PlayerListViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerListViewCell.xib; sourceTree = "<group>"; };
@@ -1948,6 +1960,8 @@
 				23F160C513A17B4900408488 /* PlayerListViewCell.h */,
 				23F160C613A17B4900408488 /* PlayerListViewCell.m */,
 				23F160C913A17B5E00408488 /* PlayerListViewCell.xib */,
+				23F0019D1492B75B000294AF /* EmergencyContactViewController.h */,
+				23F0019E1492B75B000294AF /* EmergencyContactViewController.m */,
 			);
 			name = Players;
 			sourceTree = "<group>";
@@ -2371,11 +2385,17 @@
 		23F0DE1913AABC64004DAD9F /* ChalkTalk */ = {
 			isa = PBXGroup;
 			children = (
+				23F001A01492E345000294AF /* DragSprite.h */,
+				23F001A11492E345000294AF /* DragSprite.m */,
 				238C39BB135289BD00F7BCB7 /* ChalkTalkLayer.h */,
 				238C39BC135289BD00F7BCB7 /* ChalkTalkLayer.m */,
 				23FC68F9149176DB00BADF79 /* ChalkTalkViewController.h */,
 				23FC68FA149176DB00BADF79 /* ChalkTalkViewController.m */,
 				23FC68FB149176DB00BADF79 /* ChalkTalkViewController.xib */,
+				23F001A71492E9B3000294AF /* DrawMyTouch.h */,
+				23F001A81492E9B4000294AF /* DrawMyTouch.m */,
+				23F001AA1492F130000294AF /* TouchDraw.h */,
+				23F001AB1492F130000294AF /* TouchDraw.m */,
 			);
 			name = ChalkTalk;
 			sourceTree = "<group>";
@@ -2961,6 +2981,10 @@
 				23F4C6FF148EE21900F05EDC /* TrainingListViewCell.m in Sources */,
 				23F2BBB214916486004AFD54 /* SeasonFormDataSource.m in Sources */,
 				23FC68FC149176DB00BADF79 /* ChalkTalkViewController.m in Sources */,
+				23F0019F1492B75B000294AF /* EmergencyContactViewController.m in Sources */,
+				23F001A21492E345000294AF /* DragSprite.m in Sources */,
+				23F001A91492E9B4000294AF /* DrawMyTouch.m in Sources */,
+				23F001AC1492F130000294AF /* TouchDraw.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

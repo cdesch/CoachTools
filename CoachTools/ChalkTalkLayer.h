@@ -11,32 +11,16 @@
 #import "ConfigMenuViewController.h"
 #import <UIKit/UIKit.h>
 
-@class HUDLayer;
 
-
-// HelloWorldLayer
-@interface ChalkTalkLayer : CCLayer
-{
+@interface ChalkTalkLayer : CCLayer{
     
-    NSInteger timeInt;
-    
-    NSMutableDictionary *myPlayers;
-    NSMutableArray *playersList;
-    
-    //ConfigMenuViewController *configMenuViewController;
-    
+    NSMutableArray *iconsArray;
 }
-
-@property (nonatomic, readwrite) NSInteger timeInt;
-
-@property (nonatomic, retain) NSMutableDictionary *myPlayers;
-@property (nonatomic, retain) NSMutableArray *playersList;
-
-//@property (nonatomic, retain) ConfigMenuViewController *configMenuViewController;
-
-
 // returns a CCScene that contains the HelloWorldLayer as the only child
--(void)gameManagementConfigMenu;
+
+- (void)spawnSpriteWithImage:(NSString*)image;
+- (void)cleanLines:(id)sender;
+- (float)randomFloatBetween:(float)smallNumber and:(float)bigNumber;
 
 
 @end

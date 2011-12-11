@@ -29,7 +29,6 @@
 @synthesize itemModel;
 @synthesize nameTextField;
 @synthesize uniformColorTextField;
-@synthesize locationTextField;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil teamSelected:(Team *)aTeam
 {
@@ -92,7 +91,7 @@
 
     nameTextField.text = team.name;
     uniformColorTextField.text = team.uniformColor;
-    locationTextField.text = team.homeLocation;
+
     
 }
 
@@ -127,9 +126,6 @@
 	// Values set on the model will be reflected in the form fields.
 	//[sampleFormModel setObject:@"A value contained in the model" forKey:@"readOnlyText"];
     [itemModel setObject:team.name forKey:@"name"];
-    if(team.homeLocation != nil){
-        [itemModel setObject:team.homeLocation  forKey:@"homeLocation"];
-    }
     
     if (team.uniformColor != nil) {
         [itemModel setObject:team.uniformColor forKey:@"uniformColor"];
@@ -181,7 +177,6 @@
         //item.gameNumber = [NSNumber numberWithInt:[[self.itemModel valueForKey:@"gameNumber"] intValue]];
         team.name = [self.itemModel valueForKey:@"name"];
         team.uniformColor = [self.itemModel valueForKey:@"uniformColor"];
-        team.homeLocation = [self.itemModel valueForKey:@"homeLocation"];
         
           //Save the Data.
         RootViewController *ac = [RootViewController sharedAppController];

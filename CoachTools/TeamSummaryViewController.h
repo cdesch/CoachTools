@@ -17,7 +17,6 @@
 
     UITextField *nameTextField;
     UITextField *uniformColorTextField;
-    UITextField *locationTextField;
 
 }
 
@@ -27,7 +26,7 @@
 
 @property (nonatomic, retain) IBOutlet UITextField *nameTextField;
 @property (nonatomic, retain) IBOutlet UITextField *uniformColorTextField;
-@property (nonatomic, retain) IBOutlet UITextField *locationTextField;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil teamSelected:(Team *)aTeam;
 

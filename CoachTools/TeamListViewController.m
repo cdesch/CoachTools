@@ -81,7 +81,7 @@
     
     self.navigationItem.rightBarButtonItem = addButton;
     [addButton release];
-    
+    /*
     
     UIBarButtonItem *sortAscendingButton = [[UIBarButtonItem alloc] initWithTitle:@"Sort" style:UIBarButtonItemStyleBordered target:self action:@selector(sortButton:)];
     UIBarButtonItem *flexibleBarButtItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -91,7 +91,7 @@
     [flexibleBarButtItem release];
     [sortAscendingButton release];
     
-    
+    */
 
 }
 

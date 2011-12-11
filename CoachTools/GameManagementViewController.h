@@ -71,7 +71,7 @@
 - (void)showGameTimerControls;
 - (void)hideGameTimerControls;
 - (void)runGameScene;
-- (void)compileStats;
+//- (void)compileStats;
 
 @end
 

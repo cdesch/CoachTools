@@ -29,28 +29,12 @@
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
-	if ([key isEqualToString:@"cPlayingTimeValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"cPlayingTime"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-	}
 	if ([key isEqualToString:@"activeValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"active"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
-	if ([key isEqualToString:@"cGoalsValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"cGoals"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-	}
 	if ([key isEqualToString:@"phoneNumberValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"phoneNumber"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-	}
-	if ([key isEqualToString:@"cStartsValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"cStarts"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-	}
-	if ([key isEqualToString:@"cAbsencesValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"cAbsences"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 
@@ -60,27 +44,43 @@
 
 
 
-@dynamic cPlayingTime;
+@dynamic lastName;
 
 
 
-- (double)cPlayingTimeValue {
-	NSNumber *result = [self cPlayingTime];
-	return [result doubleValue];
-}
 
-- (void)setCPlayingTimeValue:(double)value_ {
-	[self setCPlayingTime:[NSNumber numberWithDouble:value_]];
-}
 
-- (double)primitiveCPlayingTimeValue {
-	NSNumber *result = [self primitiveCPlayingTime];
-	return [result doubleValue];
-}
 
-- (void)setPrimitiveCPlayingTimeValue:(double)value_ {
-	[self setPrimitiveCPlayingTime:[NSNumber numberWithDouble:value_]];
-}
+@dynamic primaryPosition;
+
+
+
+
+
+
+@dynamic contactIdentifier;
+
+
+
+
+
+
+@dynamic firstName;
+
+
+
+
+
+
+@dynamic playerNumber;
+
+
+
+
+
+
+@dynamic secondaryPosition;
+
 
 
 
@@ -112,55 +112,15 @@
 
 
 
-@dynamic lastName;
+@dynamic email;
 
 
 
 
 
 
-@dynamic firstName;
+@dynamic birthdate;
 
-
-
-
-
-
-@dynamic contactIdentifier;
-
-
-
-
-
-
-@dynamic secondaryPosition;
-
-
-
-
-
-
-@dynamic cGoals;
-
-
-
-- (short)cGoalsValue {
-	NSNumber *result = [self cGoals];
-	return [result shortValue];
-}
-
-- (void)setCGoalsValue:(short)value_ {
-	[self setCGoals:[NSNumber numberWithShort:value_]];
-}
-
-- (short)primitiveCGoalsValue {
-	NSNumber *result = [self primitiveCGoals];
-	return [result shortValue];
-}
-
-- (void)setPrimitiveCGoalsValue:(short)value_ {
-	[self setPrimitiveCGoals:[NSNumber numberWithShort:value_]];
-}
 
 
 
@@ -192,86 +152,6 @@
 
 
 
-@dynamic playerNumber;
-
-
-
-
-
-
-@dynamic email;
-
-
-
-
-
-
-@dynamic cStarts;
-
-
-
-- (short)cStartsValue {
-	NSNumber *result = [self cStarts];
-	return [result shortValue];
-}
-
-- (void)setCStartsValue:(short)value_ {
-	[self setCStarts:[NSNumber numberWithShort:value_]];
-}
-
-- (short)primitiveCStartsValue {
-	NSNumber *result = [self primitiveCStarts];
-	return [result shortValue];
-}
-
-- (void)setPrimitiveCStartsValue:(short)value_ {
-	[self setPrimitiveCStarts:[NSNumber numberWithShort:value_]];
-}
-
-
-
-
-
-@dynamic cAbsences;
-
-
-
-- (short)cAbsencesValue {
-	NSNumber *result = [self cAbsences];
-	return [result shortValue];
-}
-
-- (void)setCAbsencesValue:(short)value_ {
-	[self setCAbsences:[NSNumber numberWithShort:value_]];
-}
-
-- (short)primitiveCAbsencesValue {
-	NSNumber *result = [self primitiveCAbsences];
-	return [result shortValue];
-}
-
-- (void)setPrimitiveCAbsencesValue:(short)value_ {
-	[self setPrimitiveCAbsences:[NSNumber numberWithShort:value_]];
-}
-
-
-
-
-
-@dynamic birthdate;
-
-
-
-
-
-
-@dynamic primaryPosition;
-
-
-
-
-
-
 @dynamic training;
 
 	
@@ -294,6 +174,17 @@
 	[self willAccessValueForKey:@"gameScore"];
 	NSMutableSet *result = [self mutableSetValueForKey:@"gameScore"];
 	[self didAccessValueForKey:@"gameScore"];
+	return result;
+}
+	
+
+@dynamic game;
+
+	
+- (NSMutableSet*)gameSet {
+	[self willAccessValueForKey:@"game"];
+	NSMutableSet *result = [self mutableSetValueForKey:@"game"];
+	[self didAccessValueForKey:@"game"];
 	return result;
 }
 	

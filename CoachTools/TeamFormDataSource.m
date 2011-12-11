@@ -13,7 +13,6 @@
 
 @implementation TeamFormDataSource
 
-
 - (id)initWithModel:(id)aModel {
 	if (self = [super initWithModel:aModel]) {
         
@@ -22,7 +21,7 @@
         basicFieldSection.formFieldStyle = [[[FormFieldStyle alloc] init] autorelease];
         
 		[basicFieldSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"name" title:@"Name"] autorelease]];
-        [basicFieldSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"homeLocation" title:@"Location"] autorelease]];
+
         [basicFieldSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"uniformColor" title:@"Uniform Color"] autorelease]];
 
         //TODO: Fix Style for Long label name fields

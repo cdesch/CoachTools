@@ -252,7 +252,7 @@ static GameManagementViewController *sharedInstance;
     //NSLog(@"Entering %s", __PRETTY_FUNCTION__);
     
     [[[GameScene sharedScene] playerLayer] saveEndGameData];
-    [self compileStats];
+    //[self compileStats];
     
     [self endCocos2d];
     [self dismissModalViewControllerAnimated:YES];
@@ -320,7 +320,7 @@ static GameManagementViewController *sharedInstance;
     [self showGameTimerControls];
     //NSLog(@"Exiting %s", __PRETTY_FUNCTION__); 
 }
-
+/*
 - (void)compileStats{
     
     //NSLog(@"Entering %s", __PRETTY_FUNCTION__); 
@@ -396,7 +396,7 @@ static GameManagementViewController *sharedInstance;
 
     // NSLog(@"Exiting %s", __PRETTY_FUNCTION__); 
 }
-
+*/
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.

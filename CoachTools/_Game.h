@@ -5,10 +5,13 @@
 
 
 @class GameScore;
-@class GameStart;
+@class EventLocation;
+@class Person;
+@class Opponent;
 @class GameSub;
-@class GamePenalty;
 @class Season;
+@class GameStart;
+@class GamePenalty;
 
 
 
@@ -36,6 +39,12 @@
 
 
 
+@property (nonatomic, retain) NSString *location;
+
+//- (BOOL)validateLocation:(id*)value_ error:(NSError**)error_;
+
+
+
 @property (nonatomic, retain) NSNumber *time;
 
 @property short timeValue;
@@ -46,9 +55,9 @@
 
 
 
-@property (nonatomic, retain) NSString *location;
+@property (nonatomic, retain) NSString *opponent;
 
-//- (BOOL)validateLocation:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateOpponent:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -68,16 +77,6 @@
 
 
 
-@property (nonatomic, retain) NSNumber *homeScore;
-
-@property short homeScoreValue;
-- (short)homeScoreValue;
-- (void)setHomeScoreValue:(short)value_;
-
-//- (BOOL)validateHomeScore:(id*)value_ error:(NSError**)error_;
-
-
-
 @property (nonatomic, retain) NSString *locationDetail;
 
 //- (BOOL)validateLocationDetail:(id*)value_ error:(NSError**)error_;
@@ -94,9 +93,19 @@
 
 
 
-@property (nonatomic, retain) NSString *opponent;
+@property (nonatomic, retain) NSString *startingFormation;
 
-//- (BOOL)validateOpponent:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateStartingFormation:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSNumber *homeScore;
+
+@property short homeScoreValue;
+- (short)homeScoreValue;
+- (void)setHomeScoreValue:(short)value_;
+
+//- (BOOL)validateHomeScore:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -120,21 +129,15 @@
 
 
 
-@property (nonatomic, retain) NSString *gameNumber;
-
-//- (BOOL)validateGameNumber:(id*)value_ error:(NSError**)error_;
-
-
-
 @property (nonatomic, retain) NSString *numPlayers;
 
 //- (BOOL)validateNumPlayers:(id*)value_ error:(NSError**)error_;
 
 
 
-@property (nonatomic, retain) NSString *startingFormation;
+@property (nonatomic, retain) NSString *gameNumber;
 
-//- (BOOL)validateStartingFormation:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateGameNumber:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -150,8 +153,18 @@
 
 
 
-@property (nonatomic, retain) NSSet* gameStart;
-- (NSMutableSet*)gameStartSet;
+@property (nonatomic, retain) EventLocation* gameLocation;
+//- (BOOL)validateGameLocation:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSSet* playersAttended;
+- (NSMutableSet*)playersAttendedSet;
+
+
+
+@property (nonatomic, retain) Opponent* gameOpponent;
+//- (BOOL)validateGameOpponent:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -160,13 +173,18 @@
 
 
 
-@property (nonatomic, retain) NSSet* gamePenalty;
-- (NSMutableSet*)gamePenaltySet;
-
-
-
 @property (nonatomic, retain) Season* season;
 //- (BOOL)validateSeason:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSSet* gameStart;
+- (NSMutableSet*)gameStartSet;
+
+
+
+@property (nonatomic, retain) NSSet* gamePenalty;
+- (NSMutableSet*)gamePenaltySet;
 
 
 
@@ -180,15 +198,20 @@
 - (void)addGameScoreObject:(GameScore*)value_;
 - (void)removeGameScoreObject:(GameScore*)value_;
 
-- (void)addGameStart:(NSSet*)value_;
-- (void)removeGameStart:(NSSet*)value_;
-- (void)addGameStartObject:(GameStart*)value_;
-- (void)removeGameStartObject:(GameStart*)value_;
+- (void)addPlayersAttended:(NSSet*)value_;
+- (void)removePlayersAttended:(NSSet*)value_;
+- (void)addPlayersAttendedObject:(Person*)value_;
+- (void)removePlayersAttendedObject:(Person*)value_;
 
 - (void)addGameSub:(NSSet*)value_;
 - (void)removeGameSub:(NSSet*)value_;
 - (void)addGameSubObject:(GameSub*)value_;
 - (void)removeGameSubObject:(GameSub*)value_;
+
+- (void)addGameStart:(NSSet*)value_;
+- (void)removeGameStart:(NSSet*)value_;
+- (void)addGameStartObject:(GameStart*)value_;
+- (void)removeGameStartObject:(GameStart*)value_;
 
 - (void)addGamePenalty:(NSSet*)value_;
 - (void)removeGamePenalty:(NSSet*)value_;
@@ -200,6 +223,12 @@
 @interface _Game (CoreDataGeneratedPrimitiveAccessors)
 
 
+- (NSString*)primitiveLocation;
+- (void)setPrimitiveLocation:(NSString*)value;
+
+
+
+
 - (NSNumber*)primitiveTime;
 - (void)setPrimitiveTime:(NSNumber*)value;
 
@@ -209,8 +238,8 @@
 
 
 
-- (NSString*)primitiveLocation;
-- (void)setPrimitiveLocation:(NSString*)value;
+- (NSString*)primitiveOpponent;
+- (void)setPrimitiveOpponent:(NSString*)value;
 
 
 
@@ -230,15 +259,6 @@
 
 
 
-- (NSNumber*)primitiveHomeScore;
-- (void)setPrimitiveHomeScore:(NSNumber*)value;
-
-- (short)primitiveHomeScoreValue;
-- (void)setPrimitiveHomeScoreValue:(short)value_;
-
-
-
-
 - (NSString*)primitiveLocationDetail;
 - (void)setPrimitiveLocationDetail:(NSString*)value;
 
@@ -254,8 +274,17 @@
 
 
 
-- (NSString*)primitiveOpponent;
-- (void)setPrimitiveOpponent:(NSString*)value;
+- (NSString*)primitiveStartingFormation;
+- (void)setPrimitiveStartingFormation:(NSString*)value;
+
+
+
+
+- (NSNumber*)primitiveHomeScore;
+- (void)setPrimitiveHomeScore:(NSNumber*)value;
+
+- (short)primitiveHomeScoreValue;
+- (void)setPrimitiveHomeScoreValue:(short)value_;
 
 
 
@@ -278,20 +307,14 @@
 
 
 
-- (NSString*)primitiveGameNumber;
-- (void)setPrimitiveGameNumber:(NSString*)value;
-
-
-
-
 - (NSString*)primitiveNumPlayers;
 - (void)setPrimitiveNumPlayers:(NSString*)value;
 
 
 
 
-- (NSString*)primitiveStartingFormation;
-- (void)setPrimitiveStartingFormation:(NSString*)value;
+- (NSString*)primitiveGameNumber;
+- (void)setPrimitiveGameNumber:(NSString*)value;
 
 
 
@@ -308,8 +331,18 @@
 
 
 
-- (NSMutableSet*)primitiveGameStart;
-- (void)setPrimitiveGameStart:(NSMutableSet*)value;
+- (EventLocation*)primitiveGameLocation;
+- (void)setPrimitiveGameLocation:(EventLocation*)value;
+
+
+
+- (NSMutableSet*)primitivePlayersAttended;
+- (void)setPrimitivePlayersAttended:(NSMutableSet*)value;
+
+
+
+- (Opponent*)primitiveGameOpponent;
+- (void)setPrimitiveGameOpponent:(Opponent*)value;
 
 
 
@@ -318,13 +351,18 @@
 
 
 
-- (NSMutableSet*)primitiveGamePenalty;
-- (void)setPrimitiveGamePenalty:(NSMutableSet*)value;
-
-
-
 - (Season*)primitiveSeason;
 - (void)setPrimitiveSeason:(Season*)value;
+
+
+
+- (NSMutableSet*)primitiveGameStart;
+- (void)setPrimitiveGameStart:(NSMutableSet*)value;
+
+
+
+- (NSMutableSet*)primitiveGamePenalty;
+- (void)setPrimitiveGamePenalty:(NSMutableSet*)value;
 
 
 @end

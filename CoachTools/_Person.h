@@ -7,15 +7,12 @@
 @class Training;
 @class Team;
 @class GameScore;
+@class Game;
 @class GameSub;
 @class EmergancyContact;
 @class GameScore;
 @class GameStart;
 @class GamePenalty;
-
-
-
-
 
 
 
@@ -39,13 +36,39 @@
 
 
 
-@property (nonatomic, retain) NSNumber *cPlayingTime;
+@property (nonatomic, retain) NSString *lastName;
 
-@property double cPlayingTimeValue;
-- (double)cPlayingTimeValue;
-- (void)setCPlayingTimeValue:(double)value_;
+//- (BOOL)validateLastName:(id*)value_ error:(NSError**)error_;
 
-//- (BOOL)validateCPlayingTime:(id*)value_ error:(NSError**)error_;
+
+
+@property (nonatomic, retain) NSString *primaryPosition;
+
+//- (BOOL)validatePrimaryPosition:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *contactIdentifier;
+
+//- (BOOL)validateContactIdentifier:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *firstName;
+
+//- (BOOL)validateFirstName:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *playerNumber;
+
+//- (BOOL)validatePlayerNumber:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *secondaryPosition;
+
+//- (BOOL)validateSecondaryPosition:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -59,37 +82,15 @@
 
 
 
-@property (nonatomic, retain) NSString *lastName;
+@property (nonatomic, retain) NSString *email;
 
-//- (BOOL)validateLastName:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSString *firstName;
-
-//- (BOOL)validateFirstName:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateEmail:(id*)value_ error:(NSError**)error_;
 
 
 
-@property (nonatomic, retain) NSString *contactIdentifier;
+@property (nonatomic, retain) NSDate *birthdate;
 
-//- (BOOL)validateContactIdentifier:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSString *secondaryPosition;
-
-//- (BOOL)validateSecondaryPosition:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSNumber *cGoals;
-
-@property short cGoalsValue;
-- (short)cGoalsValue;
-- (void)setCGoalsValue:(short)value_;
-
-//- (BOOL)validateCGoals:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateBirthdate:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -100,50 +101,6 @@
 - (void)setPhoneNumberValue:(short)value_;
 
 //- (BOOL)validatePhoneNumber:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSString *playerNumber;
-
-//- (BOOL)validatePlayerNumber:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSString *email;
-
-//- (BOOL)validateEmail:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSNumber *cStarts;
-
-@property short cStartsValue;
-- (short)cStartsValue;
-- (void)setCStartsValue:(short)value_;
-
-//- (BOOL)validateCStarts:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSNumber *cAbsences;
-
-@property short cAbsencesValue;
-- (short)cAbsencesValue;
-- (void)setCAbsencesValue:(short)value_;
-
-//- (BOOL)validateCAbsences:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSDate *birthdate;
-
-//- (BOOL)validateBirthdate:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSString *primaryPosition;
-
-//- (BOOL)validatePrimaryPosition:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -160,6 +117,11 @@
 
 @property (nonatomic, retain) NSSet* gameScore;
 - (NSMutableSet*)gameScoreSet;
+
+
+
+@property (nonatomic, retain) NSSet* game;
+- (NSMutableSet*)gameSet;
 
 
 
@@ -208,6 +170,11 @@
 - (void)addGameScoreObject:(GameScore*)value_;
 - (void)removeGameScoreObject:(GameScore*)value_;
 
+- (void)addGame:(NSSet*)value_;
+- (void)removeGame:(NSSet*)value_;
+- (void)addGameObject:(Game*)value_;
+- (void)removeGameObject:(Game*)value_;
+
 - (void)addGameSub:(NSSet*)value_;
 - (void)removeGameSub:(NSSet*)value_;
 - (void)addGameSubObject:(GameSub*)value_;
@@ -238,11 +205,38 @@
 @interface _Person (CoreDataGeneratedPrimitiveAccessors)
 
 
-- (NSNumber*)primitiveCPlayingTime;
-- (void)setPrimitiveCPlayingTime:(NSNumber*)value;
+- (NSString*)primitiveLastName;
+- (void)setPrimitiveLastName:(NSString*)value;
 
-- (double)primitiveCPlayingTimeValue;
-- (void)setPrimitiveCPlayingTimeValue:(double)value_;
+
+
+
+- (NSString*)primitivePrimaryPosition;
+- (void)setPrimitivePrimaryPosition:(NSString*)value;
+
+
+
+
+- (NSString*)primitiveContactIdentifier;
+- (void)setPrimitiveContactIdentifier:(NSString*)value;
+
+
+
+
+- (NSString*)primitiveFirstName;
+- (void)setPrimitiveFirstName:(NSString*)value;
+
+
+
+
+- (NSString*)primitivePlayerNumber;
+- (void)setPrimitivePlayerNumber:(NSString*)value;
+
+
+
+
+- (NSString*)primitiveSecondaryPosition;
+- (void)setPrimitiveSecondaryPosition:(NSString*)value;
 
 
 
@@ -256,74 +250,8 @@
 
 
 
-- (NSString*)primitiveLastName;
-- (void)setPrimitiveLastName:(NSString*)value;
-
-
-
-
-- (NSString*)primitiveFirstName;
-- (void)setPrimitiveFirstName:(NSString*)value;
-
-
-
-
-- (NSString*)primitiveContactIdentifier;
-- (void)setPrimitiveContactIdentifier:(NSString*)value;
-
-
-
-
-- (NSString*)primitiveSecondaryPosition;
-- (void)setPrimitiveSecondaryPosition:(NSString*)value;
-
-
-
-
-- (NSNumber*)primitiveCGoals;
-- (void)setPrimitiveCGoals:(NSNumber*)value;
-
-- (short)primitiveCGoalsValue;
-- (void)setPrimitiveCGoalsValue:(short)value_;
-
-
-
-
-- (NSNumber*)primitivePhoneNumber;
-- (void)setPrimitivePhoneNumber:(NSNumber*)value;
-
-- (short)primitivePhoneNumberValue;
-- (void)setPrimitivePhoneNumberValue:(short)value_;
-
-
-
-
-- (NSString*)primitivePlayerNumber;
-- (void)setPrimitivePlayerNumber:(NSString*)value;
-
-
-
-
 - (NSString*)primitiveEmail;
 - (void)setPrimitiveEmail:(NSString*)value;
-
-
-
-
-- (NSNumber*)primitiveCStarts;
-- (void)setPrimitiveCStarts:(NSNumber*)value;
-
-- (short)primitiveCStartsValue;
-- (void)setPrimitiveCStartsValue:(short)value_;
-
-
-
-
-- (NSNumber*)primitiveCAbsences;
-- (void)setPrimitiveCAbsences:(NSNumber*)value;
-
-- (short)primitiveCAbsencesValue;
-- (void)setPrimitiveCAbsencesValue:(short)value_;
 
 
 
@@ -334,8 +262,11 @@
 
 
 
-- (NSString*)primitivePrimaryPosition;
-- (void)setPrimitivePrimaryPosition:(NSString*)value;
+- (NSNumber*)primitivePhoneNumber;
+- (void)setPrimitivePhoneNumber:(NSNumber*)value;
+
+- (short)primitivePhoneNumberValue;
+- (void)setPrimitivePhoneNumberValue:(short)value_;
 
 
 
@@ -353,6 +284,11 @@
 
 - (NSMutableSet*)primitiveGameScore;
 - (void)setPrimitiveGameScore:(NSMutableSet*)value;
+
+
+
+- (NSMutableSet*)primitiveGame;
+- (void)setPrimitiveGame:(NSMutableSet*)value;
 
 
 

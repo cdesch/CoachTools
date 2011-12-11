@@ -18,7 +18,6 @@
 	if (self = [super initWithModel:aModel]) {
         
         // Some basic form fields that accept text input
-        
         IBAFormSection *pickListSection = [self addSectionWithHeaderTitle:@"Game Options" footerTitle:nil];
         pickListSection.formFieldStyle =[[[FormFieldStyle alloc] init] autorelease];
         

@@ -53,11 +53,18 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    if ([item.contactIdentifier intValue] == (-1)){
-        self.labels = [NSArray arrayWithObjects:@"Existing Contact", @"New Contact",@"Migrate Existing Contact", nil];
+    if (item !=nil){
+        if ([item.contactIdentifier intValue] == (-1)){
+            self.labels = [NSArray arrayWithObjects:@"Existing Contact", @"New Contact",@"Migrate Existing Contact", nil];
+        }else{
+            self.labels = [NSArray arrayWithObjects:@"Existing Contact", @"New Contact",nil];
+        }     
     }else{
-        self.labels = [NSArray arrayWithObjects:@"Existing Contact", @"New Contact",nil];
+           self.labels = [NSArray arrayWithObjects:@"Existing Contact", @"New Contact",nil];
     }
+    
+    
+   
     
 }
 
@@ -76,10 +83,12 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-     if ([item.contactIdentifier intValue] == (-1)){
-         [self showMigrationAlert];
-     }
+    if (item !=nil){
+        if([item.contactIdentifier intValue] == (-1)){
+            [self showMigrationAlert];
+        }
+    }
+     
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -96,6 +105,14 @@
 {
     // Return YES for supported orientations
 	return YES;
+}
+
+- (void)dealloc{
+    [labels release];
+
+    labels = nil;
+    
+    [super dealloc];
 }
 
 
@@ -121,7 +138,7 @@
 	}
 	else if (buttonIndex == 1)
 	{
-		// No
+		// No Dimiss
 	}
 }
 
@@ -223,19 +240,8 @@
 
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person{
     
-    item.firstName          = (NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
-    item.lastName           = (NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);	
-    NSNumber *recordId      = [NSNumber numberWithInteger:ABRecordGetRecordID(person)];
-    item.contactIdentifier  = [recordId stringValue];
-    if (item.firstName == nil) {
-        item.firstName = @"";
-    }
-    if (item.lastName == nil) {
-        item.lastName = @"";
-    }
-    
     [self dismissModalViewControllerAnimated:YES];
-    [self.delegate doneAddressBook:self contactIdentifier:[NSNumber numberWithInt:ABRecordGetRecordID(person)]];    
+    [self.delegate doneAddressBook:self contactIdentifier:person];    
     
 	return NO;
 }
@@ -256,20 +262,9 @@
 - (void)newPersonViewController:(ABNewPersonViewController *)newPersonView didCompleteWithNewPerson:(ABRecordRef)person{
 
     if (person != nil) {
-        
-        item.firstName          = (NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
-        item.lastName           = (NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);	
-        NSNumber *recordId      = [NSNumber numberWithInteger:ABRecordGetRecordID(person)];
-        item.contactIdentifier  = [recordId stringValue];
-        if (item.firstName == nil) {
-            item.firstName = @"";
-        }
-        if (item.lastName == nil) {
-            item.lastName = @"";
-        }
-        
+              
         [self dismissModalViewControllerAnimated:YES];
-        [self.delegate doneAddressBook:self contactIdentifier:[NSNumber numberWithInt:ABRecordGetRecordID(person)]];    
+        [self.delegate doneAddressBook:self contactIdentifier:person]; 
     }else{
 
         [self dismissModalViewControllerAnimated:YES];
@@ -284,20 +279,9 @@
 {
     
     if (person != nil) {
-        
-        item.firstName          = (NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
-        item.lastName           = (NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);	
-        NSNumber *recordId      = [NSNumber numberWithInteger:ABRecordGetRecordID(person)];
-        item.contactIdentifier  = [recordId stringValue];
-        if (item.firstName == nil) {
-            item.firstName = @"";
-        }
-        if (item.lastName == nil) {
-            item.lastName = @"";
-        }
         [self.navigationController popViewControllerAnimated:NO];
         [self dismissModalViewControllerAnimated:YES];
-        [self.delegate doneAddressBook:self contactIdentifier:[NSNumber numberWithInt:ABRecordGetRecordID(person)]];    
+        [self.delegate doneAddressBook:self contactIdentifier:person];    
     }else{
         [self.navigationController popViewControllerAnimated:NO];        
         [self dismissModalViewControllerAnimated:YES];

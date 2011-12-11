@@ -10,7 +10,7 @@
 #import "Season.h"
 #import "TrainingAddViewController.h"
 
-@interface TrainingListViewController : UITableViewController <AddTrainingDelegate> {
+@interface TrainingListViewController : UITableViewController <AddTrainingDelegate,UIPopoverControllerDelegate> {
     
     NSMutableDictionary *trainingModel;
     Training            *item;

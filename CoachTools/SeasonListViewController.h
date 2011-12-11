@@ -31,6 +31,6 @@
 - (void)cancelForm;
 - (void)showSeason:(Season *)season animated:(BOOL)animated;
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
-- (NSArray*)fetchObjectStats:(NSString*)objectName;
+- (NSArray*)fetchObjectStats:(Season*)objectName;
 
 @end

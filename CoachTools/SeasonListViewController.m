@@ -293,7 +293,7 @@
     
     Season *itemSelected = [self.itemArray objectAtIndex:indexPath.row];   
     cell.teamNameLabel.text = [itemSelected.name description];
-    NSArray *objectStats = [self fetchObjectStats:itemSelected.name];
+    NSArray *objectStats = [self fetchObjectStats:itemSelected];
     cell.winLabel.text = [[objectStats objectAtIndex:0] description];
     cell.lossLabel.text = [[objectStats objectAtIndex:1] description];
     cell.drawLabel.text = [[objectStats objectAtIndex:2] description];
@@ -342,22 +342,14 @@
 
 
 //Get the stats of the team
-- (NSArray*)fetchObjectStats:(NSString*)objectName{    
+- (NSArray*)fetchObjectStats:(Season*)objectName{    
     
     int wins = 0; 
     int losses = 0;
     int draw = 0;
     int notPlayed = 0;
-    
-    RootViewController *appController = [RootViewController sharedAppController];
-    
-    NSManagedObjectContext *moc = [appController managedObjectContext];
-    NSFetchRequest *request = [[[NSFetchRequest alloc] init] autorelease];
-    [request setEntity:[NSEntityDescription entityForName:@"Game" inManagedObjectContext:moc]];
-    [request setPredicate:[NSPredicate predicateWithFormat:@"ANY season.name like %@", objectName]];
-    NSArray *singleEmployeeDepartments = [moc executeFetchRequest:request error:NULL];
-    
-    for(Game* game in singleEmployeeDepartments){
+
+    for(Game* game in objectName.games){
         if([game.played boolValue] == FALSE){
             notPlayed ++;
         }else{

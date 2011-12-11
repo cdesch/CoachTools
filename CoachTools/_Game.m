@@ -37,12 +37,12 @@
 		NSSet *affectingKey = [NSSet setWithObject:@"gameIntervalTime"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
-	if ([key isEqualToString:@"homeScoreValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"homeScore"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-	}
 	if ([key isEqualToString:@"opponentScoreValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"opponentScore"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"homeScoreValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"homeScore"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 	if ([key isEqualToString:@"gameIntervalValue"]) {
@@ -56,6 +56,13 @@
 
 	return keyPaths;
 }
+
+
+
+
+@dynamic location;
+
+
 
 
 
@@ -86,7 +93,7 @@
 
 
 
-@dynamic location;
+@dynamic opponent;
 
 
 
@@ -126,32 +133,6 @@
 
 
 
-@dynamic homeScore;
-
-
-
-- (short)homeScoreValue {
-	NSNumber *result = [self homeScore];
-	return [result shortValue];
-}
-
-- (void)setHomeScoreValue:(short)value_ {
-	[self setHomeScore:[NSNumber numberWithShort:value_]];
-}
-
-- (short)primitiveHomeScoreValue {
-	NSNumber *result = [self primitiveHomeScore];
-	return [result shortValue];
-}
-
-- (void)setPrimitiveHomeScoreValue:(short)value_ {
-	[self setPrimitiveHomeScore:[NSNumber numberWithShort:value_]];
-}
-
-
-
-
-
 @dynamic locationDetail;
 
 
@@ -185,8 +166,34 @@
 
 
 
-@dynamic opponent;
+@dynamic startingFormation;
 
+
+
+
+
+
+@dynamic homeScore;
+
+
+
+- (short)homeScoreValue {
+	NSNumber *result = [self homeScore];
+	return [result shortValue];
+}
+
+- (void)setHomeScoreValue:(short)value_ {
+	[self setHomeScore:[NSNumber numberWithShort:value_]];
+}
+
+- (short)primitiveHomeScoreValue {
+	NSNumber *result = [self primitiveHomeScore];
+	return [result shortValue];
+}
+
+- (void)setPrimitiveHomeScoreValue:(short)value_ {
+	[self setPrimitiveHomeScore:[NSNumber numberWithShort:value_]];
+}
 
 
 
@@ -244,13 +251,6 @@
 
 
 
-@dynamic gameNumber;
-
-
-
-
-
-
 @dynamic numPlayers;
 
 
@@ -258,7 +258,7 @@
 
 
 
-@dynamic startingFormation;
+@dynamic gameNumber;
 
 
 
@@ -283,15 +283,23 @@
 }
 	
 
-@dynamic gameStart;
+@dynamic gameLocation;
 
 	
-- (NSMutableSet*)gameStartSet {
-	[self willAccessValueForKey:@"gameStart"];
-	NSMutableSet *result = [self mutableSetValueForKey:@"gameStart"];
-	[self didAccessValueForKey:@"gameStart"];
+
+@dynamic playersAttended;
+
+	
+- (NSMutableSet*)playersAttendedSet {
+	[self willAccessValueForKey:@"playersAttended"];
+	NSMutableSet *result = [self mutableSetValueForKey:@"playersAttended"];
+	[self didAccessValueForKey:@"playersAttended"];
 	return result;
 }
+	
+
+@dynamic gameOpponent;
+
 	
 
 @dynamic gameSub;
@@ -305,6 +313,21 @@
 }
 	
 
+@dynamic season;
+
+	
+
+@dynamic gameStart;
+
+	
+- (NSMutableSet*)gameStartSet {
+	[self willAccessValueForKey:@"gameStart"];
+	NSMutableSet *result = [self mutableSetValueForKey:@"gameStart"];
+	[self didAccessValueForKey:@"gameStart"];
+	return result;
+}
+	
+
 @dynamic gamePenalty;
 
 	
@@ -314,10 +337,6 @@
 	[self didAccessValueForKey:@"gamePenalty"];
 	return result;
 }
-	
-
-@dynamic season;
-
 	
 
 

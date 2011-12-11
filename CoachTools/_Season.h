@@ -14,8 +14,6 @@
 
 
 
-
-
 @interface SeasonID : NSManagedObjectID {}
 @end
 
@@ -27,41 +25,9 @@
 
 
 
-@property (nonatomic, retain) NSNumber *cWins;
-
-@property short cWinsValue;
-- (short)cWinsValue;
-- (void)setCWinsValue:(short)value_;
-
-//- (BOOL)validateCWins:(id*)value_ error:(NSError**)error_;
-
-
-
 @property (nonatomic, retain) NSString *name;
 
 //- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSDate *endDate;
-
-//- (BOOL)validateEndDate:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSNumber *cLosses;
-
-@property short cLossesValue;
-- (short)cLossesValue;
-- (void)setCLossesValue:(short)value_;
-
-//- (BOOL)validateCLosses:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSString *league;
-
-//- (BOOL)validateLeague:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -78,6 +44,18 @@
 - (void)setEndedValue:(BOOL)value_;
 
 //- (BOOL)validateEnded:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSDate *endDate;
+
+//- (BOOL)validateEndDate:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *league;
+
+//- (BOOL)validateLeague:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -117,38 +95,8 @@
 @interface _Season (CoreDataGeneratedPrimitiveAccessors)
 
 
-- (NSNumber*)primitiveCWins;
-- (void)setPrimitiveCWins:(NSNumber*)value;
-
-- (short)primitiveCWinsValue;
-- (void)setPrimitiveCWinsValue:(short)value_;
-
-
-
-
 - (NSString*)primitiveName;
 - (void)setPrimitiveName:(NSString*)value;
-
-
-
-
-- (NSDate*)primitiveEndDate;
-- (void)setPrimitiveEndDate:(NSDate*)value;
-
-
-
-
-- (NSNumber*)primitiveCLosses;
-- (void)setPrimitiveCLosses:(NSNumber*)value;
-
-- (short)primitiveCLossesValue;
-- (void)setPrimitiveCLossesValue:(short)value_;
-
-
-
-
-- (NSString*)primitiveLeague;
-- (void)setPrimitiveLeague:(NSString*)value;
 
 
 
@@ -164,6 +112,18 @@
 
 - (BOOL)primitiveEndedValue;
 - (void)setPrimitiveEndedValue:(BOOL)value_;
+
+
+
+
+- (NSDate*)primitiveEndDate;
+- (void)setPrimitiveEndDate:(NSDate*)value;
+
+
+
+
+- (NSString*)primitiveLeague;
+- (void)setPrimitiveLeague:(NSString*)value;
 
 
 

@@ -111,6 +111,16 @@
 	return YES;
 }
 
+- (void)dealloc{
+    [labels release];
+    [placeholders release];
+    labels = nil;
+    placeholders = nil;
+    
+    [super dealloc];
+}
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -322,7 +332,19 @@
 
 #pragma mark Addressbook Delegat
 
-- (void)doneAddressBook:(AddressBookViewController *)doneAddressBook contactIdentifier:(NSNumber *)contactIdentifier{
+- (void)doneAddressBook:(AddressBookViewController *)doneAddressBook contactIdentifier:(ABRecordRef)person{
+    
+    item.firstName          = (NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
+    item.lastName           = (NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);	
+    NSNumber *recordId      = [NSNumber numberWithInteger:ABRecordGetRecordID(person)];
+    item.contactIdentifier  = [recordId stringValue];
+    if (item.firstName == nil) {
+        item.firstName = @"";
+    }
+    if (item.lastName == nil) {
+        item.lastName = @"";
+    }
+    
     NSIndexPath* indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
     
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
@@ -366,11 +388,7 @@
             }else{
                 ABAddressBookRef addressBook = ABAddressBookCreate();
                 // Search for the person named "Appleseed" in the address book
-                //NSArray *people = (NSArray *)ABAddressBookCopyPeopleWithName(addressBook, CFSTR("Appleseed"));
                 ABRecordID recordID = (ABRecordID) [item.contactIdentifier intValue];
-                NSLog(@" record %d", recordID);
-
-                //NSArray *people = (NSArray *)ABAddressBookGetPersonWithRecordID(addressBook, recordID);
                 ABRecordRef person = ABAddressBookGetPersonWithRecordID(addressBook, recordID);
                 // Display "Appleseed" information if found in the address book 
                 if (person != nil)

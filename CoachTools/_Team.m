@@ -29,50 +29,9 @@
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
-	if ([key isEqualToString:@"cWinsValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"cWins"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-	}
-	if ([key isEqualToString:@"cLossesValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"cLosses"];
-		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
-	}
 
 	return keyPaths;
 }
-
-
-
-
-@dynamic homeLocation;
-
-
-
-
-
-
-@dynamic cWins;
-
-
-
-- (short)cWinsValue {
-	NSNumber *result = [self cWins];
-	return [result shortValue];
-}
-
-- (void)setCWinsValue:(short)value_ {
-	[self setCWins:[NSNumber numberWithShort:value_]];
-}
-
-- (short)primitiveCWinsValue {
-	NSNumber *result = [self primitiveCWins];
-	return [result shortValue];
-}
-
-- (void)setPrimitiveCWinsValue:(short)value_ {
-	[self setPrimitiveCWins:[NSNumber numberWithShort:value_]];
-}
-
 
 
 
@@ -98,31 +57,9 @@
 
 
 
-@dynamic cLosses;
+@dynamic homeLocation;
 
-
-
-- (short)cLossesValue {
-	NSNumber *result = [self cLosses];
-	return [result shortValue];
-}
-
-- (void)setCLossesValue:(short)value_ {
-	[self setCLosses:[NSNumber numberWithShort:value_]];
-}
-
-- (short)primitiveCLossesValue {
-	NSNumber *result = [self primitiveCLosses];
-	return [result shortValue];
-}
-
-- (void)setPrimitiveCLossesValue:(short)value_ {
-	[self setPrimitiveCLosses:[NSNumber numberWithShort:value_]];
-}
-
-
-
-
+	
 
 @dynamic seasons;
 

@@ -90,8 +90,6 @@
     [flexibleBarButtItem release];
     [sortAscendingButton release];
     [addButton release];
-
-
     
 }
 
@@ -153,7 +151,7 @@
     
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Sort by"
                                                              delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil
-                                                    otherButtonTitles:@"Game Number", @"Opponent", @"Location", @"Team Goals", @"Opponent Goals", nil];
+                                                    otherButtonTitles:@"Game Number", @"Opponent", @"Location",  nil]; // @"Opponent Goals",@"Team Goals",
     actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
     //actionSheet.destructiveButtonIndex = 4; // make the second button red (destructive)
     
@@ -210,66 +208,21 @@
 
 
 - (void)insertGameButton{
-
-    /*
-    AddGameViewController *addController = [[AddGameViewController alloc] initWithNibName:@"AddGameViewController" bundle:nil seasonSelected:season];
-
-    addController.delegate = self;
-    
-    RootViewController *sharedController = [RootViewController sharedAppController];
-    NSManagedObjectContext *managedObjectContext = [sharedController managedObjectContext];
-	Game* newObject = [NSEntityDescription insertNewObjectForEntityForName:@"Game" inManagedObjectContext:managedObjectContext];
-	addController.game = newObject;    
-    
-    //Turn off editting if its on
-    [self.tableView setEditing:FALSE animated:YES];
-    //Push the viewcontroller onto the navigation stack    
-    //[self.navigationController pushViewController:addController animated:YES];
-
-    
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:addController];
-    navigationController.modalPresentationStyle = UIModalPresentationFormSheet;
-    navigationController.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-
-    [self presentModalViewController:navigationController animated:YES];
-    
-    [navigationController release];
-    
-    [addController release];
-     */
-    
-    itemModel = [[NSMutableDictionary alloc] init];
-    
+   
+    itemModel = [[NSMutableDictionary alloc] init]; 
     
     RootViewController *sharedController = [RootViewController sharedAppController];
     NSManagedObjectContext *managedObjectContext = [sharedController managedObjectContext];
     item = [NSEntityDescription insertNewObjectForEntityForName:@"Game" inManagedObjectContext:managedObjectContext];
-    
-    
-    //NSLog(@"%@",[newItem description]);
-    
-    
-    //NSDictionary *attributesByName = [[newItem entity] attributesByName];
-    //trainingModel = [[newItem dictionaryWithValuesForKeys:[attributesByName allKeys]] mutableCopy];
-    //NSLog(@"%@",[newItem description]);
-    //NSLog(@"%@",[trainingModel description]);
-    
-    
-    //
-    
     
     //ShowcaseModel *showcaseModel = [self model];
     ShowcaseModel *showcaseModel = [[[ShowcaseModel alloc] init] autorelease];
     showcaseModel.shouldAutoRotate = YES;
     showcaseModel.tableViewStyleGrouped = YES;
     showcaseModel.displayNavigationToolbar = YES;
-    
-    //
     showcaseModel.modalPresentation = YES;
     showcaseModel.modalPresentationStyle = UIModalPresentationFormSheet;
-	
-	//NSMutableDictionary *sampleFormModel = [[[NSMutableDictionary alloc] init] autorelease];
-    
+
 	// Values set on the model will be reflected in the form fields.
 	//[sampleFormModel setObject:@"A value contained in the model" forKey:@"readOnlyText"];
     [itemModel setObject:[NSString stringWithFormat:@"%d",[self.itemArray count] +1] forKey:@"gameNumber"];
@@ -356,8 +309,6 @@
         [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
         
         // construct new date and return
-        //dateTextField.text = [dateFormatter stringFromDate:[dateCal dateFromComponents:dateComponent]];
-        //self.game.date = [dateCal dateFromComponents:dateComponent];
         tempDate =  [[dateCal dateFromComponents:dateComponent] copy];
         
         [timeCal release];
@@ -416,7 +367,6 @@
 	}		
 
     [itemModel release];
-    
     [self dismissModalViewControllerAnimated:YES];
 }
 

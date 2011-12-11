@@ -14,6 +14,7 @@
 #import "Game.h"
 #import "Training.h"
 #import "Person.h"
+
 @implementation PopulateTeam
 
 - (void)populate{
@@ -55,7 +56,7 @@
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             [FlurryAnalytics logError:[NSString stringWithFormat:@"Unresolved Error CoreData %s", __PRETTY_FUNCTION__] message:@"CoreData" error:error];
             abort();
-        }		
+        }
     }
     
     //Create Seasons
@@ -125,8 +126,21 @@
         abort();
     }		
     
+    //Release the object a little
+    [locationsList release];
+    [opponentsList release];
+
+    locationsList = nil;
+    opponentsList = nil;
     
 }
+
+
+- (void)dealloc{
+    
+    [super dealloc];
+}
+
 
 /*
 - (Team*)createTeam{

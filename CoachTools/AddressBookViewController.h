@@ -33,7 +33,7 @@
 @end
 
 @protocol AddressBookDelegate <NSObject>
-- (void)doneAddressBook:(AddressBookViewController *)doneAddressBook contactIdentifier:(NSNumber *)contactIdentifier;
-- (void)cancelledAddressBook:(AddressBookViewController *)cancelledAddressBook;
+    - (void)doneAddressBook:(AddressBookViewController *)doneAddressBook contactIdentifier:(ABRecordRef)person;
+    - (void)cancelledAddressBook:(AddressBookViewController *)cancelledAddressBook;
 
 @end

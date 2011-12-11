@@ -80,6 +80,10 @@ void SignalHandler(int sig) {
     NSString * buildNo = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBuildNumber"];
     NSString * buildDate = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBuildDate"];
     NSLog(@"Application Version: %@ Build No: %@ Build Date: %@",version,buildNo,buildDate);
+
+    [version release];
+    [buildNo release];
+    [buildDate release];
     
     if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
 		[CCDirector setDirectorType:kCCDirectorTypeThreadMainLoop];

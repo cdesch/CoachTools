@@ -153,7 +153,7 @@
     
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Sort by"
                                                              delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil
-                                                    otherButtonTitles:@"Name", @"Number", @"Goals", @"Starts", nil];
+                                                    otherButtonTitles:@"Name", @"Number",  nil]; //@"Goals", @"Starts",
     actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
     //actionSheet.destructiveButtonIndex = 4; // make the second button red (destructive)
     //[actionSheet showInView:self.view]; // show from our table view (pops up in the middle of the table)
@@ -216,7 +216,6 @@
     PlayerEditViewController *detailViewController = [[PlayerEditViewController alloc] initWithStyle:UITableViewStyleGrouped player:item];
     detailViewController.delegate = self;
     
-    //detailViewController.modalPresentationStyle = UIModalPresentationFormSheet;
     UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:detailViewController];
     navigation.modalPresentationStyle = UIModalPresentationFormSheet;
     [self presentModalViewController:navigation animated:YES];

@@ -41,15 +41,15 @@
         segControl = [[SVSegmentedControl alloc] initWithSectionTitles:[NSArray arrayWithObjects:@"Start", @"Pause", nil]];
         
         segControl.selectedSegmentChangedHandler = ^(id sender) {
-            SVSegmentedControl *segControl = (SVSegmentedControl *)sender;
+            SVSegmentedControl *segControl1 = (SVSegmentedControl *)sender;
             //NSLog(@"segmentedControl %i did select index %i (captured via block)", segControl.tag, segControl.selectedIndex);
-            if(segControl.selectedIndex == 0){
-                segControl.thumb.tintColor = [UIColor colorWithRed:0 green:0.5 blue:0.1 alpha:1];
+            if(segControl1.selectedIndex == 0){
+                segControl1.thumb.tintColor = [UIColor colorWithRed:0 green:0.5 blue:0.1 alpha:1];
                 [self playSystemSound];
                 //[ac.segTimer stop];
                 [self.delegate pauseTimer:self];
             }else{
-                segControl.thumb.tintColor = [UIColor colorWithRed:0.6 green:0.2 blue:0.2 alpha:1];
+                segControl1.thumb.tintColor = [UIColor colorWithRed:0.6 green:0.2 blue:0.2 alpha:1];
                 [self playSystemSound];
                // [ac.segTimer start];
                 [self.delegate startTimer:self];

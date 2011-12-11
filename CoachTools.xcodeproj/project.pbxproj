@@ -209,6 +209,11 @@
 		2381E9A81443C93D0092616B /* ItemFormModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2381E9A71443C93D0092616B /* ItemFormModel.m */; };
 		23840E27140474E100DA5D30 /* GameSummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23840E25140474E100DA5D30 /* GameSummaryViewController.m */; };
 		23840E28140474E100DA5D30 /* GameSummaryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23840E26140474E100DA5D30 /* GameSummaryViewController.xib */; };
+		2389D46F14941A8000C8302E /* EventLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2389D46E14941A8000C8302E /* EventLocation.m */; };
+		2389D47214941AA900C8302E /* _EventLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2389D47114941AA900C8302E /* _EventLocation.m */; };
+		2389D47D14942BEF00C8302E /* LocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2389D47C14942BEB00C8302E /* LocationManager.m */; };
+		2389D48414942E1900C8302E /* Opponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2389D48314942E1800C8302E /* Opponent.m */; };
+		2389D48714942E2D00C8302E /* _Opponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2389D48614942E2C00C8302E /* _Opponent.m */; };
 		238A69591382B45C00494480 /* HUDLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 238A69581382B45C00494480 /* HUDLayer.m */; };
 		238BC0A9140D332300ABBEFF /* SeasonSummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 238BC0A7140D332300ABBEFF /* SeasonSummaryViewController.m */; };
 		238BC0AA140D332300ABBEFF /* SeasonSummaryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 238BC0A8140D332300ABBEFF /* SeasonSummaryViewController.xib */; };
@@ -243,7 +248,6 @@
 		239BB99414074616008AACDE /* RoadMap.png in Resources */ = {isa = PBXBuildFile; fileRef = 239BB99314074616008AACDE /* RoadMap.png */; };
 		239FC8061381F9A80026FA17 /* PlayerSummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 239FC8041381F9A80026FA17 /* PlayerSummaryViewController.m */; };
 		239FC8071381F9A80026FA17 /* PlayerSummaryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 239FC8051381F9A80026FA17 /* PlayerSummaryViewController.xib */; };
-		23A31E82141FB33200DB4EE3 /* libFlurryAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23A31E81141FB33200DB4EE3 /* libFlurryAnalytics.a */; };
 		23A51845137767E3006477C6 /* AddTeamViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23A51843137767E3006477C6 /* AddTeamViewController.m */; };
 		23A51846137767E3006477C6 /* AddTeamViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23A51844137767E3006477C6 /* AddTeamViewController.xib */; };
 		23A5184B13776931006477C6 /* PlayerListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23A5184913776931006477C6 /* PlayerListViewController.m */; };
@@ -371,6 +375,7 @@
 		23F001A21492E345000294AF /* DragSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F001A11492E345000294AF /* DragSprite.m */; };
 		23F001A91492E9B4000294AF /* DrawMyTouch.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F001A81492E9B4000294AF /* DrawMyTouch.m */; };
 		23F001AC1492F130000294AF /* TouchDraw.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F001AB1492F130000294AF /* TouchDraw.m */; };
+		23F001AF1492F772000294AF /* libFlurryAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23F001AE1492F772000294AF /* libFlurryAnalytics.a */; };
 		23F160C713A17B4900408488 /* PlayerListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23F160C613A17B4900408488 /* PlayerListViewCell.m */; };
 		23F160CA13A17B5E00408488 /* PlayerListViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23F160C913A17B5E00408488 /* PlayerListViewCell.xib */; };
 		23F1F55A13E8566700E761CE /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23F1F55913E8566700E761CE /* MessageUI.framework */; };
@@ -796,6 +801,16 @@
 		23840E24140474E100DA5D30 /* GameSummaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameSummaryViewController.h; sourceTree = "<group>"; };
 		23840E25140474E100DA5D30 /* GameSummaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameSummaryViewController.m; sourceTree = "<group>"; };
 		23840E26140474E100DA5D30 /* GameSummaryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameSummaryViewController.xib; sourceTree = "<group>"; };
+		2389D46D14941A8000C8302E /* EventLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventLocation.h; sourceTree = "<group>"; };
+		2389D46E14941A8000C8302E /* EventLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventLocation.m; sourceTree = "<group>"; };
+		2389D47014941AA900C8302E /* _EventLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _EventLocation.h; sourceTree = "<group>"; };
+		2389D47114941AA900C8302E /* _EventLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _EventLocation.m; sourceTree = "<group>"; };
+		2389D47B14942BE800C8302E /* LocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationManager.h; sourceTree = "<group>"; };
+		2389D47C14942BEB00C8302E /* LocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationManager.m; sourceTree = "<group>"; };
+		2389D48214942E1800C8302E /* Opponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Opponent.h; sourceTree = "<group>"; };
+		2389D48314942E1800C8302E /* Opponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Opponent.m; sourceTree = "<group>"; };
+		2389D48514942E2C00C8302E /* _Opponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Opponent.h; sourceTree = "<group>"; };
+		2389D48614942E2C00C8302E /* _Opponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Opponent.m; sourceTree = "<group>"; };
 		238A69571382B45C00494480 /* HUDLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HUDLayer.h; sourceTree = "<group>"; };
 		238A69581382B45C00494480 /* HUDLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HUDLayer.m; sourceTree = "<group>"; };
 		238BC0A6140D332300ABBEFF /* SeasonSummaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SeasonSummaryViewController.h; sourceTree = "<group>"; };
@@ -851,7 +866,6 @@
 		239FC8031381F9A80026FA17 /* PlayerSummaryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerSummaryViewController.h; sourceTree = "<group>"; };
 		239FC8041381F9A80026FA17 /* PlayerSummaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerSummaryViewController.m; sourceTree = "<group>"; };
 		239FC8051381F9A80026FA17 /* PlayerSummaryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerSummaryViewController.xib; sourceTree = "<group>"; };
-		23A31E81141FB33200DB4EE3 /* libFlurryAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurryAnalytics.a; sourceTree = "<group>"; };
 		23A51842137767E3006477C6 /* AddTeamViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddTeamViewController.h; sourceTree = "<group>"; };
 		23A51843137767E3006477C6 /* AddTeamViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddTeamViewController.m; sourceTree = "<group>"; };
 		23A51844137767E3006477C6 /* AddTeamViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddTeamViewController.xib; sourceTree = "<group>"; };
@@ -1083,7 +1097,6 @@
 		23EB6EC914099A9E00D9B45A /* IADManagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IADManagerViewController.h; sourceTree = "<group>"; };
 		23EB6ECA14099A9E00D9B45A /* IADManagerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IADManagerViewController.m; sourceTree = "<group>"; };
 		23EB6ECB14099A9E00D9B45A /* IADManagerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IADManagerViewController.xib; sourceTree = "<group>"; };
-		23EB6ECF1409A4B400D9B45A /* FlurryAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAnalytics.h; sourceTree = "<group>"; };
 		23EB6ED21409AD9A00D9B45A /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		23EFC857139455B50069EF0F /* _GameScore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _GameScore.h; sourceTree = "<group>"; };
 		23EFC858139455B50069EF0F /* _GameScore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _GameScore.m; sourceTree = "<group>"; };
@@ -1097,6 +1110,8 @@
 		23F001A81492E9B4000294AF /* DrawMyTouch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawMyTouch.m; sourceTree = "<group>"; };
 		23F001AA1492F130000294AF /* TouchDraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TouchDraw.h; sourceTree = "<group>"; };
 		23F001AB1492F130000294AF /* TouchDraw.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchDraw.m; sourceTree = "<group>"; };
+		23F001AD1492F753000294AF /* FlurryAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlurryAnalytics.h; sourceTree = "<group>"; };
+		23F001AE1492F772000294AF /* libFlurryAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFlurryAnalytics.a; path = ../libFlurryAnalytics.a; sourceTree = "<group>"; };
 		23F160C513A17B4900408488 /* PlayerListViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerListViewCell.h; sourceTree = "<group>"; };
 		23F160C613A17B4900408488 /* PlayerListViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerListViewCell.m; sourceTree = "<group>"; };
 		23F160C913A17B5E00408488 /* PlayerListViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlayerListViewCell.xib; sourceTree = "<group>"; };
@@ -1178,9 +1193,9 @@
 				232EBAF013526C62002277B9 /* CoreGraphics.framework in Frameworks */,
 				232EBAF213526C62002277B9 /* CoreData.framework in Frameworks */,
 				23DC41EE14097B1300B14B50 /* libCorePlot-CocoaTouch.a in Frameworks */,
-				23A31E82141FB33200DB4EE3 /* libFlurryAnalytics.a in Frameworks */,
 				2306F3F21478689500EBBAC2 /* libGoogleAdMobAds.a in Frameworks */,
 				23C2FF21148584BD002B8350 /* Crittercism_v2_9_16.a in Frameworks */,
+				23F001AF1492F772000294AF /* libFlurryAnalytics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1300,6 +1315,10 @@
 				2360F0241422D13100962B3A /* Training.m */,
 				234097BB148DF55D000B3746 /* EmergancyContact.h */,
 				234097BC148DF55D000B3746 /* EmergancyContact.m */,
+				2389D46D14941A8000C8302E /* EventLocation.h */,
+				2389D46E14941A8000C8302E /* EventLocation.m */,
+				2389D48214942E1800C8302E /* Opponent.h */,
+				2389D48314942E1800C8302E /* Opponent.m */,
 			);
 			name = Entities;
 			sourceTree = "<group>";
@@ -1353,11 +1372,11 @@
 		232EBAEA13526C62002277B9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				23F001B01492F784000294AF /* Flurry */,
 				23409795148D5D86000B3746 /* ELCTextFieldCell */,
 				23C2FEC314858489002B8350 /* External */,
 				23069B2C1479B6A10052F785 /* AddressBook.framework */,
 				23FAFC071479978300C42398 /* AddressBookUI.framework */,
-				23A31E81141FB33200DB4EE3 /* libFlurryAnalytics.a */,
 				2306F3E7147865EE00EBBAC2 /* SystemConfiguration.framework */,
 				2316D18A1409CDA8005E676D /* EventKitUI.framework */,
 				2316D1841409BDF8005E676D /* EventKit.framework */,
@@ -1386,7 +1405,6 @@
 				2306F4531478A4E400EBBAC2 /* In App Puchase Manager */,
 				2306F4521478A4A500EBBAC2 /* TODO Deprecate */,
 				2306F3E91478688200EBBAC2 /* GoogleAdSense */,
-				23EB6ECE1409A4B400D9B45A /* FlurryAnalytics */,
 				23EB6EC1140992D700D9B45A /* Work In Progress */,
 				232EBAFC13526C62002277B9 /* CoachToolsAppDelegate.h */,
 				232EBAFD13526C62002277B9 /* CoachToolsAppDelegate.m */,
@@ -1403,6 +1421,8 @@
 				237C526C140D54AE00C6E3A7 /* EventManager.m */,
 				23B449E214535D2C00398CF6 /* PopulateTeam.h */,
 				23B449E314535D2C00398CF6 /* PopulateTeam.m */,
+				2389D47B14942BE800C8302E /* LocationManager.h */,
+				2389D47C14942BEB00C8302E /* LocationManager.m */,
 				23F0DE3213AAC9AF004DAD9F /* GameTimer */,
 				B9E10A71135E5138002DCF10 /* Data Model */,
 				2302FA9D1368878000D98738 /* DataManagement */,
@@ -2355,14 +2375,6 @@
 			name = "Work In Progress";
 			sourceTree = "<group>";
 		};
-		23EB6ECE1409A4B400D9B45A /* FlurryAnalytics */ = {
-			isa = PBXGroup;
-			children = (
-				23EB6ECF1409A4B400D9B45A /* FlurryAnalytics.h */,
-			);
-			path = FlurryAnalytics;
-			sourceTree = "<group>";
-		};
 		23EB6ED41409B4E100D9B45A /* GameLog */ = {
 			isa = PBXGroup;
 			children = (
@@ -2380,6 +2392,16 @@
 				23DF62A2140492DC0084A11B /* GameStartViewCell.xib */,
 			);
 			name = GameLog;
+			sourceTree = "<group>";
+		};
+		23F001B01492F784000294AF /* Flurry */ = {
+			isa = PBXGroup;
+			children = (
+				23F001AE1492F772000294AF /* libFlurryAnalytics.a */,
+				23F001AD1492F753000294AF /* FlurryAnalytics.h */,
+			);
+			name = Flurry;
+			path = CoachTools;
 			sourceTree = "<group>";
 		};
 		23F0DE1913AABC64004DAD9F /* ChalkTalk */ = {
@@ -2457,6 +2479,10 @@
 				237DAC08139D7353005C1395 /* _GameStart.m */,
 				23B6DE8C13E5D5B000DC17A6 /* _GamePenalty.h */,
 				23B6DE8D13E5D5B000DC17A6 /* _GamePenalty.m */,
+				2389D47014941AA900C8302E /* _EventLocation.h */,
+				2389D47114941AA900C8302E /* _EventLocation.m */,
+				2389D48514942E2C00C8302E /* _Opponent.h */,
+				2389D48614942E2C00C8302E /* _Opponent.m */,
 			);
 			name = gen;
 			sourceTree = "<group>";
@@ -2985,6 +3011,11 @@
 				23F001A21492E345000294AF /* DragSprite.m in Sources */,
 				23F001A91492E9B4000294AF /* DrawMyTouch.m in Sources */,
 				23F001AC1492F130000294AF /* TouchDraw.m in Sources */,
+				2389D46F14941A8000C8302E /* EventLocation.m in Sources */,
+				2389D47214941AA900C8302E /* _EventLocation.m in Sources */,
+				2389D47D14942BEF00C8302E /* LocationManager.m in Sources */,
+				2389D48414942E1900C8302E /* Opponent.m in Sources */,
+				2389D48714942E2D00C8302E /* _Opponent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3104,9 +3135,6 @@
 					"\"$(SRCROOT)/CoachTools\"",
 					"\"$(SRCROOT)/CoachTools/CorePlotHeaders\"",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/CoachTools/FlurryAnalytics\"",
-					"\"$(SRCROOT)/CoachTools/CrittercismSDK\"",
-					"\"$(SRCROOT)/CoachTools/TestFlightSDK0.8.1\"",
 					"\"$(SRCROOT)/../../github/Crittercism-SDK\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3134,9 +3162,6 @@
 					"\"$(SRCROOT)/CoachTools\"",
 					"\"$(SRCROOT)/CoachTools/CorePlotHeaders\"",
 					"\"$(SRCROOT)\"",
-					"\"$(SRCROOT)/CoachTools/FlurryAnalytics\"",
-					"\"$(SRCROOT)/CoachTools/CrittercismSDK\"",
-					"\"$(SRCROOT)/CoachTools/TestFlightSDK0.8.1\"",
 					"\"$(SRCROOT)/../../github/Crittercism-SDK\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";

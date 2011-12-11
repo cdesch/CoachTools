@@ -19,7 +19,6 @@
 #import "TrainingFormDataSource.h"
 #import "EventManager.h"
 
-
 #import "TrainingListViewCell.h"
 #import "HelpManagement.h"
 #import "FlurryAnalytics.h"
@@ -79,6 +78,8 @@
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithTitle:@"Add Training" style:UIBarButtonItemStylePlain target:self action:@selector(insertItemButton:)];
     
     self.navigationItem.rightBarButtonItem = addButton;
+    [addButton release];
+    /*
     UIBarButtonItem *sortAscendingButton = [[UIBarButtonItem alloc] initWithTitle:@"Sort" style:UIBarButtonItemStyleBordered target:self action:@selector(sortButton:)];
     
     UIBarButtonItem *flexibleBarButtItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -87,7 +88,8 @@
     
     [flexibleBarButtItem release];
     [sortAscendingButton release];
-    [addButton release];
+     */
+
 
 }
 
@@ -139,7 +141,67 @@
     // Return YES for supported orientations
 	return YES;
 }
+/*
+//Sort Button is pressed
+- (void)sortButton:(id)sender{
+    
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Sort by"
+                                                             delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil
+                                                    otherButtonTitles:@"Training Number", @"Date",  nil]; // @"Opponent Goals",
+    actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
+    //actionSheet.destructiveButtonIndex = 4; // make the second button red (destructive)
+    
+    //[actionSheet showInView:self.view]; // show from our table view (pops up in the middle of the table)
+    [actionSheet showFromBarButtonItem:sender animated:YES];
+    [actionSheet release];
+    
+}
 
+//Action Sheet Delegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    if (actionSheet) {
+        
+        if(buttonIndex == 0){
+            
+            NSSortDescriptor *sortDescriptor =  [[NSSortDescriptor alloc] initWithKey:@"trainingNumber" ascending:YES selector:@selector(localizedStandardCompare:)] ;
+            NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:&sortDescriptor count:1];
+            [self.itemArray sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptors] ];
+            [sortDescriptor release];
+            [sortDescriptors release];
+            
+            [self.tableView reloadData];    
+            
+            
+        }else if (buttonIndex == 1){
+            [self sortList:@"opponent" ascendingOrder:YES];
+        }else if (buttonIndex == 2){
+            [self sortList:@"location" ascendingOrder:YES];
+        }else if (buttonIndex == 3){
+            [self sortList:@"homeScore" ascendingOrder:NO];
+        }
+        else if (buttonIndex == 4){
+            [self sortList:@"opponentScore" ascendingOrder:NO];
+        }
+    }
+    
+}
+
+- (void)sortList:(NSString *)key ascendingOrder:(BOOL)order{
+    
+    
+    //Sort using key as sort parameter
+	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:key ascending:order];
+	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:&sortDescriptor count:1];
+    [self.itemArray sortUsingDescriptors:sortDescriptors ];
+    
+    [sortDescriptor release];
+	[sortDescriptors release];
+    
+    [self.tableView reloadData];                                                                         
+    
+}
+*/
 - (void)insertItemButton:(id)sender{
     
     trainingModel = [[NSMutableDictionary alloc] init];

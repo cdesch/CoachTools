@@ -4,11 +4,9 @@
 #import <CoreData/CoreData.h>
 
 
+@class EventLocation;
 @class Season;
 @class Person;
-
-
-
 
 
 
@@ -22,22 +20,6 @@
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (TeamID*)objectID;
-
-
-
-@property (nonatomic, retain) NSString *homeLocation;
-
-//- (BOOL)validateHomeLocation:(id*)value_ error:(NSError**)error_;
-
-
-
-@property (nonatomic, retain) NSNumber *cWins;
-
-@property short cWinsValue;
-- (short)cWinsValue;
-- (void)setCWinsValue:(short)value_;
-
-//- (BOOL)validateCWins:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -59,14 +41,9 @@
 
 
 
-@property (nonatomic, retain) NSNumber *cLosses;
 
-@property short cLossesValue;
-- (short)cLossesValue;
-- (void)setCLossesValue:(short)value_;
-
-//- (BOOL)validateCLosses:(id*)value_ error:(NSError**)error_;
-
+@property (nonatomic, retain) EventLocation* homeLocation;
+//- (BOOL)validateHomeLocation:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -105,21 +82,6 @@
 @interface _Team (CoreDataGeneratedPrimitiveAccessors)
 
 
-- (NSString*)primitiveHomeLocation;
-- (void)setPrimitiveHomeLocation:(NSString*)value;
-
-
-
-
-- (NSNumber*)primitiveCWins;
-- (void)setPrimitiveCWins:(NSNumber*)value;
-
-- (short)primitiveCWinsValue;
-- (void)setPrimitiveCWinsValue:(short)value_;
-
-
-
-
 - (NSString*)primitiveLeagueType;
 - (void)setPrimitiveLeagueType:(NSString*)value;
 
@@ -138,13 +100,9 @@
 
 
 
-- (NSNumber*)primitiveCLosses;
-- (void)setPrimitiveCLosses:(NSNumber*)value;
 
-- (short)primitiveCLossesValue;
-- (void)setPrimitiveCLossesValue:(short)value_;
-
-
+- (EventLocation*)primitiveHomeLocation;
+- (void)setPrimitiveHomeLocation:(EventLocation*)value;
 
 
 

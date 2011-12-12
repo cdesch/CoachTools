@@ -46,6 +46,7 @@
 - (IBAction)chalkTalk:(id)sender;
 - (IBAction)IAPManagerButton:(id)sender;
 - (IBAction)notAvailable:(id)sender;
+- (IBAction)launchFeedback:(id)sender;
 - (IBAction)testButton:(id)sender;
 
 

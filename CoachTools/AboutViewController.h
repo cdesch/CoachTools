@@ -17,7 +17,6 @@
     id <AboutDelegate> delegate;
     IBOutlet UILabel *appNameLabel;
     IBOutlet UILabel *versionLabel;
-    IBOutlet UILabel *buildVersionLabel;
     IBOutlet UILabel *message;
     
     NSString *subjectLine;
@@ -31,7 +30,6 @@
 @property (nonatomic, assign) id <AboutDelegate> delegate;
 @property (nonatomic, retain) IBOutlet UILabel *appNameLabel;
 @property (nonatomic, retain) IBOutlet UILabel *versionLabel;
-@property (nonatomic, retain) IBOutlet UILabel *buildVersionLabel;
 @property (nonatomic, retain) IBOutlet UILabel *message;
 
 @property (nonatomic, retain) NSString *subjectLine;

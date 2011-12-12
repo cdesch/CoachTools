@@ -15,7 +15,6 @@
 @synthesize delegate;
 @synthesize appNameLabel;
 @synthesize versionLabel;
-@synthesize buildVersionLabel;
 @synthesize message;
 
 @synthesize subjectLine;
@@ -53,12 +52,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    versionString = [NSString stringWithFormat:@"V.%@ B.%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"],[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBuildNumber"]];    
+    
     self.appNameLabel.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleName"];
-    self.versionLabel.text = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
-    self.buildVersionLabel = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBuildNumber"];
-    
-    versionString = [NSString stringWithFormat:@"V.%@ Build.%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"],[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBuildNumber"]];
-    
+    self.versionLabel.text =  versionString;
+        
     subjectLine = [NSString stringWithFormat:@"CoachTools: Contact - %@", versionString];
     emailLine = @"coachtoolsapps@gmail.com";
     bodyMessage = [NSString stringWithFormat:@"CoachTools: Contact - %@", versionString];
@@ -238,7 +236,7 @@
 	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:email]];
     
     [recipients release];
-    [body release];
+    //[body release];
     [email release];
     
 }

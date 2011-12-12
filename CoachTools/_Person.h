@@ -5,14 +5,15 @@
 
 
 @class Training;
-@class Team;
+@class GamePenalty;
 @class GameScore;
+@class Team;
 @class Game;
 @class GameSub;
-@class EmergancyContact;
 @class GameScore;
 @class GameStart;
-@class GamePenalty;
+@class EmergencyContact;
+
 
 
 
@@ -42,9 +43,13 @@
 
 
 
-@property (nonatomic, retain) NSString *primaryPosition;
+@property (nonatomic, retain) NSNumber *phoneNumber;
 
-//- (BOOL)validatePrimaryPosition:(id*)value_ error:(NSError**)error_;
+@property short phoneNumberValue;
+- (short)phoneNumberValue;
+- (void)setPhoneNumberValue:(short)value_;
+
+//- (BOOL)validatePhoneNumber:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -66,12 +71,6 @@
 
 
 
-@property (nonatomic, retain) NSString *secondaryPosition;
-
-//- (BOOL)validateSecondaryPosition:(id*)value_ error:(NSError**)error_;
-
-
-
 @property (nonatomic, retain) NSNumber *active;
 
 @property BOOL activeValue;
@@ -88,19 +87,31 @@
 
 
 
+@property (nonatomic, retain) NSString *secondaryPosition;
+
+//- (BOOL)validateSecondaryPosition:(id*)value_ error:(NSError**)error_;
+
+
+
 @property (nonatomic, retain) NSDate *birthdate;
 
 //- (BOOL)validateBirthdate:(id*)value_ error:(NSError**)error_;
 
 
 
-@property (nonatomic, retain) NSNumber *phoneNumber;
+@property (nonatomic, retain) NSNumber *teamCaptain;
 
-@property short phoneNumberValue;
-- (short)phoneNumberValue;
-- (void)setPhoneNumberValue:(short)value_;
+@property BOOL teamCaptainValue;
+- (BOOL)teamCaptainValue;
+- (void)setTeamCaptainValue:(BOOL)value_;
 
-//- (BOOL)validatePhoneNumber:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateTeamCaptain:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, retain) NSString *primaryPosition;
+
+//- (BOOL)validatePrimaryPosition:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -110,13 +121,18 @@
 
 
 
-@property (nonatomic, retain) Team* team;
-//- (BOOL)validateTeam:(id*)value_ error:(NSError**)error_;
+@property (nonatomic, retain) NSSet* gamePenalty;
+- (NSMutableSet*)gamePenaltySet;
 
 
 
 @property (nonatomic, retain) NSSet* gameScore;
 - (NSMutableSet*)gameScoreSet;
+
+
+
+@property (nonatomic, retain) Team* team;
+//- (BOOL)validateTeam:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -130,11 +146,6 @@
 
 
 
-@property (nonatomic, retain) NSSet* emergancyContact;
-- (NSMutableSet*)emergancyContactSet;
-
-
-
 @property (nonatomic, retain) NSSet* gameAssist;
 - (NSMutableSet*)gameAssistSet;
 
@@ -145,8 +156,8 @@
 
 
 
-@property (nonatomic, retain) NSSet* gamePenalty;
-- (NSMutableSet*)gamePenaltySet;
+@property (nonatomic, retain) NSSet* emergencyContact;
+- (NSMutableSet*)emergencyContactSet;
 
 
 
@@ -165,6 +176,11 @@
 - (void)addTrainingObject:(Training*)value_;
 - (void)removeTrainingObject:(Training*)value_;
 
+- (void)addGamePenalty:(NSSet*)value_;
+- (void)removeGamePenalty:(NSSet*)value_;
+- (void)addGamePenaltyObject:(GamePenalty*)value_;
+- (void)removeGamePenaltyObject:(GamePenalty*)value_;
+
 - (void)addGameScore:(NSSet*)value_;
 - (void)removeGameScore:(NSSet*)value_;
 - (void)addGameScoreObject:(GameScore*)value_;
@@ -180,11 +196,6 @@
 - (void)addGameSubObject:(GameSub*)value_;
 - (void)removeGameSubObject:(GameSub*)value_;
 
-- (void)addEmergancyContact:(NSSet*)value_;
-- (void)removeEmergancyContact:(NSSet*)value_;
-- (void)addEmergancyContactObject:(EmergancyContact*)value_;
-- (void)removeEmergancyContactObject:(EmergancyContact*)value_;
-
 - (void)addGameAssist:(NSSet*)value_;
 - (void)removeGameAssist:(NSSet*)value_;
 - (void)addGameAssistObject:(GameScore*)value_;
@@ -195,10 +206,10 @@
 - (void)addGameStartObject:(GameStart*)value_;
 - (void)removeGameStartObject:(GameStart*)value_;
 
-- (void)addGamePenalty:(NSSet*)value_;
-- (void)removeGamePenalty:(NSSet*)value_;
-- (void)addGamePenaltyObject:(GamePenalty*)value_;
-- (void)removeGamePenaltyObject:(GamePenalty*)value_;
+- (void)addEmergencyContact:(NSSet*)value_;
+- (void)removeEmergencyContact:(NSSet*)value_;
+- (void)addEmergencyContactObject:(EmergencyContact*)value_;
+- (void)removeEmergencyContactObject:(EmergencyContact*)value_;
 
 @end
 
@@ -211,8 +222,11 @@
 
 
 
-- (NSString*)primitivePrimaryPosition;
-- (void)setPrimitivePrimaryPosition:(NSString*)value;
+- (NSNumber*)primitivePhoneNumber;
+- (void)setPrimitivePhoneNumber:(NSNumber*)value;
+
+- (short)primitivePhoneNumberValue;
+- (void)setPrimitivePhoneNumberValue:(short)value_;
 
 
 
@@ -235,12 +249,6 @@
 
 
 
-- (NSString*)primitiveSecondaryPosition;
-- (void)setPrimitiveSecondaryPosition:(NSString*)value;
-
-
-
-
 - (NSNumber*)primitiveActive;
 - (void)setPrimitiveActive:(NSNumber*)value;
 
@@ -256,17 +264,29 @@
 
 
 
+- (NSString*)primitiveSecondaryPosition;
+- (void)setPrimitiveSecondaryPosition:(NSString*)value;
+
+
+
+
 - (NSDate*)primitiveBirthdate;
 - (void)setPrimitiveBirthdate:(NSDate*)value;
 
 
 
 
-- (NSNumber*)primitivePhoneNumber;
-- (void)setPrimitivePhoneNumber:(NSNumber*)value;
+- (NSNumber*)primitiveTeamCaptain;
+- (void)setPrimitiveTeamCaptain:(NSNumber*)value;
 
-- (short)primitivePhoneNumberValue;
-- (void)setPrimitivePhoneNumberValue:(short)value_;
+- (BOOL)primitiveTeamCaptainValue;
+- (void)setPrimitiveTeamCaptainValue:(BOOL)value_;
+
+
+
+
+- (NSString*)primitivePrimaryPosition;
+- (void)setPrimitivePrimaryPosition:(NSString*)value;
 
 
 
@@ -277,13 +297,18 @@
 
 
 
-- (Team*)primitiveTeam;
-- (void)setPrimitiveTeam:(Team*)value;
+- (NSMutableSet*)primitiveGamePenalty;
+- (void)setPrimitiveGamePenalty:(NSMutableSet*)value;
 
 
 
 - (NSMutableSet*)primitiveGameScore;
 - (void)setPrimitiveGameScore:(NSMutableSet*)value;
+
+
+
+- (Team*)primitiveTeam;
+- (void)setPrimitiveTeam:(Team*)value;
 
 
 
@@ -297,11 +322,6 @@
 
 
 
-- (NSMutableSet*)primitiveEmergancyContact;
-- (void)setPrimitiveEmergancyContact:(NSMutableSet*)value;
-
-
-
 - (NSMutableSet*)primitiveGameAssist;
 - (void)setPrimitiveGameAssist:(NSMutableSet*)value;
 
@@ -312,8 +332,8 @@
 
 
 
-- (NSMutableSet*)primitiveGamePenalty;
-- (void)setPrimitiveGamePenalty:(NSMutableSet*)value;
+- (NSMutableSet*)primitiveEmergencyContact;
+- (void)setPrimitiveEmergencyContact:(NSMutableSet*)value;
 
 
 @end

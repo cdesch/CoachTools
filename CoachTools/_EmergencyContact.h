@@ -1,5 +1,5 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
-// Make changes to EmergancyContact.h instead.
+// Make changes to EmergencyContact.h instead.
 
 #import <CoreData/CoreData.h>
 
@@ -10,14 +10,14 @@
 
 
 
-@interface EmergancyContactID : NSManagedObjectID {}
+@interface EmergencyContactID : NSManagedObjectID {}
 @end
 
-@interface _EmergancyContact : NSManagedObject {}
+@interface _EmergencyContact : NSManagedObject {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
-- (EmergancyContactID*)objectID;
+- (EmergencyContactID*)objectID;
 
 
 
@@ -52,11 +52,11 @@
 
 @end
 
-@interface _EmergancyContact (CoreDataGeneratedAccessors)
+@interface _EmergencyContact (CoreDataGeneratedAccessors)
 
 @end
 
-@interface _EmergancyContact (CoreDataGeneratedPrimitiveAccessors)
+@interface _EmergencyContact (CoreDataGeneratedPrimitiveAccessors)
 
 
 - (NSString*)primitiveContactIdentifier;

@@ -14,9 +14,6 @@ NSInteger INSERT_TAG = 99;
 NSInteger REGULAR_TAG = 98;
 @implementation EmergencyContactViewController
 
-
-
-
 @synthesize item;
 @synthesize itemsArray;
 @synthesize eContact;
@@ -38,11 +35,6 @@ NSInteger REGULAR_TAG = 98;
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
-        
-    
-        
-        //itemsArray = [[NSMutableArray alloc] init];
-        //itemsArray = [[NSMutableArray alloc] initWithObjects:@"one",@"two",nil];
         item = player;
             
     }
@@ -65,6 +57,8 @@ NSInteger REGULAR_TAG = 98;
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
+    self.title = @"Emergency Contacts";
+    
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStyleDone target:self action:@selector(doneButton:)];
     
     self.navigationItem.leftBarButtonItem = doneButton;
@@ -72,6 +66,9 @@ NSInteger REGULAR_TAG = 98;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    self.tableView.allowsSelectionDuringEditing = YES;
+    
 }
 
 - (void)viewDidUnload
@@ -85,28 +82,19 @@ NSInteger REGULAR_TAG = 98;
 {
     [super viewWillAppear:animated];
     
-    if([item.emergancyContact count] == 0 ){
-        //itemsArray = [[NSMutableArray alloc] initWithObjects:@"No Contact", nil];
-
-        RootViewController *sharedController = [RootViewController sharedAppController];
-        NSManagedObjectContext *managedObjectContext = [sharedController managedObjectContext];
-        eContact = [NSEntityDescription insertNewObjectForEntityForName:@"EmergancyContact" inManagedObjectContext:managedObjectContext];
-        
-        //Edit the link
-        AddressBookViewController *detailViewController = [[AddressBookViewController alloc] initWithStyle:UITableViewStyleGrouped];
-        detailViewController.delegate = self;
-        [self.navigationController pushViewController:detailViewController animated:YES];
-        [detailViewController release];  
-    }else {
-        
-        if(itemsArray != nil){
-            [itemsArray release];
-            itemsArray = nil;
-        }
-        
-        itemsArray = [[item.emergancyContact allObjects] copy];
-        [self.tableView reloadData];
-    }
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"contactIdentifier" ascending:YES];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:&sortDescriptor count:1];
+    
+    NSMutableArray *sortedPlayers = [[NSMutableArray alloc] initWithArray:[item.emergencyContact  allObjects]];
+    [sortedPlayers sortUsingDescriptors:sortDescriptors];
+    self.itemsArray = sortedPlayers;
+    
+    [sortDescriptor release];
+    [sortDescriptors release];
+    [sortedPlayers release];
+    
+    // Update recipe type and ingredients on return.
+    [self.tableView reloadData]; 
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -145,20 +133,16 @@ NSInteger REGULAR_TAG = 98;
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated{
-    //NSLog(@"EditingTable!");
-    //[self.tableView setEditing:editing animated:animated];
-    NSLog(@"EditingSuper!");
-    [super setEditing:editing animated:animated];
-    NSLog(@"Editing ON!");
+
+    [super setEditing:editing animated:animated];    
+    [self.tableView beginUpdates];
     
     NSArray *paths = [NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self.itemsArray count] inSection:0]];
-    [self.tableView beginUpdates];
+
     if (editing)
     {
         [[self tableView] insertRowsAtIndexPaths:paths 
-                                withRowAnimation:UITableViewRowAnimationLeft];
-        //[[self tableView] cellForRowAtIndexPath:paths]
-        
+                                withRowAnimation:UITableViewRowAnimationLeft];      
     }
     else {
         [[self tableView] deleteRowsAtIndexPaths:paths 
@@ -185,15 +169,33 @@ NSInteger REGULAR_TAG = 98;
 {
 
     // Return the number of rows in the section
-    if([tableView isEditing])
+    
+    /*
+    if(self.editing)
         return [itemsArray count] +1;
     else
         return [itemsArray count];
+     
+     */
+    
+    NSInteger rows = 0;
+    
+    /*
+     The number of rows depends on the section.
+     In the case of ingredients, if editing, add a row in editing mode to present an "Add Ingredient" cell.
+	 */
+
+    rows = [itemsArray count];
+    if (self.editing) {
+       rows++;
+    }
+    
+    return rows;
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath{
     
-    EmergancyContact *selectedItem = [self.itemsArray objectAtIndex:indexPath.row];
+    EmergencyContact *selectedItem = [self.itemsArray objectAtIndex:indexPath.row];
     
     ABAddressBookRef addressBook = ABAddressBookCreate();
     // Search for the person named "Appleseed" in the address book
@@ -205,7 +207,7 @@ NSInteger REGULAR_TAG = 98;
         NSString* firstName        = (NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
         NSString* lastName         = (NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);
         cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
-        cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     }
     else 
     {
@@ -225,32 +227,67 @@ NSInteger REGULAR_TAG = 98;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"Cell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell == nil) {
-        cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-    }
-    
-    NSLog(@"%d %d", indexPath.section, indexPath.row );
-    
-   if (self.editing && (indexPath.row == [itemsArray count]) ) {
-        cell.textLabel.text = @"Add New Emergency Contact";
 
-    }else{
+    UITableViewCell *cell = nil;
+
+    NSUInteger itemsCount = [self.itemsArray count];
+    
+    if (indexPath.row < itemsCount) {
+        static NSString *CellIdentifier = @"Cell";
+        
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        
+        if (cell == nil) {
+            // Create a cell to display an ingredient.
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+            cell.accessoryType = UITableViewCellAccessoryNone;
+        }
+        
         [self configureCell:cell atIndexPath:indexPath];
+    
+    }else{
+        static NSString *CellIdentifier = @"AddCell";
+        
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        
+        if (cell == nil) {
+            // Create a cell to display an ingredient.
+            cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        
+        cell.textLabel.text = @"Add Emergency Contact";
     }
-
-
-    // Configure the cell...
     
     return cell;
+
 }
+
+
+#pragma mark -
+#pragma mark Editing rows
+/*
+- (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	NSIndexPath *rowToSelect = indexPath;
+    NSInteger section = indexPath.section;
+    BOOL isEditing = self.editing;
+    
+    // If editing, don't allow instructions to be selected
+    // Not editing: Only allow instructions to be selected
+    if ((isEditing && section == INSTRUCTIONS_SECTION) || (!isEditing && section != INSTRUCTIONS_SECTION)) {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        rowToSelect = nil;    
+    }
+    
+	return rowToSelect;
+}
+*/
+
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
   
-    NSLog(@"Editing %d %d", indexPath.section, indexPath.row );
 
+/*
     if (self.editing && (indexPath.row == [itemsArray count]) ) {
     //    NSLog(@"Editing INSERT!");
         return UITableViewCellEditingStyleInsert;
@@ -258,7 +295,19 @@ NSInteger REGULAR_TAG = 98;
     }
       //      NSLog(@"Editing DELETE!");
     return UITableViewCellEditingStyleDelete;
+  */
     
+    UITableViewCellEditingStyle style = UITableViewCellEditingStyleNone;
+    if (indexPath.row == [self.itemsArray count]) {
+       style = UITableViewCellEditingStyleInsert;
+    }
+    else {
+       style = UITableViewCellEditingStyleDelete;
+    }
+
+    
+    return style;
+
 }
 
 /*
@@ -284,17 +333,15 @@ NSInteger REGULAR_TAG = 98;
         RootViewController *ac = [RootViewController sharedAppController];
         NSManagedObjectContext *managedObjectContext = [ac managedObjectContext];
         
-        EmergancyContact* selectedItem = [self.itemsArray objectAtIndex:indexPath.row];
-        
-        // Delete the managed object for the given index path
+        EmergencyContact* selectedItem = [self.itemsArray objectAtIndex:indexPath.row];
 
+        // Delete the managed object for the given index path
+        [itemsArray removeObject:selectedItem];
+        
         [managedObjectContext deleteObject:selectedItem];
         
-        
         // Delete the managed object for the given index path in the table view
-        [tableView deleteRowsAtIndexPaths:[NSArray
-                                           arrayWithObject:indexPath]
-                         withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationTop];
 		
         // Save the context
 		NSError *error;
@@ -306,16 +353,21 @@ NSInteger REGULAR_TAG = 98;
     }   
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-                
+        
+        if(eContact != nil){
+            eContact =nil;
+        }
+        
         RootViewController *sharedController = [RootViewController sharedAppController];
         NSManagedObjectContext *managedObjectContext = [sharedController managedObjectContext];
-        eContact = [NSEntityDescription insertNewObjectForEntityForName:@"EmergancyContact" inManagedObjectContext:managedObjectContext];
+        eContact = [NSEntityDescription insertNewObjectForEntityForName:@"EmergencyContact" inManagedObjectContext:managedObjectContext];
 
         //Edit the link
         AddressBookViewController *detailViewController = [[AddressBookViewController alloc] initWithStyle:UITableViewStyleGrouped];
         detailViewController.delegate = self;
         [self.navigationController pushViewController:detailViewController animated:YES];
         [detailViewController release];
+        
     }   
 }
 
@@ -380,11 +432,11 @@ NSInteger REGULAR_TAG = 98;
              abort();
          }		
      }
-    NSLog(@"HEre");
+    
     //Do Nothing
     [self.navigationController popViewControllerAnimated:YES];
     
-    if([item.emergancyContact count] == 0){
+    if([item.emergencyContact count] == 0){
         [self dismissModalViewControllerAnimated:YES];
     }
 }
@@ -402,47 +454,70 @@ NSInteger REGULAR_TAG = 98;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    EmergancyContact *selectedItem = [self.itemsArray objectAtIndex:indexPath.row];
-    
-    ABAddressBookRef addressBook = ABAddressBookCreate();
-    // Search for the person named "Appleseed" in the address book
-    ABRecordID recordID = (ABRecordID) [selectedItem.contactIdentifier intValue];
-    ABRecordRef person = ABAddressBookGetPersonWithRecordID(addressBook, recordID);
-    // Display "Appleseed" information if found in the address book 
-    if (person != nil)
-    {
-        //ABRecordRef person = (ABRecordRef)[people objectAtIndex:0];
-        ABPersonViewController *picker = [[[ABPersonViewController alloc] init] autorelease];
-        picker.personViewDelegate = self;
-        picker.displayedPerson = person;
-        // Allow users to edit the person’s information
-        picker.allowsEditing = YES;
-        [self.navigationController pushViewController:picker animated:YES];
+    if (self.editing) {
+        if(indexPath.row == [self.itemsArray count]){
+            
+            if(eContact != nil){
+                eContact =nil;
+            }
+            
+            RootViewController *sharedController = [RootViewController sharedAppController];
+            NSManagedObjectContext *managedObjectContext = [sharedController managedObjectContext];
+            eContact = [NSEntityDescription insertNewObjectForEntityForName:@"EmergencyContact" inManagedObjectContext:managedObjectContext];
+            
+            //Edit the link
+            AddressBookViewController *detailViewController = [[AddressBookViewController alloc] initWithStyle:UITableViewStyleGrouped];
+            detailViewController.delegate = self;
+            [self.navigationController pushViewController:detailViewController animated:YES];
+            [detailViewController release];
+
+        }else{
+            //Edit the link
+            AddressBookViewController *detailViewController = [[AddressBookViewController alloc] initWithStyle:UITableViewStyleGrouped];
+            eContact = [self.itemsArray objectAtIndex:indexPath.row];
+            detailViewController.delegate = self;
+            [self.navigationController pushViewController:detailViewController animated:YES];
+            [detailViewController release];
+
+        }
+    }else{
+        
+        EmergencyContact *selectedItem = [self.itemsArray objectAtIndex:indexPath.row];
+        
+        ABAddressBookRef addressBook = ABAddressBookCreate();
+        // Search for the person named "Appleseed" in the address book
+        ABRecordID recordID = (ABRecordID) [selectedItem.contactIdentifier intValue];
+        ABRecordRef person = ABAddressBookGetPersonWithRecordID(addressBook, recordID);
+        // Display "Appleseed" information if found in the address book 
+        if (person != nil)
+        {
+            //ABRecordRef person = (ABRecordRef)[people objectAtIndex:0];
+            ABPersonViewController *picker = [[[ABPersonViewController alloc] init] autorelease];
+            picker.personViewDelegate = self;
+            picker.displayedPerson = person;
+            // Allow users to edit the person’s information
+            picker.allowsEditing = YES;
+            [self.navigationController pushViewController:picker animated:YES];
+        }
+        else 
+        {
+            // Show an alert if "Appleseed" is not in Contacts
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" 
+                                                            message:@"Could not find person in the Contacts application" 
+                                                           delegate:nil 
+                                                  cancelButtonTitle:@"Cancel" 
+                                                  otherButtonTitles:nil];
+            [alert show];
+            [alert release];
+        }
+        
+        CFRelease(addressBook);
     }
-    else 
-    {
-        // Show an alert if "Appleseed" is not in Contacts
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" 
-                                                        message:@"Could not find person in the Contacts application" 
-                                                       delegate:nil 
-                                              cancelButtonTitle:@"Cancel" 
-                                              otherButtonTitles:nil];
-        [alert show];
-        [alert release];
-    }
-    
-    //[people release];
-    CFRelease(addressBook);
+
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
 
-    //Edit the link
-    AddressBookViewController *detailViewController = [[AddressBookViewController alloc] initWithStyle:UITableViewStyleGrouped];
-    eContact = [self.itemsArray objectAtIndex:indexPath.row];
-    detailViewController.delegate = self;
-    [self.navigationController pushViewController:detailViewController animated:YES];
-    [detailViewController release];
 }
 
 @end

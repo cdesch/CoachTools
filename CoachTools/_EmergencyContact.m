@@ -1,29 +1,29 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
-// Make changes to EmergancyContact.m instead.
+// Make changes to EmergencyContact.m instead.
 
-#import "_EmergancyContact.h"
+#import "_EmergencyContact.h"
 
-@implementation EmergancyContactID
+@implementation EmergencyContactID
 @end
 
-@implementation _EmergancyContact
+@implementation _EmergencyContact
 
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_ {
 	NSParameterAssert(moc_);
-	return [NSEntityDescription insertNewObjectForEntityForName:@"EmergancyContact" inManagedObjectContext:moc_];
+	return [NSEntityDescription insertNewObjectForEntityForName:@"EmergencyContact" inManagedObjectContext:moc_];
 }
 
 + (NSString*)entityName {
-	return @"EmergancyContact";
+	return @"EmergencyContact";
 }
 
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_ {
 	NSParameterAssert(moc_);
-	return [NSEntityDescription entityForName:@"EmergancyContact" inManagedObjectContext:moc_];
+	return [NSEntityDescription entityForName:@"EmergencyContact" inManagedObjectContext:moc_];
 }
 
-- (EmergancyContactID*)objectID {
-	return (EmergancyContactID*)[super objectID];
+- (EmergencyContactID*)objectID {
+	return (EmergencyContactID*)[super objectID];
 }
 
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {

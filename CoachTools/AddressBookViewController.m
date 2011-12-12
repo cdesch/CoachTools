@@ -53,6 +53,9 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
+    self.title = @"Select Contact";
+    
     if (item !=nil){
         if ([item.contactIdentifier intValue] == (-1)){
             self.labels = [NSArray arrayWithObjects:@"Existing Contact", @"New Contact",@"Migrate Existing Contact", nil];
@@ -289,7 +292,6 @@
     }
     
 }
-
 
 // Does not allow users to perform default actions such as emailing a contact, when they select a contact property.
 - (BOOL)unknownPersonViewController:(ABUnknownPersonViewController *)personViewController shouldPerformDefaultActionForPerson:(ABRecordRef)person 

@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-
 @interface FormationPosition : NSObject {
     NSString *positionName;
     NSNumber *x;

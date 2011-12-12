@@ -26,6 +26,7 @@
 
 #import "Crittercism.h"
 #import "FlurryAnalytics.h"
+#import "TestFlight.h"
 
 //#import "SampleFormController.h"
 
@@ -336,6 +337,11 @@ static RootViewController *sharedInstance;
 - (IBAction)testButton:(id)sender{
 
     
+}
+
+- (IBAction)launchFeedback:(id)sender{
+    
+       [TestFlight openFeedbackView];
 }
  
  

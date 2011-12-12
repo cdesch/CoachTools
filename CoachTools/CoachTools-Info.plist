@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CFBuildDate</key>
-	<string>11.12.10 19:37:01</string>
+	<string>11.12.11 18:31:53</string>
 	<key>CFBuildNumber</key>
-	<string>420</string>
+	<string>457</string>
 	<key>CFBuildVersion</key>
 	<string>1.02.1</string>
 	<key>CFBundleDevelopmentRegion</key>
@@ -36,7 +36,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1.02.1</string>
+	<string>1.02.1.457</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSMainNibFile</key>

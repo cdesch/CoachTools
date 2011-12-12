@@ -6,8 +6,8 @@
 //  Copyright (c) 2011 Desch Enterprises. All rights reserved.
 //
 
-#import "_EmergancyContact.h"
+#import "_EmergencyContact.h"
 
-@interface EmergancyContact : _EmergancyContact
+@interface EmergencyContact : _EmergencyContact
 
 @end

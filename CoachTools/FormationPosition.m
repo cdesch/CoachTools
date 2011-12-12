@@ -36,7 +36,7 @@
 
 
 // this returns the position for the player
--(CGPoint)positionForPlayer {
+- (CGPoint)positionForPlayer {
 	return CGPointMake([[self x] intValue], [[self y] intValue]);
 }
 

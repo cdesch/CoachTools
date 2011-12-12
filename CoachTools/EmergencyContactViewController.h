@@ -9,21 +9,33 @@
 #import <UIKit/UIKit.h>
 #import "Person.h"
 #import <AddressBookUI/AddressBookUI.h>
-#import "EmergancyContact.h"
+#import "EmergencyContact.h"
 #import "AddressBookViewController.h"
+
+//@protocol EmergencyContactDelegate;
 
 @interface EmergencyContactViewController : UITableViewController <ABPersonViewControllerDelegate, AddressBookDelegate,UITableViewDelegate> {
     
     Person*     item;
     NSMutableArray*    itemsArray;
-    EmergancyContact *eContact;
+    EmergencyContact *eContact;
     
 }
 
 @property (nonatomic, retain) Person*    item;
 @property (nonatomic, retain) NSMutableArray*   itemsArray;
-@property (nonatomic, retain) EmergancyContact *eContact;
+@property (nonatomic, retain) EmergencyContact *eContact;
 
 - (id)initWithStyle:(UITableViewStyle)style player:(Person*)player;
 - (void)doneButton:(id)sender;
 @end
+
+/*
+@protocol EmergencyContactDelegate <NSObject>
+
+- (void)doneEditingEmergencyContacts:(EmergencyContactViewController *)doneEditingEmergencyContacts;
+
+
+@end
+
+*/

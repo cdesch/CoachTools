@@ -29,12 +29,16 @@
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
+	if ([key isEqualToString:@"phoneNumberValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"phoneNumber"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
 	if ([key isEqualToString:@"activeValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"active"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
-	if ([key isEqualToString:@"phoneNumberValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"phoneNumber"];
+	if ([key isEqualToString:@"teamCaptainValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"teamCaptain"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 
@@ -51,8 +55,27 @@
 
 
 
-@dynamic primaryPosition;
+@dynamic phoneNumber;
 
+
+
+- (short)phoneNumberValue {
+	NSNumber *result = [self phoneNumber];
+	return [result shortValue];
+}
+
+- (void)setPhoneNumberValue:(short)value_ {
+	[self setPhoneNumber:[NSNumber numberWithShort:value_]];
+}
+
+- (short)primitivePhoneNumberValue {
+	NSNumber *result = [self primitivePhoneNumber];
+	return [result shortValue];
+}
+
+- (void)setPrimitivePhoneNumberValue:(short)value_ {
+	[self setPrimitivePhoneNumber:[NSNumber numberWithShort:value_]];
+}
 
 
 
@@ -73,13 +96,6 @@
 
 
 @dynamic playerNumber;
-
-
-
-
-
-
-@dynamic secondaryPosition;
 
 
 
@@ -119,6 +135,13 @@
 
 
 
+@dynamic secondaryPosition;
+
+
+
+
+
+
 @dynamic birthdate;
 
 
@@ -126,27 +149,34 @@
 
 
 
-@dynamic phoneNumber;
+@dynamic teamCaptain;
 
 
 
-- (short)phoneNumberValue {
-	NSNumber *result = [self phoneNumber];
-	return [result shortValue];
+- (BOOL)teamCaptainValue {
+	NSNumber *result = [self teamCaptain];
+	return [result boolValue];
 }
 
-- (void)setPhoneNumberValue:(short)value_ {
-	[self setPhoneNumber:[NSNumber numberWithShort:value_]];
+- (void)setTeamCaptainValue:(BOOL)value_ {
+	[self setTeamCaptain:[NSNumber numberWithBool:value_]];
 }
 
-- (short)primitivePhoneNumberValue {
-	NSNumber *result = [self primitivePhoneNumber];
-	return [result shortValue];
+- (BOOL)primitiveTeamCaptainValue {
+	NSNumber *result = [self primitiveTeamCaptain];
+	return [result boolValue];
 }
 
-- (void)setPrimitivePhoneNumberValue:(short)value_ {
-	[self setPrimitivePhoneNumber:[NSNumber numberWithShort:value_]];
+- (void)setPrimitiveTeamCaptainValue:(BOOL)value_ {
+	[self setPrimitiveTeamCaptain:[NSNumber numberWithBool:value_]];
 }
+
+
+
+
+
+@dynamic primaryPosition;
+
 
 
 
@@ -163,8 +193,15 @@
 }
 	
 
-@dynamic team;
+@dynamic gamePenalty;
 
+	
+- (NSMutableSet*)gamePenaltySet {
+	[self willAccessValueForKey:@"gamePenalty"];
+	NSMutableSet *result = [self mutableSetValueForKey:@"gamePenalty"];
+	[self didAccessValueForKey:@"gamePenalty"];
+	return result;
+}
 	
 
 @dynamic gameScore;
@@ -176,6 +213,10 @@
 	[self didAccessValueForKey:@"gameScore"];
 	return result;
 }
+	
+
+@dynamic team;
+
 	
 
 @dynamic game;
@@ -196,17 +237,6 @@
 	[self willAccessValueForKey:@"gameSub"];
 	NSMutableSet *result = [self mutableSetValueForKey:@"gameSub"];
 	[self didAccessValueForKey:@"gameSub"];
-	return result;
-}
-	
-
-@dynamic emergancyContact;
-
-	
-- (NSMutableSet*)emergancyContactSet {
-	[self willAccessValueForKey:@"emergancyContact"];
-	NSMutableSet *result = [self mutableSetValueForKey:@"emergancyContact"];
-	[self didAccessValueForKey:@"emergancyContact"];
 	return result;
 }
 	
@@ -233,13 +263,13 @@
 }
 	
 
-@dynamic gamePenalty;
+@dynamic emergencyContact;
 
 	
-- (NSMutableSet*)gamePenaltySet {
-	[self willAccessValueForKey:@"gamePenalty"];
-	NSMutableSet *result = [self mutableSetValueForKey:@"gamePenalty"];
-	[self didAccessValueForKey:@"gamePenalty"];
+- (NSMutableSet*)emergencyContactSet {
+	[self willAccessValueForKey:@"emergencyContact"];
+	NSMutableSet *result = [self mutableSetValueForKey:@"emergencyContact"];
+	[self didAccessValueForKey:@"emergencyContact"];
 	return result;
 }
 	

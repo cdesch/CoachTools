@@ -12,7 +12,7 @@
 #import "FlurryAnalytics.h"
 #import "HelpManagement.h"
 #import "Crittercism.h"
-//#import "TestFlight.h"
+#import "TestFlight.h"
 #import <Foundation/Foundation.h>
 
 @implementation CoachToolsAppDelegate
@@ -56,7 +56,7 @@ void SignalHandler(int sig) {
     // installs HandleExceptions as the Uncaught Exception Handler
     //NSSetUncaughtExceptionHandler(&HandleExceptions);
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
-    /*
+    
     // create the signal action structure 
     struct sigaction newSignalAction;
     // initialize the signal action structure
@@ -71,20 +71,24 @@ void SignalHandler(int sig) {
     [TestFlight takeOff:@"0458201e65ba81f1484cc143b2350c36_NDI1NzcyMDExLTExLTIxIDE5OjU4OjE3LjA4Nzg5Mg"];
     //[TestFlight passCheckpoint:@"CHECKPOINT_NAME"];
     //[TestFlight openFeedbackView];
-    */
+
     
     //Setup Flurry
     [FlurryAnalytics startSession:@"XCHIX4BBSVNWK861PWPC"];
-    
+
     NSString * version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
     NSString * buildNo = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBuildNumber"];
     NSString * buildDate = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBuildDate"];
     NSLog(@"Application Version: %@ Build No: %@ Build Date: %@",version,buildNo,buildDate);
 
+    version = nil;
+    buildNo = nil;
+    buildDate = nil;
+    /*
     [version release];
     [buildNo release];
     [buildDate release];
-    
+*/
     if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
 		[CCDirector setDirectorType:kCCDirectorTypeThreadMainLoop];
     

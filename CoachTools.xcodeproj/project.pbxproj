@@ -14,12 +14,14 @@
 		2301AEBF13EF1376007AE673 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2301AEB813EF1376007AE673 /* Icon.png */; };
 		2301AEC013EF1376007AE673 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2301AEB913EF1376007AE673 /* Icon@2x.png */; };
 		2301AEC113EF1376007AE673 /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 2301AEBA13EF1376007AE673 /* iTunesArtwork.png */; };
+		230549B114943BD5003FF172 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 230549AF14943BD5003FF172 /* libTestFlight.a */; };
 		23069B2D1479B6A10052F785 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23069B2C1479B6A10052F785 /* AddressBook.framework */; };
 		2306F3E8147865EE00EBBAC2 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2306F3E7147865EE00EBBAC2 /* SystemConfiguration.framework */; };
 		2306F3F21478689500EBBAC2 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2306F3F01478689500EBBAC2 /* libGoogleAdMobAds.a */; };
 		2306F3F31478689500EBBAC2 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2306F3F11478689500EBBAC2 /* README.txt */; };
 		2306F4511478769900EBBAC2 /* HelpManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 2306F4501478769900EBBAC2 /* HelpManagement.m */; };
 		2306F4571478CB5200EBBAC2 /* GameSummaryFormDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 2306F4561478CB5000EBBAC2 /* GameSummaryFormDataSource.m */; };
+		23075DDA1495713B002088E7 /* ModelMap1to2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 23075DD91495713A002088E7 /* ModelMap1to2.xcmappingmodel */; };
 		230A5F0A1403404B00CFE088 /* GameLogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 230A5F081403404A00CFE088 /* GameLogViewController.m */; };
 		230A5F0B1403404B00CFE088 /* GameLogViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 230A5F091403404B00CFE088 /* GameLogViewController.xib */; };
 		230D8AA414881D5D00822774 /* libIBAForms.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 230D8AA314881D4700822774 /* libIBAForms.a */; };
@@ -64,8 +66,8 @@
 		23409791148D519A000B3746 /* PlayerEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23409790148D519A000B3746 /* PlayerEditViewController.m */; };
 		23409794148D5D80000B3746 /* ELCTextfieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23409793148D5D80000B3746 /* ELCTextfieldCell.m */; };
 		234097AC148DB4DE000B3746 /* AddressBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 234097AB148DB4DD000B3746 /* AddressBookViewController.m */; };
-		234097BD148DF55E000B3746 /* EmergancyContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 234097BC148DF55D000B3746 /* EmergancyContact.m */; };
-		234097C0148DF573000B3746 /* _EmergancyContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 234097BF148DF572000B3746 /* _EmergancyContact.m */; };
+		234097BD148DF55E000B3746 /* EmergencyContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 234097BC148DF55D000B3746 /* EmergencyContact.m */; };
+		234097C0148DF573000B3746 /* _EmergencyContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 234097BF148DF572000B3746 /* _EmergencyContact.m */; };
 		23505BB11383328300FACCA8 /* bench2.png in Resources */ = {isa = PBXBuildFile; fileRef = 23505BB01383328300FACCA8 /* bench2.png */; };
 		2351986E1385781900A0C978 /* PlayerLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2351986D1385781900A0C978 /* PlayerLayer.m */; };
 		235B6BBD13FF3FDF00C478F6 /* BadgeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 235B6BBC13FF3FDE00C478F6 /* BadgeView.m */; };
@@ -354,7 +356,6 @@
 		23DC41EE14097B1300B14B50 /* libCorePlot-CocoaTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 23DC41ED14097B1300B14B50 /* libCorePlot-CocoaTouch.a */; };
 		23DE234B13E2217000B1C845 /* AboutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 23DE234913E2217000B1C845 /* AboutViewController.m */; };
 		23DE234C13E2217000B1C845 /* AboutViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23DE234A13E2217000B1C845 /* AboutViewController.xib */; };
-		23DEB4F9147B042E008B16B2 /* ModelMap1to2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 23DEB4F8147B042E008B16B2 /* ModelMap1to2.xcmappingmodel */; };
 		23DEB4FC147B0EC1008B16B2 /* Project-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 23DEB4FB147B0EC1008B16B2 /* Project-Info.plist */; };
 		23DF62A1140492340084A11B /* GameStartViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 23DF62A0140492340084A11B /* GameStartViewCell.m */; };
 		23DF62A3140492DC0084A11B /* GameStartViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 23DF62A2140492DC0084A11B /* GameStartViewCell.xib */; };
@@ -434,6 +435,8 @@
 		2301AEB813EF1376007AE673 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		2301AEB913EF1376007AE673 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		2301AEBA13EF1376007AE673 /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
+		230549AF14943BD5003FF172 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		230549B014943BD5003FF172 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		23069B2C1479B6A10052F785 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		2306F3E7147865EE00EBBAC2 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		2306F3EA1478689500EBBAC2 /* GADBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADBannerView.h; sourceTree = "<group>"; };
@@ -448,6 +451,7 @@
 		2306F4501478769900EBBAC2 /* HelpManagement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpManagement.m; sourceTree = "<group>"; };
 		2306F4551478CB4C00EBBAC2 /* GameSummaryFormDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameSummaryFormDataSource.h; sourceTree = "<group>"; };
 		2306F4561478CB5000EBBAC2 /* GameSummaryFormDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameSummaryFormDataSource.m; sourceTree = "<group>"; };
+		23075DD91495713A002088E7 /* ModelMap1to2.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = ModelMap1to2.xcmappingmodel; sourceTree = "<group>"; };
 		230A5F071403404A00CFE088 /* GameLogViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameLogViewController.h; sourceTree = "<group>"; };
 		230A5F081403404A00CFE088 /* GameLogViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameLogViewController.m; sourceTree = "<group>"; };
 		230A5F091403404B00CFE088 /* GameLogViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameLogViewController.xib; sourceTree = "<group>"; };
@@ -511,10 +515,10 @@
 		23409793148D5D80000B3746 /* ELCTextfieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ELCTextfieldCell.m; path = ../../github/ELCTextFieldCell/Classes/ELCTextfieldCell.m; sourceTree = "<group>"; };
 		234097AA148DB4DC000B3746 /* AddressBookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressBookViewController.h; sourceTree = "<group>"; };
 		234097AB148DB4DD000B3746 /* AddressBookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressBookViewController.m; sourceTree = "<group>"; };
-		234097BB148DF55D000B3746 /* EmergancyContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmergancyContact.h; sourceTree = "<group>"; };
-		234097BC148DF55D000B3746 /* EmergancyContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmergancyContact.m; sourceTree = "<group>"; };
-		234097BE148DF572000B3746 /* _EmergancyContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _EmergancyContact.h; sourceTree = "<group>"; };
-		234097BF148DF572000B3746 /* _EmergancyContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _EmergancyContact.m; sourceTree = "<group>"; };
+		234097BB148DF55D000B3746 /* EmergencyContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmergencyContact.h; sourceTree = "<group>"; };
+		234097BC148DF55D000B3746 /* EmergencyContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmergencyContact.m; sourceTree = "<group>"; };
+		234097BE148DF572000B3746 /* _EmergencyContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _EmergencyContact.h; sourceTree = "<group>"; };
+		234097BF148DF572000B3746 /* _EmergencyContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _EmergencyContact.m; sourceTree = "<group>"; };
 		23505BB01383328300FACCA8 /* bench2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bench2.png; sourceTree = "<group>"; };
 		2351986C1385781900A0C978 /* PlayerLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerLayer.h; sourceTree = "<group>"; };
 		2351986D1385781900A0C978 /* PlayerLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerLayer.m; sourceTree = "<group>"; };
@@ -1077,7 +1081,6 @@
 		23DE234813E2217000B1C845 /* AboutViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutViewController.h; sourceTree = "<group>"; };
 		23DE234913E2217000B1C845 /* AboutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutViewController.m; sourceTree = "<group>"; };
 		23DE234A13E2217000B1C845 /* AboutViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutViewController.xib; sourceTree = "<group>"; };
-		23DEB4F8147B042E008B16B2 /* ModelMap1to2.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = ModelMap1to2.xcmappingmodel; sourceTree = "<group>"; };
 		23DEB4FB147B0EC1008B16B2 /* Project-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Project-Info.plist"; sourceTree = "<group>"; };
 		23DF629F140492340084A11B /* GameStartViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameStartViewCell.h; sourceTree = "<group>"; };
 		23DF62A0140492340084A11B /* GameStartViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameStartViewCell.m; sourceTree = "<group>"; };
@@ -1196,6 +1199,7 @@
 				2306F3F21478689500EBBAC2 /* libGoogleAdMobAds.a in Frameworks */,
 				23C2FF21148584BD002B8350 /* Crittercism_v2_9_16.a in Frameworks */,
 				23F001AF1492F772000294AF /* libFlurryAnalytics.a in Frameworks */,
+				230549B114943BD5003FF172 /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1313,8 +1317,8 @@
 				B90EE191135FC12A0091A7B9 /* Team.m */,
 				2360F0231422D13100962B3A /* Training.h */,
 				2360F0241422D13100962B3A /* Training.m */,
-				234097BB148DF55D000B3746 /* EmergancyContact.h */,
-				234097BC148DF55D000B3746 /* EmergancyContact.m */,
+				234097BB148DF55D000B3746 /* EmergencyContact.h */,
+				234097BC148DF55D000B3746 /* EmergencyContact.m */,
 				2389D46D14941A8000C8302E /* EventLocation.h */,
 				2389D46E14941A8000C8302E /* EventLocation.m */,
 				2389D48214942E1800C8302E /* Opponent.h */,
@@ -1372,6 +1376,8 @@
 		232EBAEA13526C62002277B9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				230549AF14943BD5003FF172 /* libTestFlight.a */,
+				230549B014943BD5003FF172 /* TestFlight.h */,
 				23F001B01492F784000294AF /* Flurry */,
 				23409795148D5D86000B3746 /* ELCTextFieldCell */,
 				23C2FEC314858489002B8350 /* External */,
@@ -1562,7 +1568,7 @@
 			name = Sounds;
 			sourceTree = "<group>";
 		};
-		236FF59C139E599B00BFD897 /* Formation */ = {
+		236FF59C139E599B00BFD897 /* Formations */ = {
 			isa = PBXGroup;
 			children = (
 				236FF599139E598F00BFD897 /* FormationPosition.h */,
@@ -1572,7 +1578,7 @@
 				236FF5A0139E607400BFD897 /* LeagueFormations.h */,
 				236FF5A1139E607400BFD897 /* LeagueFormations.m */,
 			);
-			name = Formation;
+			name = Formations;
 			sourceTree = "<group>";
 		};
 		2372D42F13526CF0003AEA8D /* cocos2d */ = {
@@ -2459,8 +2465,8 @@
 		B90EE197135FC1320091A7B9 /* gen */ = {
 			isa = PBXGroup;
 			children = (
-				234097BE148DF572000B3746 /* _EmergancyContact.h */,
-				234097BF148DF572000B3746 /* _EmergancyContact.m */,
+				234097BE148DF572000B3746 /* _EmergencyContact.h */,
+				234097BF148DF572000B3746 /* _EmergencyContact.m */,
 				2360F0271422D1E300962B3A /* _Training.h */,
 				2360F0281422D1E300962B3A /* _Training.m */,
 				23D3FB3B139D961700E1A349 /* _Season.h */,
@@ -2501,11 +2507,11 @@
 		B9E10A71135E5138002DCF10 /* Data Model */ = {
 			isa = PBXGroup;
 			children = (
-				23DEB4F8147B042E008B16B2 /* ModelMap1to2.xcmappingmodel */,
 				231852E81406FD200035DE91 /* Entities */,
 				B90EE197135FC1320091A7B9 /* gen */,
 				232EBAFF13526C62002277B9 /* CoachTools.xcdatamodeld */,
-				236FF59C139E599B00BFD897 /* Formation */,
+				236FF59C139E599B00BFD897 /* Formations */,
+				23075DD91495713A002088E7 /* ModelMap1to2.xcmappingmodel */,
 			);
 			name = "Data Model";
 			sourceTree = "<group>";
@@ -2778,7 +2784,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "#!/bin/bash\n# Auto Increment Version Script\nbuildPlist=\"CoachTools/CoachTools-Info.plist\"\nbuildVersion=$(/usr/libexec/PlistBuddy -c \"Print CFBuildVersion\" $buildPlist)\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBuildNumber\" $buildPlist)\nbuildNumber=$(($buildNumber + 1))\nbuilddate=$(date +\"%y.%m.%d %H:%M:%S\")\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $builddate\" $buildPlist\n#/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildVersion.$buildNumber\" $buildPlist\n#/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $buildVersion.$buildNumber\" $buildPlist";
+			shellScript = "#!/bin/bash\n# Auto Increment Version Script\nbuildPlist=\"CoachTools/CoachTools-Info.plist\"\nbuildVersion=$(/usr/libexec/PlistBuddy -c \"Print CFBuildVersion\" $buildPlist)\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBuildNumber\" $buildPlist)\nbuildNumber=$(($buildNumber + 1))\nbuilddate=$(date +\"%y.%m.%d %H:%M:%S\")\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $builddate\" $buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildVersion.$buildNumber\" $buildPlist\n#/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $buildVersion.$buildNumber\" $buildPlist";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2995,15 +3001,14 @@
 				2397A253146DF9D900FABD16 /* GameFormDataSource.m in Sources */,
 				2306F4511478769900EBBAC2 /* HelpManagement.m in Sources */,
 				2306F4571478CB5200EBBAC2 /* GameSummaryFormDataSource.m in Sources */,
-				23DEB4F9147B042E008B16B2 /* ModelMap1to2.xcmappingmodel in Sources */,
 				23C2FF63148584BD002B8350 /* Crittercism.xcdatamodeld in Sources */,
 				230D8AAC1488521800822774 /* DateTimeSelectionViewController.m in Sources */,
 				231703BE14886E8F00FB83B6 /* PlayerImportFormDataSource.m in Sources */,
 				23409791148D519A000B3746 /* PlayerEditViewController.m in Sources */,
 				23409794148D5D80000B3746 /* ELCTextfieldCell.m in Sources */,
 				234097AC148DB4DE000B3746 /* AddressBookViewController.m in Sources */,
-				234097BD148DF55E000B3746 /* EmergancyContact.m in Sources */,
-				234097C0148DF573000B3746 /* _EmergancyContact.m in Sources */,
+				234097BD148DF55E000B3746 /* EmergencyContact.m in Sources */,
+				234097C0148DF573000B3746 /* _EmergencyContact.m in Sources */,
 				23F4C6FF148EE21900F05EDC /* TrainingListViewCell.m in Sources */,
 				23F2BBB214916486004AFD54 /* SeasonFormDataSource.m in Sources */,
 				23FC68FC149176DB00BADF79 /* ChalkTalkViewController.m in Sources */,
@@ -3016,6 +3021,7 @@
 				2389D47D14942BEF00C8302E /* LocationManager.m in Sources */,
 				2389D48414942E1900C8302E /* Opponent.m in Sources */,
 				2389D48714942E2D00C8302E /* _Opponent.m in Sources */,
+				23075DDA1495713B002088E7 /* ModelMap1to2.xcmappingmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3070,7 +3076,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Chris Desch (WM989P33GJ)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
@@ -3084,7 +3090,7 @@
 					"-all_load",
 				);
 				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F6B3829F-EBA3-4A34-B0E1-97A186282B5C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -3095,8 +3101,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Christopher Desch";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = DCBLOCKNSLOGSTATEMENTS;
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
@@ -3109,7 +3115,7 @@
 					"-all_load",
 				);
 				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9E42608D-7E14-4011-9B59-EE640E365265";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = 2;
@@ -3149,8 +3155,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CoachTools/CoachTools-Prefix.pch";

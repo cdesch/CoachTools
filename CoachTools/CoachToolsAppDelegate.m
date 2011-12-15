@@ -68,7 +68,7 @@ void SignalHandler(int sig) {
     sigaction(SIGILL, &newSignalAction, NULL);
     sigaction(SIGBUS, &newSignalAction, NULL);
     // Call takeOff after install your own unhandled exception and signal handlers
-    [TestFlight takeOff:@"0458201e65ba81f1484cc143b2350c36_NDI1NzcyMDExLTExLTIxIDE5OjU4OjE3LjA4Nzg5Mg"];
+    //[TestFlight takeOff:@"0458201e65ba81f1484cc143b2350c36_NDI1NzcyMDExLTExLTIxIDE5OjU4OjE3LjA4Nzg5Mg"];
     //[TestFlight passCheckpoint:@"CHECKPOINT_NAME"];
     //[TestFlight openFeedbackView];
 
@@ -84,11 +84,7 @@ void SignalHandler(int sig) {
     version = nil;
     buildNo = nil;
     buildDate = nil;
-    /*
-    [version release];
-    [buildNo release];
-    [buildDate release];
-*/
+
     if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
 		[CCDirector setDirectorType:kCCDirectorTypeThreadMainLoop];
     
@@ -109,8 +105,8 @@ void SignalHandler(int sig) {
     [self.window makeKeyAndVisible];
     
     //Crittercism API
-    //[Crittercism initWithAppID:@"4ec82c723f5b316f9a00004f" andKey:@"4ec82c723f5b316f9a00004flwax7sls" andSecret:@"if9cgs1z3bhu8gncwufsolmenpjeqvtq" andMainViewController:self.navigationController ];
-    //[Crittercism sharedInstance].delegate = self;
+    [Crittercism initWithAppID:@"4ec82c723f5b316f9a00004f" andKey:@"4ec82c723f5b316f9a00004flwax7sls" andSecret:@"if9cgs1z3bhu8gncwufsolmenpjeqvtq" andMainViewController:self.navigationController ];
+    [Crittercism sharedInstance].delegate = self;
     
     return YES;
 }

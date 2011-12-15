@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		23001A8F1499A00E003ADF84 /* Move_dSYM_To_Storage.sh in Resources */ = {isa = PBXBuildFile; fileRef = 23001A8E1499A00E003ADF84 /* Move_dSYM_To_Storage.sh */; };
 		2301AEBB13EF1376007AE673 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 2301AEB413EF1376007AE673 /* Icon-72.png */; };
 		2301AEBC13EF1376007AE673 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 2301AEB513EF1376007AE673 /* Icon-Small-50.png */; };
 		2301AEBD13EF1376007AE673 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 2301AEB613EF1376007AE673 /* Icon-Small.png */; };
@@ -30,6 +31,7 @@
 		2316D1851409BDF8005E676D /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2316D1841409BDF8005E676D /* EventKit.framework */; };
 		2316D18B1409CDA8005E676D /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2316D18A1409CDA8005E676D /* EventKitUI.framework */; };
 		231703BE14886E8F00FB83B6 /* PlayerImportFormDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 231703BD14886E8F00FB83B6 /* PlayerImportFormDataSource.m */; };
+		231DE5CF14968EAE00E268BC /* CalendarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 231DE5CE14968EAE00E268BC /* CalendarManager.m */; };
 		231E932713FC84D40000DB54 /* iToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 231E932613FC84D40000DB54 /* iToast.m */; };
 		2323A03413722BEC006769B5 /* GameListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2323A03213722BEC006769B5 /* GameListViewController.m */; };
 		2323A03513722BEC006769B5 /* GameListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2323A03313722BEC006769B5 /* GameListViewController.xib */; };
@@ -45,6 +47,7 @@
 		2324161413A07937003FD78E /* TeamListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2324161313A07937003FD78E /* TeamListViewCell.m */; };
 		2324161E13A1114A003FD78E /* TeamListViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2324161D13A11149003FD78E /* TeamListViewCell.xib */; };
 		2325CA99138C4278004D2B4C /* playerSelected1.png in Resources */ = {isa = PBXBuildFile; fileRef = 2325CA98138C4278004D2B4C /* playerSelected1.png */; };
+		232DA3A614995A320077CEAE /* PlayerFormController.m in Sources */ = {isa = PBXBuildFile; fileRef = 232DA3A514995A320077CEAE /* PlayerFormController.m */; };
 		232EBAEC13526C62002277B9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 232EBAEB13526C62002277B9 /* UIKit.framework */; };
 		232EBAEE13526C62002277B9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 232EBAED13526C62002277B9 /* Foundation.framework */; };
 		232EBAF013526C62002277B9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 232EBAEF13526C62002277B9 /* CoreGraphics.framework */; };
@@ -428,6 +431,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		23001A8E1499A00E003ADF84 /* Move_dSYM_To_Storage.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = Move_dSYM_To_Storage.sh; sourceTree = "<group>"; };
 		2301AEB413EF1376007AE673 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		2301AEB513EF1376007AE673 /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
 		2301AEB613EF1376007AE673 /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
@@ -463,6 +467,8 @@
 		2316D18A1409CDA8005E676D /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
 		231703BC14886E8F00FB83B6 /* PlayerImportFormDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerImportFormDataSource.h; sourceTree = "<group>"; };
 		231703BD14886E8F00FB83B6 /* PlayerImportFormDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerImportFormDataSource.m; sourceTree = "<group>"; };
+		231DE5CD14968EAE00E268BC /* CalendarManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarManager.h; sourceTree = "<group>"; };
+		231DE5CE14968EAE00E268BC /* CalendarManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarManager.m; sourceTree = "<group>"; };
 		231E932513FC84D40000DB54 /* iToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iToast.h; sourceTree = "<group>"; };
 		231E932613FC84D40000DB54 /* iToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iToast.m; sourceTree = "<group>"; };
 		2323A03113722BEC006769B5 /* GameListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameListViewController.h; sourceTree = "<group>"; };
@@ -487,6 +493,8 @@
 		2324161313A07937003FD78E /* TeamListViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamListViewCell.m; sourceTree = "<group>"; };
 		2324161D13A11149003FD78E /* TeamListViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TeamListViewCell.xib; sourceTree = "<group>"; };
 		2325CA98138C4278004D2B4C /* playerSelected1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playerSelected1.png; sourceTree = "<group>"; };
+		232DA3A414995A320077CEAE /* PlayerFormController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerFormController.h; sourceTree = "<group>"; };
+		232DA3A514995A320077CEAE /* PlayerFormController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerFormController.m; sourceTree = "<group>"; };
 		232EBAE713526C62002277B9 /* CoachTools.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoachTools.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		232EBAEB13526C62002277B9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		232EBAED13526C62002277B9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -1423,6 +1431,8 @@
 				23DE234A13E2217000B1C845 /* AboutViewController.xib */,
 				238BC0AC140D355D00ABBEFF /* EmailManager.h */,
 				238BC0AD140D355D00ABBEFF /* EmailManager.m */,
+				231DE5CD14968EAE00E268BC /* CalendarManager.h */,
+				231DE5CE14968EAE00E268BC /* CalendarManager.m */,
 				237C526B140D54AE00C6E3A7 /* EventManager.h */,
 				237C526C140D54AE00C6E3A7 /* EventManager.m */,
 				23B449E214535D2C00398CF6 /* PopulateTeam.h */,
@@ -1442,6 +1452,7 @@
 		232EBAF413526C62002277B9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				23001A8E1499A00E003ADF84 /* Move_dSYM_To_Storage.sh */,
 				23CF4D2513E200A700347E6B /* images */,
 				2365E72413AC155D0063FA1E /* Sounds */,
 				232EBAF513526C62002277B9 /* CoachTools-Info.plist */,
@@ -1499,8 +1510,6 @@
 		234097A5148D6C0C000B3746 /* Deprecated */ = {
 			isa = PBXGroup;
 			children = (
-				2397A24E146DDC1700FABD16 /* PlayerFormDataSource.h */,
-				2397A24F146DDC1700FABD16 /* PlayerFormDataSource.m */,
 				231703BC14886E8F00FB83B6 /* PlayerImportFormDataSource.h */,
 				231703BD14886E8F00FB83B6 /* PlayerImportFormDataSource.m */,
 				2363B4C213718F4B0082F206 /* AddPlayerViewController.h */,
@@ -1976,6 +1985,8 @@
 				234097AB148DB4DD000B3746 /* AddressBookViewController.m */,
 				2340978F148D5199000B3746 /* PlayerEditViewController.h */,
 				23409790148D519A000B3746 /* PlayerEditViewController.m */,
+				2397A24E146DDC1700FABD16 /* PlayerFormDataSource.h */,
+				2397A24F146DDC1700FABD16 /* PlayerFormDataSource.m */,
 				234097A5148D6C0C000B3746 /* Deprecated */,
 				23A5184813776931006477C6 /* PlayerListViewController.h */,
 				23A5184913776931006477C6 /* PlayerListViewController.m */,
@@ -1983,11 +1994,13 @@
 				239FC8031381F9A80026FA17 /* PlayerSummaryViewController.h */,
 				239FC8041381F9A80026FA17 /* PlayerSummaryViewController.m */,
 				239FC8051381F9A80026FA17 /* PlayerSummaryViewController.xib */,
-				23F160C513A17B4900408488 /* PlayerListViewCell.h */,
 				23F160C613A17B4900408488 /* PlayerListViewCell.m */,
+				23F160C513A17B4900408488 /* PlayerListViewCell.h */,
 				23F160C913A17B5E00408488 /* PlayerListViewCell.xib */,
 				23F0019D1492B75B000294AF /* EmergencyContactViewController.h */,
 				23F0019E1492B75B000294AF /* EmergencyContactViewController.m */,
+				232DA3A414995A320077CEAE /* PlayerFormController.h */,
+				232DA3A514995A320077CEAE /* PlayerFormController.m */,
 			);
 			name = Players;
 			sourceTree = "<group>";
@@ -2527,6 +2540,7 @@
 				232EBAE513526C62002277B9 /* Resources */,
 				232EBAE413526C62002277B9 /* Frameworks */,
 				23DEB4FF147B1CD7008B16B2 /* ShellScript */,
+				234970521497F31000A41561 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2562,7 +2576,7 @@
 		232EBADE13526C62002277B9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 				ORGANIZATIONNAME = "Desch Enterprises";
 			};
 			buildConfigurationList = 232EBAE113526C62002277B9 /* Build configuration list for PBXProject "CoachTools" */;
@@ -2745,6 +2759,7 @@
 				230D8AAD1488521800822774 /* DateTimeSelectionViewController.xib in Resources */,
 				23F4C701148EE25700F05EDC /* TrainingListViewCell.xib in Resources */,
 				23FC68FD149176DB00BADF79 /* ChalkTalkViewController.xib in Resources */,
+				23001A8F1499A00E003ADF84 /* Move_dSYM_To_Storage.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2773,6 +2788,19 @@
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
 		};
+		234970521497F31000A41561 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/sh\n\nif [ \"$BUILD_STYLE\" == \"Debug\" ]; then\necho \"Skipping debug\"\nexit 0;\nfi\n\nif [ \"$EFFECTIVE_PLATFORM_NAME\" == \"-iphonesimulator\" ]; then\necho \"Skipping simulator build\"\nexit 0;\nfi\n\nSRC_PATH=${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\nRELATIVE_DEST_PATH=dSYM/${EXECUTABLE_NAME}.$(date +%Y%m%d%H%M%S).app.dSYM\nDEST_PATH=${PROJECT_DIR}/${RELATIVE_DEST_PATH}\necho \"moving ${SRC_PATH} to ${DEST_PATH}\"\n\nmv \"${SRC_PATH}\" \"${DEST_PATH}\"\n\nif [ -f \".git/config\" ]; then\ngit add \"${RELATIVE_DEST_PATH}\"\ngit commit -m \"Added dSYM file for ${BUILD_STYLE} build\" \"${RELATIVE_DEST_PATH}\"\nfi";
+		};
 		23DEB4FF147B1CD7008B16B2 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2784,7 +2812,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "#!/bin/bash\n# Auto Increment Version Script\nbuildPlist=\"CoachTools/CoachTools-Info.plist\"\nbuildVersion=$(/usr/libexec/PlistBuddy -c \"Print CFBuildVersion\" $buildPlist)\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBuildNumber\" $buildPlist)\nbuildNumber=$(($buildNumber + 1))\nbuilddate=$(date +\"%y.%m.%d %H:%M:%S\")\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $builddate\" $buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildVersion.$buildNumber\" $buildPlist\n#/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $buildVersion.$buildNumber\" $buildPlist";
+			shellScript = "#!/bin/bash\n# Auto Increment Version Script\nbuildPlist=\"CoachTools/CoachTools-Info.plist\"\nbuildVersion=$(/usr/libexec/PlistBuddy -c \"Print CFBuildVersion\" $buildPlist)\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBuildNumber\" $buildPlist)\nbuildNumber=$(($buildNumber + 1))\nbuilddate=$(date +\"%y.%m.%d %H:%M:%S\")\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $builddate\" $buildPlist\n#/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildVersion.$buildNumber\" $buildPlist\n#/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $buildVersion.$buildNumber\" $buildPlist";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -3022,6 +3050,8 @@
 				2389D48414942E1900C8302E /* Opponent.m in Sources */,
 				2389D48714942E2D00C8302E /* _Opponent.m in Sources */,
 				23075DDA1495713B002088E7 /* ModelMap1to2.xcmappingmodel in Sources */,
+				231DE5CF14968EAE00E268BC /* CalendarManager.m in Sources */,
+				232DA3A614995A320077CEAE /* PlayerFormController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3155,8 +3185,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Christopher Desch";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Christopher Desch";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CoachTools/CoachTools-Prefix.pch";
@@ -3171,8 +3201,8 @@
 					"\"$(SRCROOT)/../../github/Crittercism-SDK\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "A29BA606-EFF2-4487-8474-943349AF6D40";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A29BA606-EFF2-4487-8474-943349AF6D40";
 				USER_HEADER_SEARCH_PATHS = /Users/cj/Documents/xcodeProjects/github/IBAForms/library;
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;

@@ -176,13 +176,14 @@ int currentFormationIndex = 0;
         
         for(Person *playerObject in playersArray)
         {
-            PlayerSprite *s = [PlayerSprite spriteWithFile:@"player1small2.png" ];
-            s.player = playerObject;
-            [s.nameLabel setString:playerObject.lastName];
-            s.position=[self setupPlayers:[playersArray indexOfObject:playerObject]];
-            [self addChild:s];
+            if (playerObject.activeValue) {
+                PlayerSprite *s = [PlayerSprite spriteWithFile:@"player1small2.png" ];
+                s.player = playerObject;
+                [s.nameLabel setString:playerObject.lastName];
+                s.position=[self setupPlayers:[playersArray indexOfObject:playerObject]];
+                [self addChild:s];
+            }
         }
-        
         
     }
     return self;

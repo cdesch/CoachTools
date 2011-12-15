@@ -29,6 +29,10 @@
         stopped
     }state;
 
+    NSInteger       gameInterval;   //How Many time segments // Havles or Quarters
+    NSInteger       quarter1;       //Time until quarter1
+    NSInteger       quarter2;       //Time until quarter1
+    NSInteger       quarter3;       //Time until quarter1
     NSInteger       halfTime;       //Time until Half
     NSInteger       fullTime;       //Time until End of Game (should be half x2)
     
@@ -51,8 +55,12 @@
 @property (nonatomic, retain) GameTimerDisplay *gameTimerDisplay;
 @property (nonatomic, retain) NSDate           *suspendTime;
 
-
+@property (nonatomic, readwrite) NSInteger       gameInterval;   //How Many time segments
+@property (nonatomic, readwrite) NSInteger       quarter1;       //Time until quarter1
+@property (nonatomic, readwrite) NSInteger       quarter2;       //Time until quarter1
+@property (nonatomic, readwrite) NSInteger       quarter3;       //Time until quarter1
 @property (nonatomic, readwrite) NSInteger       halfTime;       //Time until Half
+
 @property (nonatomic, readwrite) NSInteger       fullTime;       //Time until End of Game (should be half x2)
 @property (nonatomic, readwrite) NSInteger       warningTime;    //5 Min warning to end of half or game 
 

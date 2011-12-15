@@ -130,37 +130,39 @@
         
         for(Person *playerObject in playersArray){
 
-            int positionSlotIndex =  [self starterPlayerIndex:startingPlayers player:playerObject];
-            //Check if the current Player is a starting player
-            if (positionSlotIndex >= 0){
+            if (playerObject.activeValue) {
+                int positionSlotIndex =  [self starterPlayerIndex:startingPlayers player:playerObject];
+                //Check if the current Player is a starting player
+                if (positionSlotIndex >= 0){
                     
-                //Player Found!! Add them to their position
-                PlayerSprite *player = [PlayerSprite spriteWithFile:@"player1small2.png"];
-                player.player = playerObject;
-                [player.nameLabel setString:playerObject.lastName];
-                CGPoint aPosition = [[formationSlotsArray objectAtIndex:positionSlotIndex] position];
-                player.position =aPosition;
-
-                [self addChild:player];
+                    //Player Found!! Add them to their position
+                    PlayerSprite *player = [PlayerSprite spriteWithFile:@"player1small2.png"];
+                    player.player = playerObject;
+                    [player.nameLabel setString:playerObject.lastName];
+                    CGPoint aPosition = [[formationSlotsArray objectAtIndex:positionSlotIndex] position];
+                    player.position =aPosition;
                     
-            }else{
-                //Player is not a starting player, add them to the bench
-                //NSLog(@"Sent to Bench: %@ -- Bench does not exist yet- LOL", playerObject.lastName);
-                //Bench does not exist yet
-                PlayerSprite *player = [PlayerSprite spriteWithFile:@"player1small2.png"];
-                player.player = playerObject;
-                [player.nameLabel setString:playerObject.lastName];
-                CGPoint aPosition = [[benchSlotsArray objectAtIndex:benchSlotIndex] position];
-                
-                player.position =aPosition;
-                
-                [self addChild:player];
-                benchSlotIndex ++;
-                
+                    [self addChild:player];
+                    
+                }else{
+                    //Player is not a starting player, add them to the bench
+                    //NSLog(@"Sent to Bench: %@ -- Bench does not exist yet- LOL", playerObject.lastName);
+                    //Bench does not exist yet
+                    PlayerSprite *player = [PlayerSprite spriteWithFile:@"player1small2.png"];
+                    player.player = playerObject;
+                    [player.nameLabel setString:playerObject.lastName];
+                    CGPoint aPosition = [[benchSlotsArray objectAtIndex:benchSlotIndex] position];
+                    
+                    player.position =aPosition;
+                    
+                    [self addChild:player];
+                    benchSlotIndex ++;
+                    
+                }
             }
-            
+                        
         }
-        //[startingPlayers release];
+
         
 		//We set the layer position to the center of the screen
 		//This will also move our player sprite to the center
@@ -554,7 +556,7 @@
     }
     
     else if (targetGoalEvent == homeGoalEvent){
-        [[iToast makeText:NSLocalizedString(@"Score Saved!", @"")] show];
+        [[iToast makeText:NSLocalizedString(@"Opponent Score Saved!", @"")] show];
         [self saveGameScore];
         [touchedSoccerBall runAction:[CCMoveTo actionWithDuration:1 position:soccerBallHomeSlot.position]];
         [soccerBall reset];
@@ -571,7 +573,7 @@
         
         if(touchedSoccerBall.scoringPlayer != NULL){
             //NSLog(@"Save Score");
-            [[iToast makeText:NSLocalizedString(@"Score Saved!", @"")] show];
+            [[iToast makeText:NSLocalizedString(@"Home Score Saved!", @"")] show];
             [self saveGameScore];
             [touchedSoccerBall runAction:[CCMoveTo actionWithDuration:1 position:soccerBallHomeSlot.position]];
             [soccerBall reset];
@@ -593,6 +595,7 @@
     touchedSoccerBall = NULL;
     awayGoalEvent.visible = FALSE;
     homeGoalEvent.visible = FALSE;
+    targetGoalEvent = NULL;
     
 }
 

@@ -241,8 +241,6 @@ static GameManagementViewController *sharedInstance;
             sheet.identifier = @"EndStarters";
             [sheet showFromBarButtonItem:sender animated:YES];
         }
-
-        
     }
     
     //NSLog(@"Exiting %s", __PRETTY_FUNCTION__);
@@ -299,9 +297,7 @@ static GameManagementViewController *sharedInstance;
         }
         
     }
-    
     endButtonItem.title = @"End Selection";
-   
 }
 
 
@@ -315,8 +311,9 @@ static GameManagementViewController *sharedInstance;
     //Show and Set Gametimer
     RootViewController *sharedAppController = [RootViewController sharedAppController];
     //[[sharedAppController gameTimer] setGameTimer:1 warningTime:5]; //FOR TESTING ONLY
+    [sharedAppController gameTimer].gameInterval = [game.gameInterval intValue];
     [[sharedAppController gameTimer] setGameTimer:[game.gameIntervalTime intValue] warningTime:5];
-    
+
     [self showGameTimerControls];
     //NSLog(@"Exiting %s", __PRETTY_FUNCTION__); 
 }

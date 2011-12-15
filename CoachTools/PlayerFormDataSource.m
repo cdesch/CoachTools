@@ -20,21 +20,19 @@
 	if (self = [super initWithModel:aModel]) {
         
         // Some basic form fields that accept text input
-		IBAFormSection *basicFieldSection = [self addSectionWithHeaderTitle:@"Add Player" footerTitle:nil];
+		IBAFormSection *basicFieldSection = [self addSectionWithHeaderTitle:@"Contact Information" footerTitle:nil];
         basicFieldSection.formFieldStyle =[[[FormFieldStyle alloc] init] autorelease];
         
-        [basicFieldSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"playerNumber" title:@"Player Number"] autorelease]];
 		[basicFieldSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"firstName" title:@"First Name"] autorelease]];
         [basicFieldSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"lastName" title:@"Last Name"] autorelease]];
         [basicFieldSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"email" title:@"E-Mail"] autorelease]];
         
-        /*
-        IBATextFormField *numberField = [[IBATextFormField alloc] initWithKeyPath:@"number"
-                                                                            title:@"Number"
+
+        IBATextFormField *numberField = [[IBATextFormField alloc] initWithKeyPath:@"phoneNumber"
+                                                                            title:@"Phone Number"
                                                                  valueTransformer:[StringToNumberTransformer instance]];
-		[textInputTraitsSection addFormField:[numberField autorelease]];
-		numberField.textFormFieldCell.textField.keyboardType = UIKeyboardTypeNumberPad;
-*/	
+		[basicFieldSection addFormField:[numberField autorelease]];
+		numberField.textFormFieldCell.textField.keyboardType = UIKeyboardTypeNumberPad;	
         
         // Date fields
 		IBAFormSection *dateFieldSection = [self addSectionWithHeaderTitle:@"Dates" footerTitle:nil];
@@ -44,9 +42,8 @@
 		[dateFormatter setDateStyle:NSDateFormatterShortStyle];
 		[dateFormatter setTimeStyle:NSDateFormatterNoStyle];
 		[dateFormatter setDateFormat:@"EEE d MMM yyyy"];
-        
 		[dateFieldSection addFormField:[[[IBADateFormField alloc] initWithKeyPath:@"birthdate"
-                                                                            title:@"Birth Date"
+                                                                            title:@"Birthdate"
                                                                      defaultValue:[NSDate date]
                                                                              type:IBADateFormFieldTypeDate
                                                                     dateFormatter:dateFormatter] autorelease]];
@@ -57,7 +54,7 @@
 - (void)setModelValue:(id)value forKeyPath:(NSString *)keyPath {
 	[super setModelValue:value forKeyPath:keyPath];
 	
-	NSLog(@"%@", [self.model description]);
+	//NSLog(@"%@", [self.model description]);
 }
 
 @end

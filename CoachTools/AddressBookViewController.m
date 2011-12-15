@@ -8,26 +8,46 @@
 
 #import "AddressBookViewController.h"
 #import "Team.h"
+
+#import "PlayerFormDataSource.h"
+#import "ShowcaseModel.h"
+#import <IBAForms/IBAForms.h>
+#import "ItemFormController.h"
+
+#import "HelpManagement.h"
+
+#import "FlurryAnalytics.h"
+
 @implementation AddressBookViewController
 
 @synthesize delegate;
 @synthesize labels;
 @synthesize item;
 
+@synthesize playerModel;
+
 - (id)initWithStyle:(UITableViewStyle)style{
     
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+        self.labels = [NSArray arrayWithObjects:@"Address Book: Existing Contact",@"Address Book: New Contact", nil];    
+        
     }
     return self;
 }
 
-- (id)initWithStyle:(UITableViewStyle)style player:(Person*)player{
+- (id)initWithStyle:(UITableViewStyle)style player:(Person*)player withInternal:(BOOL)internal{
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
         item = player;
+        
+        if (internal){
+            self.labels = [NSArray arrayWithObjects:@"Address Book: Existing Contact",@"Address Book: New Contact",@"Internal Contact", nil];    
+        }else{
+            self.labels = [NSArray arrayWithObjects:@"Address Book: Existing Contact",@"Address Book: New Contact", nil];    
+        }
         
     }
     return self;
@@ -54,21 +74,11 @@
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
-    self.title = @"Select Contact";
+    self.title = @"Select Contact Type";
     
-    if (item !=nil){
-        if ([item.contactIdentifier intValue] == (-1)){
-            self.labels = [NSArray arrayWithObjects:@"Existing Contact", @"New Contact",@"Migrate Existing Contact", nil];
-        }else{
-            self.labels = [NSArray arrayWithObjects:@"Existing Contact", @"New Contact",nil];
-        }     
-    }else{
-           self.labels = [NSArray arrayWithObjects:@"Existing Contact", @"New Contact",nil];
-    }
-    
-    
-   
-    
+
+
+
 }
 
 - (void)viewDidUnload
@@ -144,6 +154,127 @@
 		// No Dimiss
 	}
 }
+
+
+#pragma mark playerFormDataSource Delgates
+
+- (void)showItemForm{
+    
+    playerModel = [[NSMutableDictionary alloc] init];
+
+    ShowcaseModel *showcaseModel = [[[ShowcaseModel alloc] init] autorelease];
+    showcaseModel.shouldAutoRotate = YES;
+    showcaseModel.tableViewStyleGrouped = YES;
+    showcaseModel.displayNavigationToolbar = YES;
+    showcaseModel.modalPresentation = YES;
+    showcaseModel.modalPresentationStyle = UIModalPresentationFormSheet;
+
+    if (item.lastName != nil){
+        [playerModel setObject:item.lastName forKey:@"lastName"];
+    }
+    
+    if (item.firstName != nil) {
+        [playerModel setObject:item.firstName forKey:@"firstName"];
+    }
+    if (item.phoneNumber != nil) {
+        [playerModel setObject:item.phoneNumber forKey:@"phoneNumber"];
+    }
+
+
+
+    if (item.birthdate != nil){
+        [playerModel setObject:item.birthdate forKey:@"birthDate"];    
+    }
+    
+    if (item.email != nil){
+        [playerModel setObject:item.email forKey:@"email"];    
+    }
+    
+    
+	PlayerFormDataSource *sampleFormDataSource = [[[PlayerFormDataSource alloc] initWithModel:playerModel] autorelease];
+	ItemFormController *sampleFormController = [[[ItemFormController alloc] initWithNibName:nil bundle:nil formDataSource:sampleFormDataSource] autorelease];
+	sampleFormController.title = @"Add Form";
+	sampleFormController.shouldAutoRotate = showcaseModel.shouldAutoRotate;
+	sampleFormController.tableViewStyle = showcaseModel.tableViewStyleGrouped ? UITableViewStyleGrouped : UITableViewStylePlain;
+    
+    [[IBAInputManager sharedIBAInputManager] setInputNavigationToolbarEnabled:showcaseModel.displayNavigationToolbar];
+    
+	UIViewController *rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+	if (showcaseModel.modalPresentation) {
+		UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
+																					 target:self 
+																					 action:@selector(completeSampleForm)] autorelease];
+        UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel 
+                                                                                       target:self 
+                                                                                       action:@selector(cancelForm)] autorelease];
+		sampleFormController.navigationItem.rightBarButtonItem = doneButton;
+        sampleFormController.navigationItem.leftBarButtonItem = cancelButton;
+		UINavigationController *formNavigationController = [[[UINavigationController alloc] initWithRootViewController:sampleFormController] autorelease];
+		formNavigationController.modalPresentationStyle = showcaseModel.modalPresentationStyle;
+		[self presentModalViewController:formNavigationController animated:YES];
+	} else {
+        if ([rootViewController isKindOfClass:[UINavigationController class]]) {
+			[(UINavigationController *)rootViewController pushViewController:sampleFormController animated:YES];
+		}
+	}
+    
+    
+}
+
+
+- (void)completeSampleForm{
+    
+    //Deactivate the input requestor if it was currenlty editing
+    [[IBAInputManager sharedIBAInputManager] deactivateActiveInputRequestor];
+    
+    //Validate
+    
+    if ([self.playerModel valueForKey:@"lastName"] == nil || [[self.playerModel valueForKey:@"lastName"] isEqualToString:@""]){
+        //Check if empty
+        [HelpManagement errorMessage:@"Last Name" error:@"requiredFieldEdit"];
+        
+    } else if ([self.playerModel valueForKey:@"firstName"] == nil || [[self.playerModel valueForKey:@"firstName"] isEqualToString:@""]){
+        //Check if empty
+        [HelpManagement errorMessage:@"First Name" error:@"requiredFieldEdit"];
+        
+    }else if (!([self.playerModel valueForKey:@"email"] == nil || [[self.playerModel valueForKey:@"email"] isEqualToString:@""]) && ![self validateEmail:[self.playerModel valueForKey:@"email"]]){
+        
+        [HelpManagement errorMessage:[self.playerModel valueForKey:@"email"]  error:@"emailInvalid"];
+        
+    }else{
+        
+        item.playerNumber = [self.playerModel valueForKey:@"playerNumber"];
+        item.firstName = [self.playerModel valueForKey:@"firstName"];
+        item.lastName = [self.playerModel valueForKey:@"lastName"];
+        item.phoneNumber = [self.playerModel valueForKey:@"phoneNumber"]; 
+        item.email = [self.playerModel valueForKey:@"email"];
+        
+        //Date
+        
+        NSCalendar *dateCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSDateComponents *dateComponent = [dateCal components:( NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekCalendarUnit | NSWeekdayCalendarUnit |NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:[self.playerModel valueForKey:@"birthdate"]];
+        
+        item.birthdate =  [[dateCal dateFromComponents:dateComponent] copy];
+        
+        [playerModel release];
+        [self dismissModalViewControllerAnimated:YES];
+        [self.delegate doneForm:self];
+    }
+    
+}
+
+- (void)cancelForm{
+    [playerModel release];
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+- (BOOL)validateEmail:(NSString *)candidate {
+    NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"; 
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex]; 
+    
+    return [emailTest evaluateWithObject:candidate];
+}
+
 
 #pragma mark Addressbook delegate
 
@@ -225,6 +356,9 @@
 	}
 	else 
 	{
+  
+        
+        [FlurryAnalytics logError:@"Unresolve Exception: Insert" message:@"Could not add person to contacts" error:nil];
 		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" 
 														message:@"Could not create unknown user" 
 													   delegate:nil 
@@ -237,6 +371,9 @@
 	CFRelease(email);
 	CFRelease(aContact);
 }
+
+
+
 
 
 #pragma mark Delegates
@@ -387,7 +524,7 @@
         //New Contact
         [self newItem];
     }else if (indexPath.row == 2){
-        [self migrateItem];
+        [self showItemForm];
     }
 }
 

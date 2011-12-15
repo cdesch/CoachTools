@@ -67,7 +67,6 @@
     
     //Check if anything was passed to the array.
     if(selectedArray == nil){
-        NSLog(@"Create New Arrary");
         selectedArray = [[NSMutableArray alloc] init];    
     }
 

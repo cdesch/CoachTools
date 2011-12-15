@@ -234,10 +234,10 @@
 	email = [email stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 	
 	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:email]];
-    
-    [recipients release];
-    //[body release];
-    [email release];
+        
+    recipients = nil;
+    body = nil;
+    email = nil;
     
 }
 

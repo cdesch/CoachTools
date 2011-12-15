@@ -8,7 +8,7 @@
 
 #import "EventManager.h"
 #import <EventKit/EventKit.h>
-
+#import "FlurryAnalytics.h"
 
 @implementation EventManager
 
@@ -69,8 +69,9 @@
     //Get the Event DB    
     EKEventStore *eventDB = [[EKEventStore alloc] init];
     EKEvent *myEvent;
+    
 
-    //Update the Event Date if it has changed. 
+    myEvent  = [eventDB eventWithIdentifier:eventIdentifier];    //Update the Event Date if it has changed. 
     if([startDate isEqualToDate:myEvent.startDate]){
        //Do nothing // Date is equal
         
@@ -88,14 +89,16 @@
     EKEventStore *eventDB = [[EKEventStore alloc] init];
     EKEvent *myEvent;
     
-     
+    myEvent  = [eventDB eventWithIdentifier:eventIdentifier];
+    
     [eventDB release];
     return myEvent.startDate;
     
 }
 
 //Creates a entry in the calendar and returns the coorsponding eventindentifier
-- (NSString*)setCalendarEntry:(NSDate*)startDate title:(NSString*)title{
++ (NSString*)setCalendarEntry:(NSDate*)startDate title:(NSString*)title{
+    
     EKEventStore *eventDB = [[EKEventStore alloc] init];
     EKEvent *myEvent  = [EKEvent eventWithEventStore:eventDB];
     
@@ -103,18 +106,15 @@
     myEvent.startDate = startDate; 
     myEvent.endDate   = [startDate dateByAddingTimeInterval:7200];
     
-    //myEvent.allDay = YES;
+    myEvent.allDay = NO;
     [myEvent setCalendar:[eventDB defaultCalendarForNewEvents]];
-    
-    
-    
-    
+
     NSError *err;
     [eventDB saveEvent:myEvent span:EKSpanThisEvent error:&err];
     
     if (err != noErr) {
         
-        
+        [FlurryAnalytics logError:@"Uncaught Exception: Calendar Insert" message:@"Failed to Insert Calendar" error:err];
         UIAlertView *alert = [[UIAlertView alloc]
                               initWithTitle:@"Error saving Entry to calendar"
                               message:@"Not saved!"
@@ -128,6 +128,67 @@
     
     [eventDB release];
     return myEvent.eventIdentifier;    
+    
+}
+
++ (void)updateCalendarEntry:(NSDate*)startDate title:(NSString*)title eventIdentifier:(NSString*)eventIdentifier{
+    //Get the Event DB    
+    EKEventStore *eventDB = [[EKEventStore alloc] init];
+    EKEvent *myEvent;
+    
+    myEvent  = [eventDB eventWithIdentifier:eventIdentifier];
+    myEvent.title     = title;
+    myEvent.startDate = startDate; 
+    myEvent.endDate   = [startDate dateByAddingTimeInterval:7200];
+    
+    myEvent.allDay = NO;    
+    NSError *err;
+    [eventDB saveEvent:myEvent span:EKSpanThisEvent error:&err];
+    
+    if (err != noErr) {
+        
+        [FlurryAnalytics logError:@"Uncaught Exception: Calendar Update" message:@"Failed to update Calendar" error:err];
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:@"Error saving Entry to calendar"
+                              message:@"Not saved!"
+                              delegate:nil
+                              cancelButtonTitle:@"Okay"
+                              otherButtonTitles:nil];
+        [alert show];
+        [alert release];
+        
+    }
+    
+    [eventDB release];
+
+}
+
++ (void)deleteCalendarEntry:(NSString*)eventIdentifier{
+    //Get the Event DB    
+    EKEventStore *eventDB = [[EKEventStore alloc] init];
+    EKEvent *myEvent;
+    
+    myEvent  = [eventDB eventWithIdentifier:eventIdentifier];
+
+
+    NSError *err;
+    [eventDB removeEvent:myEvent span:EKSpanThisEvent commit:YES error:&err];    
+    
+    if (err != noErr) {
+        
+        [FlurryAnalytics logError:@"Uncaught Exception: Calendar Delete" message:@"Failed to update Delete" error:err];
+        UIAlertView *alert = [[UIAlertView alloc]
+                              initWithTitle:@"Error saving Entry to calendar"
+                              message:@"Not saved!"
+                              delegate:nil
+                              cancelButtonTitle:@"Okay"
+                              otherButtonTitles:nil];
+        [alert show];
+        [alert release];
+        
+    }
+    
+    [eventDB release];
     
 }
 

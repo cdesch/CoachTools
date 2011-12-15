@@ -24,7 +24,11 @@
 
 @synthesize suspendTime;
 
+@synthesize gameInterval;
 @synthesize halfTime;
+@synthesize quarter1;
+@synthesize quarter2;
+@synthesize quarter3;
 @synthesize fullTime;
 @synthesize warningTime;
 
@@ -125,32 +129,48 @@
     timeInt = timeInt + 1;
     [self outputTime];
 
-    if(timeInt == halfTime){
-        //Half Time - Pause the Game  and display and alert
-        [self alert:@"Half Time!":@"The game clock has been paused!"]; 
-        [self pause];
-        [gameTimerButton setButtonToStart];
-        //Push notification
-        
-    }else if (timeInt == fullTime){
-        //Normal Game Time has expired //Extra time
-        [self alert:@"Regulation Time Elapsed!":@"The game has now entered overage time!"];
-        //Change Color of LCD Display
-        //Push Notification
-        
-    }else if( timeInt == (halfTime - warningTime) || halfTime == (fullTime - warningTime)){
-        //Game Half or Game End is approaching -  Flash the timer or display an alert
-        
-        
+    if (gameInterval == 2){
+        if(timeInt == halfTime){
+            //Half Time - Pause the Game  and display and alert
+            [self alert:@"Half Time!":@"The game clock has been paused!"]; 
+            [self pause];
+            [gameTimerButton setButtonToStart];
+            //Push notification
+            
+        }else if (timeInt == fullTime){
+            //Normal Game Time has expired //Extra time
+            [self alert:@"Regulation Time Elapsed!":@"The game has now entered overage time!"];
+            //Change Color of LCD Display
+            //Push Notification
+            
+        }else if( timeInt == (halfTime - warningTime) || halfTime == (fullTime - warningTime)){
+            //Game Half or Game End is approaching -  Flash the timer or display an alert
+            
+        }
+    }else if (gameInterval == 4){
+        if(timeInt == quarter1 || timeInt == quarter2 || timeInt == quarter3 ){
+            //Half Time - Pause the Game  and display and alert
+            [self alert:@"Quarter End!":@"The game clock has been paused!"]; 
+            [self pause];
+            [gameTimerButton setButtonToStart];
+            //Push notification
+            
+        }else if (timeInt == fullTime){
+            //Normal Game Time has expired //Extra time
+            [self alert:@"Regulation Time Elapsed!":@"The game has now entered overage time!"];
+            //Change Color of LCD Display
+            //Push Notification
+            
+        }else if( timeInt == (halfTime - warningTime) || halfTime == (fullTime - warningTime)){
+            //Game Half or Game End is approaching -  Flash the timer or display an alert
+        }      
     }
-    
     
 }
 
 -(void)outputTime{
     // Output the time to the first segment of the display controller.
     [gameTimerDisplay setString:[NSString stringWithFormat:@"%@ %@ %@" , [[NSNumber numberWithInt:homeScore] stringValue],[self timeToString], [[NSNumber numberWithInt:opponentScore] stringValue] ]];        
-    
 }
 
 //Return time as String
@@ -193,7 +213,7 @@
 
 //Start the Timer // Delegate from the gameTimeButton
 - (void)startTimer:(GameTimerButton *)button{
-    NSLog(@"Start Time");
+
     if(state == paused){
         [self resume];
     }else{
@@ -211,7 +231,6 @@
     //DIVE DOWN INTO THE DIRECTOR --  GO into the Scene, GO into 
     CCDirector *director = [CCDirector sharedDirector];
     if([[director runningScene] isKindOfClass:[GameScene class]]){
-        NSLog(@"It is that CLASSS");
         
     }
     
@@ -223,9 +242,21 @@
 }
 - (void)setGameTimer:(int)halfInMinutes warningTime:(int)warning{
 
-    halfTime = halfInMinutes * 60;
-    fullTime = halfTime * 2;
-    warningTime = warning * 60;
+    halfInMinutes = 1;
+    if(gameInterval ==2){
+        halfTime = halfInMinutes * 60;
+        fullTime = halfTime * 2;
+        warningTime = warning * 60;
+        
+    }else if(gameInterval == 4){
+        halfTime = halfInMinutes * 60;
+        quarter1 = halfInMinutes * 60;
+        quarter2 = quarter1 * 2;
+        quarter3 = quarter1 * 3;
+        fullTime = quarter1 * 4;
+        warningTime = warning * 60;
+        
+    }
     
     homeScore = 0;
     opponentScore = 0;

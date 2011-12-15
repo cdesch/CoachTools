@@ -86,16 +86,16 @@ NSInteger ICONS_TAG = 98;
 		
         // Player Buttons
         CCMenuItemFont *addHP = [CCMenuItemFont itemFromString:@"Add Home Player" target:self selector:@selector(addHomePlayer:)];
-		addHP.position=ccp(915,30);
+		addHP.position=ccp(890,30);
 		
         CCMenuItemFont *addAP = [CCMenuItemFont itemFromString:@"Add Away Player" target:self selector:@selector(addAwayPlayer:)];
-		addAP.position=ccp(150,30);
+		addAP.position=ccp(140,30);
         
         CCMenuItemFont *clearLines = [CCMenuItemFont itemFromString:@"Clear Lines" target:self selector:@selector(cleanLines:)];
-		clearLines.position=ccp(425,30);
+		clearLines.position=ccp(415,30);
         
         CCMenuItemFont *clearAll = [CCMenuItemFont itemFromString:@"Clear All" target:self selector:@selector(cleanAll:)];
-		clearAll.position=ccp(650,30);
+		clearAll.position=ccp(640,30);
 
         CCMenu *menu = [CCMenu menuWithItems:addHP,addAP,clearLines,clearAll, nil];
 		[self addChild:menu];

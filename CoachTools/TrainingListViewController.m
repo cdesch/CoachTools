@@ -79,7 +79,7 @@
     
     self.navigationItem.rightBarButtonItem = addButton;
     [addButton release];
-    /*
+
     UIBarButtonItem *sortAscendingButton = [[UIBarButtonItem alloc] initWithTitle:@"Sort" style:UIBarButtonItemStyleBordered target:self action:@selector(sortButton:)];
     
     UIBarButtonItem *flexibleBarButtItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -88,7 +88,7 @@
     
     [flexibleBarButtItem release];
     [sortAscendingButton release];
-     */
+
 
 
 }
@@ -141,13 +141,16 @@
     // Return YES for supported orientations
 	return YES;
 }
-/*
+
+#pragma mark 
+#pragma mark - Actions
+
 //Sort Button is pressed
 - (void)sortButton:(id)sender{
     
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Sort by"
                                                              delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil
-                                                    otherButtonTitles:@"Training Number", @"Date",  nil]; // @"Opponent Goals",
+                                                    otherButtonTitles:@"Training Number", @"Location", @"Date" , nil]; // @"Opponent Goals",@"Team Goals",
     actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
     //actionSheet.destructiveButtonIndex = 4; // make the second button red (destructive)
     
@@ -164,21 +167,26 @@
         
         if(buttonIndex == 0){
             
-            NSSortDescriptor *sortDescriptor =  [[NSSortDescriptor alloc] initWithKey:@"trainingNumber" ascending:YES selector:@selector(localizedStandardCompare:)] ;
+            NSSortDescriptor *sortDescriptor =  [[NSSortDescriptor alloc] initWithKey:@"trainingNumber" ascending:YES] ;
             NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:&sortDescriptor count:1];
-            [self.itemArray sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptors] ];
+            
+            NSMutableArray *sortedItems = [[NSMutableArray alloc] initWithArray:[season.training allObjects]];
+            [sortedItems sortUsingDescriptors:sortDescriptors];
+            self.itemArray = sortedItems;
+            
             [sortDescriptor release];
             [sortDescriptors release];
+            [sortedItems release];
             
-            [self.tableView reloadData];    
-            
+            // Update recipe type and ingredients on return.
+            [self.tableView reloadData]; 
             
         }else if (buttonIndex == 1){
-            [self sortList:@"opponent" ascendingOrder:YES];
+            [self sortList:@"trainingLocation" ascendingOrder:YES];
         }else if (buttonIndex == 2){
-            [self sortList:@"location" ascendingOrder:YES];
+            [self sortList:@"date" ascendingOrder:YES];
         }else if (buttonIndex == 3){
-            [self sortList:@"homeScore" ascendingOrder:NO];
+            [self sortList:@"date" ascendingOrder:NO];
         }
         else if (buttonIndex == 4){
             [self sortList:@"opponentScore" ascendingOrder:NO];
@@ -193,15 +201,19 @@
     //Sort using key as sort parameter
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:key ascending:order];
 	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:&sortDescriptor count:1];
-    [self.itemArray sortUsingDescriptors:sortDescriptors ];
+	
+	NSMutableArray *sortedItems = [[NSMutableArray alloc] initWithArray:[season.training allObjects]];
+	[sortedItems sortUsingDescriptors:sortDescriptors];
+	self.itemArray = sortedItems;
     
-    [sortDescriptor release];
+	[sortDescriptor release];
 	[sortDescriptors release];
-    
-    [self.tableView reloadData];                                                                         
+	[sortedItems release];
+	
+	// Update recipe type and ingredients on return.
+    [self.tableView reloadData];                                                             
     
 }
-*/
 - (void)insertItemButton:(id)sender{
     
     trainingModel = [[NSMutableDictionary alloc] init];

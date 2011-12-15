@@ -17,7 +17,8 @@
 + (BOOL)checkCalendarEntryExists:(NSString*)eventIdentifier;
 + (BOOL)checkCalendarDateIsEqaul:(NSString*)eventIdentifier startDate:(NSDate *)startDate;
 + (NSDate*)getCurrentCalendarDate:(NSString*)eventIdentifier;
-- (NSString*)setCalendarEntry:(NSDate*)startDate title:(NSString*)title;
-
++ (NSString*)setCalendarEntry:(NSDate*)startDate title:(NSString*)title;
++ (void)updateCalendarEntry:(NSDate*)startDate title:(NSString*)title eventIdentifier:(NSString*)eventIdentifier;
++ (void)deleteCalendarEntry:(NSString*)eventIdentifier;
 
 @end

@@ -9,6 +9,7 @@
 #import "PlayerEditViewController.h"
 #import "AddressBookViewController.h"
 #import "HelpManagement.h"
+#import "FlurryAnalytics.h"
 
 @implementation PlayerEditViewController
 
@@ -16,6 +17,8 @@
 @synthesize placeholders;
 @synthesize delegate;
 @synthesize item;
+
+@synthesize playerModel;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -65,13 +68,13 @@
     self.navigationItem.leftBarButtonItem = cancelButtonItem;
     [cancelButtonItem release];
     
-    self.labels = [NSArray arrayWithObjects:@"Player Number", 
+    self.labels = [NSArray arrayWithObjects:@"Number", 
                    @"Last Name", 
                    @"Email", 
                    @"Phone Number", 
                    nil];
 	
-	self.placeholders = [NSArray arrayWithObjects:@"Enter Player Number", 
+	self.placeholders = [NSArray arrayWithObjects:@"Player Number", 
                          @"Enter Last Name", 
                          @"Enter Email", 
                          @"Phone Number (Optional)", 
@@ -205,11 +208,15 @@
         }
         
         if([item.contactIdentifier intValue] == (-1) || [item.contactIdentifier intValue] == (-2)){
-            cell.textLabel.text = [NSString stringWithFormat:@"Contact: None Assigned"];
+            cell.textLabel.text = [NSString stringWithFormat:@"None Assigned"];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        }else{
-            cell.textLabel.text = [NSString stringWithFormat:@"Contact: %@ %@", item.firstName, item.lastName];            
-             cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+        }else if([item.contactIdentifier intValue] == (-3) ){
+            cell.textLabel.text = [NSString stringWithFormat:@"Internal: %@ %@", item.firstName, item.lastName];            
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        }
+        else{
+            cell.textLabel.text = [NSString stringWithFormat:@"Address Book: %@ %@", item.firstName, item.lastName];            
+            cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
         }
         
         return cell;
@@ -237,7 +244,7 @@
 
 - (void)updateTextLabelAtIndexPath:(NSIndexPath*)indexPath string:(NSString*)string {
     
-	NSLog(@"See input: %@ from section: %d row: %d, should update models appropriately", string, indexPath.section, indexPath.row);
+	//NSLog(@"See input: %@ from section: %d row: %d, should update models appropriately", string, indexPath.section, indexPath.row);
     item.playerNumber = string;
 }
 
@@ -265,7 +272,7 @@
         //Check if empty
        [HelpManagement errorMessage:@"Player Number" error:@"requiredFieldEdit"];
         return FALSE;
-    }else if (![item.playerNumber intValue]){
+    }else if (!isNumeric(item.playerNumber)){
         //Check if number is a number
         [HelpManagement errorMessage:@"Player Number" error:@"numOnlyField"];
         return FALSE;
@@ -330,6 +337,11 @@
 }
 */
 
+#pragma mark PlayerFormDataSource
+
+
+
+
 #pragma mark Addressbook Delegat
 
 - (void)doneAddressBook:(AddressBookViewController *)doneAddressBook contactIdentifier:(ABRecordRef)person{
@@ -346,17 +358,34 @@
     }
     
     NSIndexPath* indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
-    
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    
-    cell.textLabel.text = [NSString stringWithFormat:@"Contact: %@ %@", item.firstName, item.lastName];
-    
+    cell.textLabel.text = [NSString stringWithFormat:@"Address Book: %@ %@", item.firstName, item.lastName];
     cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-    
     
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)cancelledAddressBook:(AddressBookViewController *)cancelledAddressBook{
+    //Do Nothing
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+#pragma mark - Optional Addressbook delegates
+- (void) doneForm:(AddressBookViewController *)doneForm{
+    
+    NSNumber *recordId        = [NSNumber numberWithInteger:(-1)];
+    item.contactIdentifier    = [recordId stringValue];	
+    
+    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:0 inSection:1];
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    cell.textLabel.text = [NSString stringWithFormat:@"Internal: %@ %@", item.firstName, item.lastName];
+    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    
+}
+
+- (void)cancelForm:(AddressBookViewController *)cancelForm{
     //Do Nothing
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -380,17 +409,17 @@
             
             if([item.contactIdentifier intValue] == (-1)  || [item.contactIdentifier intValue] == (-2)){
                 //Edit the Link
-                AddressBookViewController *detailViewController = [[AddressBookViewController alloc] initWithStyle:UITableViewStyleGrouped player:item];
+                AddressBookViewController *detailViewController = [[AddressBookViewController alloc] initWithStyle:UITableViewStyleGrouped player:item withInternal:YES];
                 detailViewController.delegate = self;
 
                 [self.navigationController pushViewController:detailViewController animated:YES];
                 [detailViewController release];
             }else{
                 ABAddressBookRef addressBook = ABAddressBookCreate();
-                // Search for the person named "Appleseed" in the address book
+                // Search for the person named in the address book
                 ABRecordID recordID = (ABRecordID) [item.contactIdentifier intValue];
                 ABRecordRef person = ABAddressBookGetPersonWithRecordID(addressBook, recordID);
-                // Display "Appleseed" information if found in the address book 
+                // Display information if found in the address book 
                 if (person != nil)
                 {
                     //ABRecordRef person = (ABRecordRef)[people objectAtIndex:0];
@@ -411,6 +440,8 @@
                                                           otherButtonTitles:nil];
                     [alert show];
                     [alert release];
+                   
+                    [FlurryAnalytics logError:@"Unresolve Exception: Search" message:@"Could not find person in Contacts" error:nil];
                 }
                 
                 //[people release];
@@ -426,13 +457,149 @@
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.section == 1){
         if(indexPath.row == 0){
-            //Edit the link
-            AddressBookViewController *detailViewController = [[AddressBookViewController alloc] initWithStyle:UITableViewStyleGrouped player:item];
-            detailViewController.delegate = self;
-            [self.navigationController pushViewController:detailViewController animated:YES];
-            [detailViewController release];
+            if([item.contactIdentifier intValue] == (-1)){
+                
+                [self showItemForm];
+                      
+            }else{
+                //Edit the link with the address book
+                AddressBookViewController *detailViewController = [[AddressBookViewController alloc] initWithStyle:UITableViewStyleGrouped player:item withInternal:YES];
+                detailViewController.delegate = self;
+                [self.navigationController pushViewController:detailViewController animated:YES];
+                [detailViewController release];
+            }
+
         }
     }
+}
+
+
+
+#pragma mark playerFormDataSource Delgates
+
+- (void)showItemForm{
+    
+    playerModel = [[NSMutableDictionary alloc] init];
+    
+    ShowcaseModel *showcaseModel = [[[ShowcaseModel alloc] init] autorelease];
+    showcaseModel.shouldAutoRotate = YES;
+    showcaseModel.tableViewStyleGrouped = YES;
+    showcaseModel.displayNavigationToolbar = YES;
+    showcaseModel.modalPresentation = YES;
+    showcaseModel.modalPresentationStyle = UIModalPresentationFormSheet;
+    
+    
+    if (item.lastName != nil){
+        [playerModel setObject:item.lastName forKey:@"lastName"];
+    }
+    
+    if (item.firstName != nil) {
+        [playerModel setObject:item.firstName forKey:@"firstName"];
+    }
+    if (item.phoneNumber != nil) {
+        [playerModel setObject:item.phoneNumber forKey:@"phoneNumber"];
+    }
+    
+    if (item.birthdate != nil){
+        [playerModel setObject:item.birthdate forKey:@"birthDate"];    
+    }
+    
+    if (item.email != nil){
+        [playerModel setObject:item.email forKey:@"email"];    
+    }
+
+    
+	PlayerFormDataSource *sampleFormDataSource = [[[PlayerFormDataSource alloc] initWithModel:playerModel] autorelease];
+	ItemFormController *sampleFormController = [[[ItemFormController alloc] initWithNibName:nil bundle:nil formDataSource:sampleFormDataSource] autorelease];
+	sampleFormController.title = @"Edit Player";
+	sampleFormController.shouldAutoRotate = showcaseModel.shouldAutoRotate;
+	sampleFormController.tableViewStyle = showcaseModel.tableViewStyleGrouped ? UITableViewStyleGrouped : UITableViewStylePlain;
+    
+    [[IBAInputManager sharedIBAInputManager] setInputNavigationToolbarEnabled:showcaseModel.displayNavigationToolbar];
+    
+	UIViewController *rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+	if (showcaseModel.modalPresentation) {
+		UIBarButtonItem *doneButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
+																					 target:self 
+																					 action:@selector(completeSampleForm)] autorelease];
+        UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel 
+                                                                                       target:self 
+                                                                                       action:@selector(cancelForm)] autorelease];
+		sampleFormController.navigationItem.rightBarButtonItem = doneButton;
+        sampleFormController.navigationItem.leftBarButtonItem = cancelButton;
+		UINavigationController *formNavigationController = [[[UINavigationController alloc] initWithRootViewController:sampleFormController] autorelease];
+		formNavigationController.modalPresentationStyle = showcaseModel.modalPresentationStyle;
+		[self presentModalViewController:formNavigationController animated:YES];
+	} else {
+        if ([rootViewController isKindOfClass:[UINavigationController class]]) {
+			[(UINavigationController *)rootViewController pushViewController:sampleFormController animated:YES];
+		}
+	}
+
+}
+
+
+- (void)completeSampleForm{
+    
+    //Deactivate the input requestor if it was currenlty editing
+    [[IBAInputManager sharedIBAInputManager] deactivateActiveInputRequestor];
+    
+    //Validate
+    
+    if ([self.playerModel valueForKey:@"lastName"] == nil || [[self.playerModel valueForKey:@"lastName"] isEqualToString:@""]){
+        //Check if empty
+        [HelpManagement errorMessage:@"Last Name" error:@"requiredFieldEdit"];
+        
+    } else if ([self.playerModel valueForKey:@"firstName"] == nil || [[self.playerModel valueForKey:@"firstName"] isEqualToString:@""]){
+        //Check if empty
+        [HelpManagement errorMessage:@"First Name" error:@"requiredFieldEdit"];
+        
+    }else if (!([self.playerModel valueForKey:@"email"] == nil || [[self.playerModel valueForKey:@"email"] isEqualToString:@""]) && ![self validateEmail:[self.playerModel valueForKey:@"email"]]){
+        
+        [HelpManagement errorMessage:[self.playerModel valueForKey:@"email"]  error:@"emailInvalid"];
+        
+    }else{
+        
+        item.playerNumber = [self.playerModel valueForKey:@"playerNumber"];
+        item.firstName = [self.playerModel valueForKey:@"firstName"];
+        item.lastName = [self.playerModel valueForKey:@"lastName"];
+        item.email = [self.playerModel valueForKey:@"email"];
+        item.phoneNumber = [self.playerModel valueForKey:@"phoneNumber"]; 
+        
+        //Date
+        
+        NSCalendar *dateCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSDateComponents *dateComponent = [dateCal components:( NSYearCalendarUnit | NSMonthCalendarUnit | NSWeekCalendarUnit | NSWeekdayCalendarUnit |NSHourCalendarUnit | NSMinuteCalendarUnit) fromDate:[self.playerModel valueForKey:@"birthdate"]];
+        
+        item.birthdate =  [[dateCal dateFromComponents:dateComponent] copy];
+        
+        [playerModel release];
+        [self dismissModalViewControllerAnimated:YES];
+
+    }
+    
+}
+
+- (void)cancelForm{
+    [playerModel release];
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+- (BOOL)validateEmail:(NSString *)candidate {
+    NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"; 
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex]; 
+    
+    return [emailTest evaluateWithObject:candidate];
+}
+
+BOOL isNumeric(NSString *s)
+{
+    NSScanner *sc = [NSScanner scannerWithString: s];
+    if ( [sc scanFloat:NULL] )
+    {
+        return [sc isAtEnd];
+    }
+    return NO;
 }
 
 @end

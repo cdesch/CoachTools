@@ -165,18 +165,25 @@
 //Action Sheet Delegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     
-    if (actionSheet.tag == 1) {
-        
+    if (actionSheet) {
         if(buttonIndex == 0){
+
             [self sortList:@"lastName" ascendingOrder:YES];
         }else if (buttonIndex == 1){
+
+            
             NSSortDescriptor *sortDescriptor =  [[NSSortDescriptor alloc] initWithKey:@"playerNumber" ascending:YES selector:@selector(localizedStandardCompare:)] ;
+
             NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:&sortDescriptor count:1];
-            [playerArray sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptors] ];
+            
+            NSMutableArray *sortedPlayers = [[NSMutableArray alloc] initWithArray:[team.players allObjects]];
+            [sortedPlayers sortUsingDescriptors:sortDescriptors];
+            self.playerArray = sortedPlayers;
+            
             [sortDescriptor release];
             [sortDescriptors release];
-            
-            [self.tableView reloadData];    
+            [sortedPlayers release];
+            [self.tableView reloadData]; 
             
         }else if (buttonIndex == 2){
             [self sortList:@"cGoals" ascendingOrder:NO];
@@ -185,20 +192,21 @@
             [self sortList:@"cStarts" ascendingOrder:NO];
         }
     }
-    
 }
 
 - (void)sortList:(NSString *)key ascendingOrder:(BOOL)order{
     
     //Sort using key as sort parameter
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:key ascending:order];
-	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:&sortDescriptor count:1];
-    [playerArray sortUsingDescriptors:sortDescriptors ];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:&sortDescriptor count:1];
+    NSMutableArray *sortedPlayers = [[NSMutableArray alloc] initWithArray:[team.players allObjects]];
+    [sortedPlayers sortUsingDescriptors:sortDescriptors];
+    self.playerArray = sortedPlayers;
     
     [sortDescriptor release];
-	[sortDescriptors release];
-    
-    [self.tableView reloadData];                                                                     
+    [sortDescriptors release];
+    [sortedPlayers release];
+    [self.tableView reloadData];                                                                    
     
 }
 
@@ -346,7 +354,6 @@
     }else{
         cell.badgeView.badgeText = @"Not Active";
         cell.badgeView.badgeColor = [UIColor tomato];
-        
     }
     
     cell.badgeView.isSelected = FALSE;

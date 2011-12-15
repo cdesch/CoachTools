@@ -211,6 +211,7 @@ NSInteger REGULAR_TAG = 98;
     }
     else 
     {
+        [FlurryAnalytics logError:@"Unresolve Exception: Search" message:@"Could not find person in Contacts" error:nil];
         // Show an alert if "Appleseed" is not in Contacts
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" 
                                                         message:@"Could not find person in the Contacts application" 
@@ -491,7 +492,7 @@ NSInteger REGULAR_TAG = 98;
         // Display "Appleseed" information if found in the address book 
         if (person != nil)
         {
-            //ABRecordRef person = (ABRecordRef)[people objectAtIndex:0];
+
             ABPersonViewController *picker = [[[ABPersonViewController alloc] init] autorelease];
             picker.personViewDelegate = self;
             picker.displayedPerson = person;
@@ -501,7 +502,9 @@ NSInteger REGULAR_TAG = 98;
         }
         else 
         {
+            
             // Show an alert if "Appleseed" is not in Contacts
+            [FlurryAnalytics logError:@"Unresolve Exception: Search" message:@"Could not find person in Contacts" error:nil];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" 
                                                             message:@"Could not find person in the Contacts application" 
                                                            delegate:nil 

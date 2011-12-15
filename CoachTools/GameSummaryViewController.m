@@ -23,6 +23,8 @@
 #import "GameFormDataSource.h"
 #import "GameSummaryFormDataSource.h"
 
+#import "EventManager.h"
+
 @implementation GameSummaryViewController
 
 @synthesize itemModel;
@@ -122,7 +124,7 @@
         startGameButton.titleLabel.text = @"Game Played";
         startGameButton.userInteractionEnabled = NO;
     }
-    
+        
 }
 
 
@@ -148,9 +150,12 @@
     if (game.opponent != nil) {
         [itemModel setObject:game.opponent forKey:@"opponent"];
     }
-    
+     
     [itemModel setObject:game.date forKey:@"date"];    
     [itemModel setObject:game.date forKey:@"time"];
+    if (    [EventManager checkCalendarEntryExists:game.eventIdentifier]  ) {
+        [itemModel setObject:[NSNumber numberWithBool:TRUE] forKey:@"linkCalendar"];
+    }
     
 	GameFormDataSource *sampleFormDataSource = [[[GameFormDataSource alloc] initWithModel:itemModel] autorelease];
 	ItemFormController *sampleFormController = [[[ItemFormController alloc] initWithNibName:nil bundle:nil formDataSource:sampleFormDataSource] autorelease];
@@ -365,8 +370,6 @@
         [dateFormatter setTimeStyle:NSDateFormatterMediumStyle];
         
         // construct new date and return
-        //dateTextField.text = [dateFormatter stringFromDate:[dateCal dateFromComponents:dateComponent]];
-        //self.game.date = [dateCal dateFromComponents:dateComponent];
         tempDate =  [[dateCal dateFromComponents:dateComponent] copy];
         
         [timeCal release];
@@ -374,6 +377,31 @@
         [dateFormatter release];
         
         game.date = tempDate;
+        
+        if( [[self.itemModel valueForKey:@"linkCalendar"] intValue] == 1){
+
+            if (game.eventIdentifier != nil) {
+                
+                if([EventManager checkCalendarEntryExists:game.eventIdentifier]){
+                    [EventManager updateCalendarEntry:game.date  title:[NSString stringWithFormat:@"%@ - Game: %@", game.season.team.name, game.gameNumber ] eventIdentifier:game.eventIdentifier];    
+                }else{
+                    game.eventIdentifier= [EventManager setCalendarEntry:game.date title:[NSString stringWithFormat:@"%@ - Game: %@", game.season.team.name, game.gameNumber ]];    
+                }
+                
+
+            }else{
+
+                game.eventIdentifier= [EventManager setCalendarEntry:game.date title:[NSString stringWithFormat:@"%@ - Game: %@", game.season.team.name, game.gameNumber ]];    
+            }
+            
+        }else{
+            
+            if (game.eventIdentifier != nil) {
+                [EventManager deleteCalendarEntry:game.eventIdentifier];
+            }
+            
+            game.eventIdentifier = nil;
+        }
         
         //Save the Data.
         RootViewController *ac = [RootViewController sharedAppController];

@@ -177,10 +177,7 @@
             
             //myEvent.allDay = YES;
             [myEvent setCalendar:[eventDB defaultCalendarForNewEvents]];
-            
-            
 
-            
             NSError *err;
             [eventDB saveEvent:myEvent span:EKSpanThisEvent error:&err];
 
@@ -200,7 +197,6 @@
             }
             
             self.game.eventIdentifier = myEvent.eventIdentifier;
-            
             [eventDB release];
         }
         
@@ -209,11 +205,9 @@
         
         NSError *error = nil;
         if (![managedObjectContext save:&error]) {
-
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         }		
-        
         [self.delegate addGameViewController:self didAddGame:game];
     }    
     

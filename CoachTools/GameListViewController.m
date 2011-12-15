@@ -104,7 +104,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+        
+    // Sort and Reload
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"gameNumber" ascending:YES];
 	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:&sortDescriptor count:1];
 	
@@ -115,8 +116,7 @@
 	[sortDescriptor release];
 	[sortDescriptors release];
 	[sortedGames release];
-	
-	// Update recipe type and ingredients on return.
+
     [self.tableView reloadData]; 
 }
 
@@ -151,7 +151,7 @@
     
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Sort by"
                                                              delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil
-                                                    otherButtonTitles:@"Game Number", @"Opponent", @"Location",  nil]; // @"Opponent Goals",@"Team Goals",
+                                                    otherButtonTitles:@"Game Number", @"Opponent", @"Location", @"Date" , nil]; // @"Opponent Goals",@"Team Goals",
     actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
     //actionSheet.destructiveButtonIndex = 4; // make the second button red (destructive)
     
@@ -167,22 +167,26 @@
     if (actionSheet) {
         
         if(buttonIndex == 0){
-            
+
             NSSortDescriptor *sortDescriptor =  [[NSSortDescriptor alloc] initWithKey:@"gameNumber" ascending:YES selector:@selector(localizedStandardCompare:)] ;
             NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:&sortDescriptor count:1];
-            [self.itemArray sortUsingDescriptors:[NSArray arrayWithObject:sortDescriptors] ];
+            
+            NSMutableArray *sortedGames = [[NSMutableArray alloc] initWithArray:[season.games allObjects]];
+            [sortedGames sortUsingDescriptors:sortDescriptors];
+            self.itemArray = sortedGames;
+            
             [sortDescriptor release];
             [sortDescriptors release];
-            
-            [self.tableView reloadData];    
-            
+            [sortedGames release];
+
+            [self.tableView reloadData]; 
             
         }else if (buttonIndex == 1){
             [self sortList:@"opponent" ascendingOrder:YES];
         }else if (buttonIndex == 2){
             [self sortList:@"location" ascendingOrder:YES];
         }else if (buttonIndex == 3){
-            [self sortList:@"homeScore" ascendingOrder:NO];
+            [self sortList:@"date" ascendingOrder:YES];
         }
         else if (buttonIndex == 4){
             [self sortList:@"opponentScore" ascendingOrder:NO];
@@ -193,16 +197,19 @@
 
 - (void)sortList:(NSString *)key ascendingOrder:(BOOL)order{
     
-    
     //Sort using key as sort parameter
 	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:key ascending:order];
-	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:&sortDescriptor count:1];
-    [self.itemArray sortUsingDescriptors:sortDescriptors ];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:&sortDescriptor count:1];
+    
+    NSMutableArray *sortedGames = [[NSMutableArray alloc] initWithArray:[season.games allObjects]];
+    [sortedGames sortUsingDescriptors:sortDescriptors];
+    self.itemArray = sortedGames;
     
     [sortDescriptor release];
-	[sortDescriptors release];
+    [sortDescriptors release];
+    [sortedGames release];
     
-    [self.tableView reloadData];                                                                         
+    [self.tableView reloadData];                                                                     
     
 }
 
@@ -214,8 +221,7 @@
     RootViewController *sharedController = [RootViewController sharedAppController];
     NSManagedObjectContext *managedObjectContext = [sharedController managedObjectContext];
     item = [NSEntityDescription insertNewObjectForEntityForName:@"Game" inManagedObjectContext:managedObjectContext];
-    
-    //ShowcaseModel *showcaseModel = [self model];
+
     ShowcaseModel *showcaseModel = [[[ShowcaseModel alloc] init] autorelease];
     showcaseModel.shouldAutoRotate = YES;
     showcaseModel.tableViewStyleGrouped = YES;
@@ -291,6 +297,8 @@
         item.opponent = [self.itemModel valueForKey:@"opponent"];
         item.season = season;
         
+        
+        
         //Date
         //Retrieve Components of the date
         NSCalendar *dateCal = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -316,6 +324,11 @@
         [dateFormatter release];
         
         item.date = tempDate;
+        
+        if( [[self.itemModel valueForKey:@"linkCalendar"] intValue] == 1){
+
+            item.eventIdentifier= [EventManager setCalendarEntry:item.date title:[NSString stringWithFormat:@"%@ - Game: %@", season.team.name, item.gameNumber ]];
+        }
         
         //Save the Data.
         RootViewController *ac = [RootViewController sharedAppController];
@@ -395,7 +408,6 @@
     GameSummaryViewController *detailViewController = [[GameSummaryViewController alloc] initWithNibName:@"GameSummaryViewController" bundle:nil gameSelected:game];
     
     [self.tableView setEditing:FALSE animated:YES];
-    
     [self.navigationController pushViewController:detailViewController animated:animated];
     [detailViewController release];
 }
@@ -429,7 +441,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
-    
     static NSString *kCustomCellID = @"PlayerListViewCell";
 	
     GameListViewCell *cell = (GameListViewCell *)[tableView dequeueReusableCellWithIdentifier:kCustomCellID];
@@ -448,7 +459,6 @@
     
     Game *selectedGame =  [self.itemArray objectAtIndex:indexPath.row];
 
-    //NSLog(@"event : %@", selectedGame.eventIdentifier);
     
     //If there is a calendar entry, check to make sure its accuracte
     if(selectedGame.eventIdentifier != nil){
@@ -465,7 +475,6 @@
     [dateFormatter release];
     
     cell.locationLabel.text = selectedGame.location;
-    
     
     if([selectedGame.played boolValue] == FALSE){
         cell.badgeView.badgeText = @"Scheduled";
@@ -487,13 +496,8 @@
     cell.badgeView.isSelected = FALSE;
     cell.badgeView.badgeTextColor = [UIColor whiteColor];
     
-    cell.penaltyStatLabel.text =[NSString stringWithFormat:@"%d", [selectedGame.gamePenalty count]]; 
+    //cell.penaltyStatLabel.text =[NSString stringWithFormat:@"%d", [selectedGame.gamePenalty count]]; 
     
-    //cell.badgeText = [NSString stringWithFormat:@"Row %d", indexPath.row];
-    //cell.badgeColor = [UIColor orangeColor];
-    
-    // Configure the cell...
-    //[self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
 
@@ -555,9 +559,7 @@
             //Do nothing // Date is equl
             
         }else{
-            //NSLog(@"Date is not equal");
-            //NSLog(@"date %@",aGame.date);
-            //NSLog(@"date %@",myEvent.startDate);
+
             
             aGame.date = myEvent.startDate;
             
@@ -573,9 +575,6 @@
         
     }else {
 
-        //NSLog(@"Does Not Exist");
-        //Event Does Not exist
-        //Remove the event
   
         aGame.date = nil;
         

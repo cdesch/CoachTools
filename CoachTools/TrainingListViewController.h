@@ -10,7 +10,7 @@
 #import "Season.h"
 #import "TrainingAddViewController.h"
 
-@interface TrainingListViewController : UITableViewController <AddTrainingDelegate,UIPopoverControllerDelegate> {
+@interface TrainingListViewController : UITableViewController <AddTrainingDelegate,UIPopoverControllerDelegate, UIActionSheetDelegate> {
     
     NSMutableDictionary *trainingModel;
     Training            *item;
@@ -27,8 +27,8 @@
  
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil seasonSelected:(Season *)aSeason;
-
-- (void)insertItemButton:(id)sender;
+- (void)sortButton:(id)sender;
+- (void)sortList:(NSString *)key ascendingOrder:(BOOL)order;- (void)insertItemButton:(id)sender;
 - (void)showTraining:(Training *)training animated:(BOOL)animated;
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 - (void)validateDates:(Training*)itemSelected;

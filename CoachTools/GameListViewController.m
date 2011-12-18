@@ -238,7 +238,7 @@
 	sampleFormController.title = @"Add Game Form";
 	sampleFormController.shouldAutoRotate = showcaseModel.shouldAutoRotate;
 	sampleFormController.tableViewStyle = showcaseModel.tableViewStyleGrouped ? UITableViewStyleGrouped : UITableViewStylePlain;
-    
+
 	
     [[IBAInputManager sharedIBAInputManager] setInputNavigationToolbarEnabled:showcaseModel.displayNavigationToolbar];
     

@@ -14,6 +14,7 @@
 #import "Crittercism.h"
 #import "TestFlight.h"
 #import <Foundation/Foundation.h>
+#import "InAppRageIAPHelper.h"
 
 @implementation CoachToolsAppDelegate
 
@@ -50,7 +51,14 @@ void SignalHandler(int sig) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+
+    //Start In App Purchase Manager
+    [[SKPaymentQueue defaultQueue] addTransactionObserver:[InAppRageIAPHelper sharedHelper]];
+
+    
     //APIs
+    
+
     
     //Test Flight
     // installs HandleExceptions as the Uncaught Exception Handler

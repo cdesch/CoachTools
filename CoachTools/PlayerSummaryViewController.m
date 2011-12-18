@@ -22,6 +22,7 @@
 #import "ShowcaseModel.h"
 
 #import "EmergencyContactViewController.h"
+#import "FlurryAnalytics.h"
 
 @implementation PlayerSummaryViewController
 
@@ -280,6 +281,7 @@
     
     NSError *error = nil;
     if (![managedObjectContext save:&error]) {
+        [FlurryAnalytics logError:@"Uncaught Exception: Update" message:@"Update Player Properties" error:error];
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
@@ -309,7 +311,7 @@
     NSManagedObjectContext *context = player.managedObjectContext;
     NSError *error = nil;
     if (![context save:&error]) {
-        
+        [FlurryAnalytics logError:@"Unresolved Exception: Update" message:@"Update Player Active" error:error];
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }else{
@@ -321,6 +323,7 @@
 - (IBAction)emergancyContactButton:(id)sender{
     
     EmergencyContactViewController *detailViewController = [[EmergencyContactViewController alloc] initWithStyle:UITableViewStyleGrouped player:player];
+#warning Fix
     //detailViewController.delegate = self;
     
     UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:detailViewController];

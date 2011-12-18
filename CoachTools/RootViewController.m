@@ -17,7 +17,7 @@
 #import "PlistStringUtil.h"
 
 #import "IAPManagerViewController.h"
-#import "IADManagerViewController.h"
+
 #import <EventKitUI/EventKitUI.h>
 
 #import "ShowcaseModel.h"
@@ -163,21 +163,6 @@ static RootViewController *sharedInstance;
     IAPManagerViewController *addController = [[IAPManagerViewController alloc] initWithNibName:@"IAPManagerViewController" bundle:nil];
     //addController.delegate = self;
 	
-    
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:addController];
-    navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
-    navigationController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    
-    [self presentModalViewController:navigationController animated:YES];
-    
-    [navigationController release];
-    [addController release];
-    
-}
-
-- (IBAction)IADManagerButton:(id)sender{
-    IADManagerViewController *addController = [[IADManagerViewController alloc] initWithNibName:@"IADManagerViewController" bundle:nil];
-    //addController.delegate = self;
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:addController];
     navigationController.modalPresentationStyle = UIModalPresentationFullScreen;

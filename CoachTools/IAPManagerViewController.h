@@ -1,24 +1,33 @@
 //
 //  IAPManagerViewController.h
-//  CoachTools
+//  SortIt
 //
-//  Created by Chris Desch on 8/27/11.
+//  Created by Chris Desch on 12/16/11.
 //  Copyright (c) 2011 Desch Enterprises. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import <StoreKit/StoreKit.h>
-#import "InAppPurchaseObserver.h"
+#import "MBProgressHUD.h"
 
-@interface IAPManagerViewController : UIViewController <SKProductsRequestDelegate> {
-	InAppPurchaseObserver *inappObserver;	
-	UIButton *inappButton;
+@protocol IAPManagerDelegate;
+
+@interface IAPManagerViewController : UITableViewController{
+    id <IAPManagerDelegate > delegate;
+    MBProgressHUD *_hud;
+
     
 }
-@property (nonatomic, retain) InAppPurchaseObserver *inappObserver;
-@property (nonatomic, retain) IBOutlet UIButton *inappButton;
 
--(IBAction)buyInApp:(id)sender;
+@property (retain) id delegate;
+@property (retain) MBProgressHUD *hud;
+
 - (void)doneButton:(id)sender;
+    
+@end
+
+
+@protocol IAPManagerDelegate <NSObject>
+
+- (void)doneInAppPurchases:(IAPManagerViewController *)doneInAppPurchases;
 
 @end

@@ -24,6 +24,8 @@ static InAppRageIAPHelper * _sharedHelper;
 
 - (id)init {
     
+    
+    
     NSSet *productIdentifiers = [NSSet setWithObjects:
         @"com.cdesch.CoachTools.AdFree",
         @"com.raywenderlich.inapprage.itunesconnectrage", 

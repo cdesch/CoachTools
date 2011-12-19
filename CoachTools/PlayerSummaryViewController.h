@@ -10,6 +10,7 @@
 #import "CorePlot-CocoaTouch.h"
 #import "PlayerEditViewController.h"
 
+
 @class Person;
 
 @interface PlayerSummaryViewController : UIViewController <CPTPlotDataSource, CPTPieChartDataSource, CPTBarPlotDelegate, PlayerEditDelegate> {

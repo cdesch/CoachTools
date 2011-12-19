@@ -58,8 +58,6 @@ void SignalHandler(int sig) {
     
     //APIs
     
-
-    
     //Test Flight
     // installs HandleExceptions as the Uncaught Exception Handler
     //NSSetUncaughtExceptionHandler(&HandleExceptions);
@@ -107,6 +105,8 @@ void SignalHandler(int sig) {
 		CCLOG(@"Retina Display Not supported");
     */
     
+
+    
     // Override point for customization after application launch.
     // Add the split view controller's view to the window and display.
     self.window.rootViewController = self.navigationController;
@@ -116,6 +116,7 @@ void SignalHandler(int sig) {
     [Crittercism initWithAppID:@"4ec82c723f5b316f9a00004f" andKey:@"4ec82c723f5b316f9a00004flwax7sls" andSecret:@"if9cgs1z3bhu8gncwufsolmenpjeqvtq" andMainViewController:self.navigationController ];
     [Crittercism sharedInstance].delegate = self;
     
+
     return YES;
 }
 
@@ -393,5 +394,6 @@ void SignalHandler(int sig) {
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
+
 
 @end

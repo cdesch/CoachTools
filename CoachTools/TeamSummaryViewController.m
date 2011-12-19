@@ -21,6 +21,11 @@
 #import "HelpManagement.h"
 #import "FlurryAnalytics.h"
 
+#import "AdWhirlView.h"
+
+#define kAdWhirlViewWidth 320
+#define kAdWhirlViewHeight 50
+
 @implementation TeamSummaryViewController
 
 @synthesize popoverController=_myPopoverController;
@@ -29,6 +34,8 @@
 @synthesize itemModel;
 @synthesize nameTextField;
 @synthesize uniformColorTextField;
+
+@synthesize adView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil teamSelected:(Team *)aTeam
 {
@@ -70,6 +77,13 @@
     
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     //[self setToolbarItems:[NSArray arrayWithObject:self.editButtonItem]];
+    
+    
+    adView = [AdWhirlView requestAdWhirlViewWithDelegate:self];
+    // I use this tag to remove the ADWhirl view, as per my application settings (lite or paid)
+    //adWhirlView.tag = ADVIEW_TAG;
+    //adWhirlView.frame = CGRectMake(0, 412, kAdWhirlViewWidth, kAdWhirlViewHeight);
+    //[self.view addSubview:adWhirlView];
       
 }
 
@@ -244,5 +258,34 @@
     // Return YES for supported orientations
 	return YES;
 }
+
+
+#pragma mark - Adwhirl functions
+
+- (NSString *)adWhirlApplicationKey {
+    NSLog(@"while key");
+    return @"ab943d0fd0af4b3684a5f3839733cf5";
+}
+
+- (NSString *)admobPublisherID
+{
+    NSLog(@"admob ey");
+    return @"a14ec830778d4e5";
+}
+
+
+- (UIViewController *)viewControllerForPresentingModalView {
+    return self;
+}
+
+- (void)adWhirlDidReceiveAd:(AdWhirlView *)adWhirlView{
+    NSLog(@"Received Ad");
+}
+
+- (void)adWhirlDidFailToReceiveAd:(AdWhirlView *)adWhirlView usingBackup:(BOOL)yesOrNo{
+    NSLog(@"Failed Received Ad");
+    [FlurryAnalytics logEvent:@"Failed to Recieve Ad Whirl Ad"];
+}
+
 
 @end

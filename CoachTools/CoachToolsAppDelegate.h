@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Crittercism.h"
 
+
 @interface CoachToolsAppDelegate : NSObject <UIApplicationDelegate,CrittercismDelegate> {
 
 }

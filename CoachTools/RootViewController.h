@@ -13,7 +13,9 @@
 #import "AboutViewController.h"
 #import <EventKitUI/EventKitUI.h>
 
-@interface RootViewController : UIViewController <NSFetchedResultsControllerDelegate, AboutDelegate, EKEventEditViewDelegate> {
+#import "IAPManagerViewController.h"
+
+@interface RootViewController : UIViewController <NSFetchedResultsControllerDelegate, AboutDelegate, EKEventEditViewDelegate, IAPManagerDelegate> {
 	
     NSArray *menuSectionsArray;
     NSMutableArray *menuOptionsArray;

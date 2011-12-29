@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "Crittercism.h"
+//#import "FBConnect.h"
 
-
+//@interface CoachToolsAppDelegate : NSObject <UIApplicationDelegate,CrittercismDelegate,FBSessionDelegate> {
 @interface CoachToolsAppDelegate : NSObject <UIApplicationDelegate,CrittercismDelegate> {
+    //Facebook API
+//    Facebook *facebook;
+    NSMutableDictionary *userPermissions;
 
 }
 
@@ -20,6 +24,10 @@
 @property (nonatomic, retain, readonly) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 @property (nonatomic, retain) IBOutlet UINavigationController *navigationController;
+
+//facebook API
+//@property (nonatomic, retain) Facebook *facebook;
+//@property (nonatomic, retain) NSMutableDictionary *userPermissions;
 
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;

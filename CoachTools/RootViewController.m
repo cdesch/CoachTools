@@ -160,9 +160,8 @@ static RootViewController *sharedInstance;
 
 
 - (IBAction)IAPManagerButton:(id)sender{
-    IAPManagerViewController *addController = [[IAPManagerViewController alloc] initWithNibName:@"IAPManagerViewController" bundle:nil];
-    //addController.delegate = self;
-	
+    IAPManagerViewController *addController = [[IAPManagerViewController alloc] init];
+    addController.delegate = self;
     
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:addController];
     navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
@@ -173,6 +172,10 @@ static RootViewController *sharedInstance;
     [navigationController release];
     [addController release];
     
+}
+
+- (void)doneInAppPurchases:(IAPManagerViewController *)doneInAppPurchases{
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 

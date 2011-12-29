@@ -7,19 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "AdWhirlDelegateProtocol.h"
+//#import "AdWhirlDelegateProtocol.h"
+//#import "AdWhirlView.h"
 
 @class Team;
 
-@interface TeamSummaryViewController : UIViewController <UIPopoverControllerDelegate,AdWhirlDelegate> {
-
+//@interface TeamSummaryViewController : UIViewController <UIPopoverControllerDelegate,AdWhirlDelegate> {
+@interface TeamSummaryViewController : UIViewController <UIPopoverControllerDelegate> {
     Team *team;
     NSMutableDictionary *itemModel;
 
     UITextField *nameTextField;
     UITextField *uniformColorTextField;
     
-    IBOutlet AdWhirlView *adView;
+    //IBOutlet AdWhirlView *adView;
 
 }
 
@@ -30,7 +31,7 @@
 @property (nonatomic, retain) IBOutlet UITextField *nameTextField;
 @property (nonatomic, retain) IBOutlet UITextField *uniformColorTextField;
 
-@property (nonatomic, retain) IBOutlet AdWhirlView *adView;
+//@property (nonatomic, retain) IBOutlet AdWhirlView *adView;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil teamSelected:(Team *)aTeam;

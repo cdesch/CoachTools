@@ -21,7 +21,9 @@
 #import "HelpManagement.h"
 #import "FlurryAnalytics.h"
 
-#import "AdWhirlView.h"
+//#import "AdWhirlView.h"
+
+//#import "InAppRageIAPHelper.h"
 
 #define kAdWhirlViewWidth 320
 #define kAdWhirlViewHeight 50
@@ -35,7 +37,7 @@
 @synthesize nameTextField;
 @synthesize uniformColorTextField;
 
-@synthesize adView;
+//@synthesize adView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil teamSelected:(Team *)aTeam
 {
@@ -77,14 +79,25 @@
     
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     //[self setToolbarItems:[NSArray arrayWithObject:self.editButtonItem]];
+    /*
+    if([[InAppRageIAPHelper sharedHelper].purchasedProducts containsObject:@"com.cdesch.CoachTools.AdFree"]){
     
-    
-    adView = [AdWhirlView requestAdWhirlViewWithDelegate:self];
-    // I use this tag to remove the ADWhirl view, as per my application settings (lite or paid)
-    //adWhirlView.tag = ADVIEW_TAG;
-    //adWhirlView.frame = CGRectMake(0, 412, kAdWhirlViewWidth, kAdWhirlViewHeight);
-    //[self.view addSubview:adWhirlView];
-      
+    }else{
+        adView = [AdWhirlView requestAdWhirlViewWithDelegate:self];
+        adView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin;
+        CGSize adSize = [adView actualAdSize];
+        CGSize screenSize;
+        screenSize.width = 1024;
+        screenSize.height = 728;
+        adView.frame = CGRectMake((screenSize.width/2)-(adSize.width/2),screenSize.height-adSize.height - 107,adSize.width,adSize.height);
+        adView.clipsToBounds = YES;    
+        [self.view addSubview:adView];
+        [self.view bringSubviewToFront:adView];
+        
+
+    }
+    */
+
 }
 
 - (void)viewDidUnload
@@ -261,16 +274,24 @@
 
 
 #pragma mark - Adwhirl functions
-
+/*
 - (NSString *)adWhirlApplicationKey {
-    NSLog(@"while key");
-    return @"ab943d0fd0af4b3684a5f3839733cf5";
+    //Here you have to enter your AdWhirl SDK key
+    NSString *key = [NSString stringWithFormat:@"ab943d0fd0af4b3684a5f3839733cf54"];
+
+	return key ;
 }
+
+
+
 
 - (NSString *)admobPublisherID
 {
-    NSLog(@"admob ey");
-    return @"a14ec830778d4e5";
+    NSString *admobID = [NSString stringWithFormat:@"a14ec830778d4e5"];
+    
+
+    
+    return admobID;
 }
 
 
@@ -278,14 +299,30 @@
     return self;
 }
 
-- (void)adWhirlDidReceiveAd:(AdWhirlView *)adWhirlView{
-    NSLog(@"Received Ad");
+- (void)adWhirlDidReceiveAd:(AdWhirlView *)adWhirlView {
+    
+    [UIView beginAnimations:@"AdWhirlDelegate.adWhirlDidReceiveAd:"
+                    context:nil];
+    
+    [UIView setAnimationDuration:0.7];
+    
+    CGSize adSize = [adView actualAdSize];
+    CGRect newFrame = adView.frame;
+    
+    newFrame.size = adSize;
+    newFrame.origin.x = (self.view.bounds.size.width - adSize.width)/ 2;
+    
+    adView.frame = newFrame;
+    
+    [UIView commitAnimations];
 }
 
 - (void)adWhirlDidFailToReceiveAd:(AdWhirlView *)adWhirlView usingBackup:(BOOL)yesOrNo{
-    NSLog(@"Failed Received Ad");
+
     [FlurryAnalytics logEvent:@"Failed to Recieve Ad Whirl Ad"];
 }
 
 
+
+*/
 @end

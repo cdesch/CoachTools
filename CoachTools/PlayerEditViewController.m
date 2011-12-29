@@ -34,6 +34,7 @@
     if (self) {
         // Custom initialization
         item = player;
+         NSLog(@"%@",item.playerNumber);
 
     }
     return self;
@@ -244,7 +245,7 @@
 
 - (void)updateTextLabelAtIndexPath:(NSIndexPath*)indexPath string:(NSString*)string {
     
-	//NSLog(@"See input: %@ from section: %d row: %d, should update models appropriately", string, indexPath.section, indexPath.row);
+	NSLog(@"See input: %@ from section: %d row: %d, should update models appropriately", string, indexPath.section, indexPath.row);
     item.playerNumber = string;
 }
 
@@ -267,14 +268,18 @@
     int maxVal = 99;
     int minVal = 0;
     
+    NSLog(@"%@",item.playerNumber);
+    
+    NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
     //Game Number validators
     if ([item.playerNumber isEqualToString:@""]) {
         //Check if empty
        [HelpManagement errorMessage:@"Player Number" error:@"requiredFieldEdit"];
         return FALSE;
-    }else if (!isNumeric(item.playerNumber)){
+    }else if ( [f numberFromString:item.playerNumber] == nil){
         //Check if number is a number
         [HelpManagement errorMessage:@"Player Number" error:@"numOnlyField"];
+        [f release];
         return FALSE;
     }
     
@@ -295,6 +300,7 @@
         return FALSE;
         
     }
+    [f release];
     return TRUE;
 }
 
@@ -560,7 +566,7 @@
         
     }else{
         
-        item.playerNumber = [self.playerModel valueForKey:@"playerNumber"];
+        //item.playerNumber = [self.playerModel valueForKey:@"playerNumber"];
         item.firstName = [self.playerModel valueForKey:@"firstName"];
         item.lastName = [self.playerModel valueForKey:@"lastName"];
         item.email = [self.playerModel valueForKey:@"email"];

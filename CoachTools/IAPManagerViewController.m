@@ -69,7 +69,6 @@
     
     //self.navigationController.view.frame = CGRectMake(0, 0, 1024, 771);
 
-
     
     UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithTitle:@"Done" style:UIBarButtonItemStylePlain target:self action:@selector(doneButton:)];
     self.navigationItem.rightBarButtonItem = addButton;

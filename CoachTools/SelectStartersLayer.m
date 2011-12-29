@@ -16,6 +16,8 @@
 #import "GameStart.h"
 #import "PlistStringUtil.h"
 
+#import "FlurryAnalytics.h"
+
 #import "GameManagementViewController.h"
 
 static SelectStartersLayer *sharedInstance;
@@ -66,12 +68,11 @@ int currentFormationIndex = 0;
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init])) {
         self.isTouchEnabled = YES;
-        
-        
+
         sharedInstance = self;
         //NSLog(@"%s", __PRETTY_FUNCTION__); 
         
-        //load the formations
+        //load the formations from plist//
         [self loadFormations];
         
         CGSize size = [[CCDirector sharedDirector] winSize];
@@ -79,30 +80,28 @@ int currentFormationIndex = 0;
         game = [GameManagementViewController sharedController].game;
         NSArray *list = [[[game season] team].players allObjects];
         
-        playersArray = [list mutableCopy];
+        playersArray = [[NSMutableArray alloc] init];        
+        for (Person* player in list){
+            if([player.active boolValue]){
+                [playersArray addObject:player];
+            }
+        }
         
+        //playersArray = [list mutableCopy];
+        
+        //background//
         CCSprite *bg = [CCSprite spriteWithFile:@"soccerField3.png"];
         [bg setPosition:ccp(size.width/2 , size.height/2 )];
         //Add Background to scene
         [self addChild:bg z:0];
         
         // --- Scene Title -----//
-		// Create and initialize a Title Label
-		//CCLabelTTF *label = [CCLabelTTF labelWithString:@"Select Starters" fontName:@"Helvetica" fontSize:40];
-		//label.position =  ccp( size.width/8 , 675 ); //size.height/2 // 750
-		// add the label as a child to this Layer
-		//[self addChild: label];
         
         CCLabelTTF *gameLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%@%@",@"Game: " , game.gameNumber] fontName:@"Helvetica" fontSize:40];
 		gameLabel.position =  ccp( 100 , 675 ); //size.height/2 // 750
         [gameLabel setColor:ccRED];
 		// add the label as a child to this Layer
 		[self addChild: gameLabel];
-
-        
-        //CCMenuItemFont *switchSceneButton = [CCMenuItemFont itemFromString:@"Finished Selecting" target:self selector:@selector(switchScene:)];
-        //[switchSceneButton setColor:ccBLUE];
-		//switchSceneButton.position=ccp(120,650);
         
         CCMenuItemFont *formationButton = [CCMenuItemFont itemFromString:@"Change Formation:"  target:self selector:@selector(formation:)];
 		formationButton.position=ccp(435,675);
@@ -176,13 +175,11 @@ int currentFormationIndex = 0;
         
         for(Person *playerObject in playersArray)
         {
-            if (playerObject.activeValue) {
                 PlayerSprite *s = [PlayerSprite spriteWithFile:@"player1small2.png" ];
                 s.player = playerObject;
                 [s.nameLabel setString:playerObject.lastName];
                 s.position=[self setupPlayers:[playersArray indexOfObject:playerObject]];
                 [self addChild:s];
-            }
         }
         
     }
@@ -200,6 +197,7 @@ int currentFormationIndex = 0;
         point  = [[slotPositionsArray objectAtIndex:playerIndex] CGPointValue];
     }else {
         NSLog(@"ERROR: Setup players select starters");
+        [FlurryAnalytics logError:@"Error Loading" message:@"ErrorLoading Player Formations in Select Starters Layer" error:nil];
     }
     
     return point;
@@ -550,7 +548,6 @@ int currentFormationIndex = 0;
         }
     }
 
-    
     return count;
 
 }

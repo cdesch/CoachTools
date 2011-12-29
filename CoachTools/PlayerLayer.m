@@ -19,6 +19,9 @@
 #import "Team.h"
 #import "iToast.h"
 
+#import "FlurryAnalytics.h"
+
+
 @implementation PlayerLayer
 
 @synthesize playersArray;
@@ -57,8 +60,13 @@
         
         //NSArray *list = [team.players allObjects];
         NSArray *list = [[[game season] team].players allObjects];
-        
-        playersArray = [list mutableCopy];
+              
+        playersArray = [[NSMutableArray alloc] init];        
+        for (Person* player in list){
+            if([player.active boolValue]){
+                [playersArray addObject:player];
+            }
+        }
         
         touchedObject = NULL;
         targetObject = NULL;
@@ -130,7 +138,7 @@
         
         for(Person *playerObject in playersArray){
 
-            if (playerObject.activeValue) {
+
                 int positionSlotIndex =  [self starterPlayerIndex:startingPlayers player:playerObject];
                 //Check if the current Player is a starting player
                 if (positionSlotIndex >= 0){
@@ -157,13 +165,9 @@
                     
                     [self addChild:player];
                     benchSlotIndex ++;
-                    
                 }
-            }
-                        
         }
 
-        
 		//We set the layer position to the center of the screen
 		//This will also move our player sprite to the center
 		self.position = ccp(0,0 );
@@ -281,6 +285,7 @@
         
     }else {
         NSLog(@"ERROR");
+        [FlurryAnalytics logError:@"Error Loading" message:@"ErrorLoading Player Formations in Player Layer" error:nil];
     }
         
     return point;

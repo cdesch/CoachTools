@@ -243,7 +243,7 @@
         
     }else{
         
-        item.playerNumber = [self.playerModel valueForKey:@"playerNumber"];
+        //item.playerNumber = [self.playerModel valueForKey:@"playerNumber"];
         item.firstName = [self.playerModel valueForKey:@"firstName"];
         item.lastName = [self.playerModel valueForKey:@"lastName"];
         item.phoneNumber = [self.playerModel valueForKey:@"phoneNumber"]; 

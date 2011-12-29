@@ -18,6 +18,8 @@
 #import "RootViewController.h"
 #import "CocoaHelper.h"
 
+#import "FlurryAnalytics.h"
+
 @implementation GameLogViewController
 
 @synthesize game;
@@ -129,7 +131,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    NSLog(@"Entering %s", __PRETTY_FUNCTION__);
+//    NSLog(@"Entering %s", __PRETTY_FUNCTION__);
     /*
     NSArray *itemsArray;
     itemsArray = [game.gameSub allObjects];
@@ -407,7 +409,7 @@
 		NSError *error;
 		if (![managedObjectContext save:&error]) {
 
-#warning add Flurry here
+            [FlurryAnalytics logError:@"Uncaught Exception" message:@"Delete " error:error];
 			NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 			abort();
 		}

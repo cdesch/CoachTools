@@ -14,7 +14,7 @@
 #import "Crittercism.h"
 #import "TestFlight.h"
 #import <Foundation/Foundation.h>
-#import "InAppRageIAPHelper.h"
+//#import "InAppRageIAPHelper.h"
 
 @implementation CoachToolsAppDelegate
 
@@ -23,6 +23,8 @@
 @synthesize managedObjectModel=__managedObjectModel;
 @synthesize persistentStoreCoordinator=__persistentStoreCoordinator;
 @synthesize navigationController=_navigationController;
+
+//@synthesize facebook;
 
 //Flurr Excepption Handler
 void uncaughtExceptionHandler(NSException *exception) {
@@ -53,14 +55,11 @@ void SignalHandler(int sig) {
 {
 
     //Start In App Purchase Manager
-    [[SKPaymentQueue defaultQueue] addTransactionObserver:[InAppRageIAPHelper sharedHelper]];
-
+    //[[SKPaymentQueue defaultQueue] addTransactionObserver:[InAppRageIAPHelper sharedHelper]];
     
     //APIs
-    
     //Test Flight
     // installs HandleExceptions as the Uncaught Exception Handler
-    //NSSetUncaughtExceptionHandler(&HandleExceptions);
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     
     // create the signal action structure 
@@ -78,9 +77,7 @@ void SignalHandler(int sig) {
     //[TestFlight passCheckpoint:@"CHECKPOINT_NAME"];
     //[TestFlight openFeedbackView];
 
-    
-    //Setup Flurry
-    [FlurryAnalytics startSession:@"XCHIX4BBSVNWK861PWPC"];
+
 
     NSString * version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
     NSString * buildNo = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBuildNumber"];
@@ -105,18 +102,33 @@ void SignalHandler(int sig) {
 		CCLOG(@"Retina Display Not supported");
     */
     
-
-    
     // Override point for customization after application launch.
     // Add the split view controller's view to the window and display.
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
     
+     //Flurry API
+    [FlurryAnalytics startSession:@"XCHIX4BBSVNWK861PWPC"];
+     
     //Crittercism API
     [Crittercism initWithAppID:@"4ec82c723f5b316f9a00004f" andKey:@"4ec82c723f5b316f9a00004flwax7sls" andSecret:@"if9cgs1z3bhu8gncwufsolmenpjeqvtq" andMainViewController:self.navigationController ];
     [Crittercism sharedInstance].delegate = self;
-    
 
+    /*
+    //Facebook
+    facebook = [[Facebook alloc] initWithAppId:@"328310270514873" andDelegate:self];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults objectForKey:@"FBAccessTokenKey"] 
+        && [defaults objectForKey:@"FBExpirationDateKey"]) {
+        facebook.accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
+        facebook.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
+    }
+    
+    if (![facebook isSessionValid]) {
+        [facebook authorize:nil];
+    }*/
+    
     return YES;
 }
 
@@ -200,7 +212,6 @@ void SignalHandler(int sig) {
     [__managedObjectModel release];
     [__persistentStoreCoordinator release];
     [_navigationController release];
-
     
     [super dealloc];
 }
@@ -221,12 +232,7 @@ void SignalHandler(int sig) {
     {
         if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error])
         {
-            /*
-             Replace this implementation with code to handle the error appropriately.
-             
-             abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development. If it is not possible to recover from the error, display an alert panel that instructs the user to quit the application by pressing the Home button.
-             */
-            
+
             NSException *exception = [NSException exceptionWithName: @"Context Save Failed"   
                                                              reason: @"Bad Programming" userInfo: nil];  
             uncaughtExceptionHandler(exception);
@@ -303,21 +309,13 @@ void SignalHandler(int sig) {
     if (![__persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error])
     {
         
-
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         NSException *exception = [NSException exceptionWithName: @"Migration Failed"   
                                                          reason: @"Default Migration failed - Attempting to recover by removing Data Store " userInfo: nil]; 
         
         [FlurryAnalytics logError:[NSString stringWithFormat:@"Unresolved Error CoreData %s", __PRETTY_FUNCTION__] message:@"CoreData" error:error];
         uncaughtExceptionHandler(exception);
-
-        //TODO: Throw Warning about migration failure. 
-        /*
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"UIAlertView" message:@"<Alert message>" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"OK", nil];
-        [alert show];
-        [alert release];
-        */
-        
+      
         //Attempting to recover from error as last resort of failed migration
         
         // Delete file
@@ -347,8 +345,6 @@ void SignalHandler(int sig) {
             abort();
             
         }
-        
-
         //abort();
     }    
     
@@ -375,14 +371,12 @@ void SignalHandler(int sig) {
 -(void)crittercismDidCrashOnLastLoad {
     
     NSLog(@"App crashed the last time it was loaded");
-    
     [FlurryAnalytics logEvent:@"Crittercism: App crashed the last time it was loaded"];
 }
 
 -(void)crittercismDidClose{
     //Do Nothing
 }
-
 
 
 #pragma mark - Application's Documents directory
@@ -395,5 +389,21 @@ void SignalHandler(int sig) {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
+/*
+#pragma mark - Facebook Delegates
 
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [facebook handleOpenURL:url]; 
+}
+
+- (void)fbDidLogin {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[facebook accessToken] forKey:@"FBAccessTokenKey"];
+    [defaults setObject:[facebook expirationDate] forKey:@"FBExpirationDateKey"];
+    [defaults synchronize];
+    
+}
+
+*/
 @end

@@ -242,7 +242,7 @@
 }
 - (void)setGameTimer:(int)halfInMinutes warningTime:(int)warning{
 
-    halfInMinutes = 1;
+    //halfInMinutes = 1;
     if(gameInterval ==2){
         halfTime = halfInMinutes * 60;
         fullTime = halfTime * 2;

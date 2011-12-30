@@ -107,13 +107,14 @@ void SignalHandler(int sig) {
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
     
+    /*
      //Flurry API
     [FlurryAnalytics startSession:@"XCHIX4BBSVNWK861PWPC"];
      
     //Crittercism API
     [Crittercism initWithAppID:@"4ec82c723f5b316f9a00004f" andKey:@"4ec82c723f5b316f9a00004flwax7sls" andSecret:@"if9cgs1z3bhu8gncwufsolmenpjeqvtq" andMainViewController:self.navigationController ];
     [Crittercism sharedInstance].delegate = self;
-
+     */
     /*
     //Facebook
     facebook = [[Facebook alloc] initWithAppId:@"328310270514873" andDelegate:self];

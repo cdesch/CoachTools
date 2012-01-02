@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>1.0</key>
+	<array>
+		<string>First release</string>
+	</array>
+	<key>1.01</key>
+	<array>
+		<string>FIX: Bugs</string>
+		<string>NEW: Formations Added</string>
+	</array>
+	<key>1.02</key>
+	<array>
+		<string>NEW: Chalk Talk</string>
+		<string>NEW: Calendar Intergration</string>
+		<string>NEW: Contact Intergration</string>
+	</array>
+	<key>1.02.2</key>
+	<array>
+		<string>FIX: Critical Bug Fix</string>
+	</array>
+	<key>1.03</key>
+	<array>
+		<string>NEW: Email Support</string>
+		<string>CHANGE: Data Entry Forms</string>
+	</array>
+</dict>
+</plist>

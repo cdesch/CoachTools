@@ -31,6 +31,8 @@
 		2316D1851409BDF8005E676D /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2316D1841409BDF8005E676D /* EventKit.framework */; };
 		2316D18B1409CDA8005E676D /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2316D18A1409CDA8005E676D /* EventKitUI.framework */; };
 		231703BE14886E8F00FB83B6 /* PlayerImportFormDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 231703BD14886E8F00FB83B6 /* PlayerImportFormDataSource.m */; };
+		23178D4C14B175B700591BB6 /* iVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 23178D4B14B175B700591BB6 /* iVersion.m */; };
+		23178D4F14B175D200591BB6 /* versions.plist in Resources */ = {isa = PBXBuildFile; fileRef = 23178D4E14B175D200591BB6 /* versions.plist */; };
 		231DE5CF14968EAE00E268BC /* CalendarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 231DE5CE14968EAE00E268BC /* CalendarManager.m */; };
 		231E932713FC84D40000DB54 /* iToast.m in Sources */ = {isa = PBXBuildFile; fileRef = 231E932613FC84D40000DB54 /* iToast.m */; };
 		2323A03413722BEC006769B5 /* GameListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2323A03213722BEC006769B5 /* GameListViewController.m */; };
@@ -502,6 +504,9 @@
 		2316D18A1409CDA8005E676D /* EventKitUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKitUI.framework; path = System/Library/Frameworks/EventKitUI.framework; sourceTree = SDKROOT; };
 		231703BC14886E8F00FB83B6 /* PlayerImportFormDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerImportFormDataSource.h; sourceTree = "<group>"; };
 		231703BD14886E8F00FB83B6 /* PlayerImportFormDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerImportFormDataSource.m; sourceTree = "<group>"; };
+		23178D4A14B175B700591BB6 /* iVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iVersion.h; path = ../../github/iVersion/iVersion/iVersion.h; sourceTree = "<group>"; };
+		23178D4B14B175B700591BB6 /* iVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iVersion.m; path = ../../github/iVersion/iVersion/iVersion.m; sourceTree = "<group>"; };
+		23178D4E14B175D200591BB6 /* versions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = versions.plist; sourceTree = "<group>"; };
 		231DE5CD14968EAE00E268BC /* CalendarManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarManager.h; sourceTree = "<group>"; };
 		231DE5CE14968EAE00E268BC /* CalendarManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarManager.m; sourceTree = "<group>"; };
 		231E932513FC84D40000DB54 /* iToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iToast.h; sourceTree = "<group>"; };
@@ -1436,6 +1441,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		23178D4D14B175BD00591BB6 /* iVersion */ = {
+			isa = PBXGroup;
+			children = (
+				23178D4A14B175B700591BB6 /* iVersion.h */,
+				23178D4B14B175B700591BB6 /* iVersion.m */,
+			);
+			name = iVersion;
+			sourceTree = "<group>";
+		};
 		231852E81406FD200035DE91 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
@@ -1515,8 +1529,9 @@
 		232EBAEA13526C62002277B9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				23A1A4B5149EF4AF00A9136B /* src */,
-				23A01C6B149E9B0B002D9935 /* New Group */,
+				23178D4D14B175BD00591BB6 /* iVersion */,
+				23A1A4B5149EF4AF00A9136B /* facebook */,
+				23A01C6B149E9B0B002D9935 /* Encyrption */,
 				23A01BC7149E7AEF002D9935 /* CorePlot0.9 */,
 				23A01BB9149E768F002D9935 /* TestFlight */,
 				23F001B01492F784000294AF /* Flurry */,
@@ -1586,6 +1601,7 @@
 		232EBAF413526C62002277B9 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				23178D4E14B175D200591BB6 /* versions.plist */,
 				23001A8E1499A00E003ADF84 /* Move_dSYM_To_Storage.sh */,
 				23CF4D2513E200A700347E6B /* images */,
 				2365E72413AC155D0063FA1E /* Sounds */,
@@ -2368,7 +2384,7 @@
 			path = CorePlotHeaders;
 			sourceTree = "<group>";
 		};
-		23A01C6B149E9B0B002D9935 /* New Group */ = {
+		23A01C6B149E9B0B002D9935 /* Encyrption */ = {
 			isa = PBXGroup;
 			children = (
 				23A01C6C149E9B16002D9935 /* NSData+AESCrypt.h */,
@@ -2376,10 +2392,10 @@
 				23A01C6E149E9B16002D9935 /* NSString+AESCrypt.h */,
 				23A01C6F149E9B16002D9935 /* NSString+AESCrypt.m */,
 			);
-			name = "New Group";
+			name = Encyrption;
 			sourceTree = "<group>";
 		};
-		23A1A4B5149EF4AF00A9136B /* src */ = {
+		23A1A4B5149EF4AF00A9136B /* facebook */ = {
 			isa = PBXGroup;
 			children = (
 				23A1A4B9149EF4AF00A9136B /* Facebook.h */,
@@ -2394,6 +2410,7 @@
 				23A1A4C3149EF4AF00A9136B /* FBRequest.m */,
 				23A1A4C4149EF4AF00A9136B /* JSON */,
 			);
+			name = facebook;
 			path = src;
 			sourceTree = "<group>";
 		};
@@ -3053,6 +3070,7 @@
 				23A1A595149F73C400A9136B /* CrittercismGridViewController.xib in Resources */,
 				23A1A596149F73C400A9136B /* CrittercismRootViewController.xib in Resources */,
 				23A1A597149F73C400A9136B /* CrittercismViewController.xib in Resources */,
+				23178D4F14B175D200591BB6 /* versions.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3377,6 +3395,7 @@
 				23A1A4DD149EF4AF00A9136B /* SBJsonBase.m in Sources */,
 				23A1A4DE149EF4AF00A9136B /* SBJsonParser.m in Sources */,
 				23A1A4DF149EF4AF00A9136B /* SBJsonWriter.m in Sources */,
+				23178D4C14B175B700591BB6 /* iVersion.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

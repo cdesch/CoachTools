@@ -14,6 +14,7 @@
 #import "Crittercism.h"
 #import "TestFlight.h"
 #import <Foundation/Foundation.h>
+#import "iVersion.h"
 //#import "InAppRageIAPHelper.h"
 
 @implementation CoachToolsAppDelegate
@@ -114,7 +115,14 @@ void SignalHandler(int sig) {
     //Crittercism API
     [Crittercism initWithAppID:@"4ec82c723f5b316f9a00004f" andKey:@"4ec82c723f5b316f9a00004flwax7sls" andSecret:@"if9cgs1z3bhu8gncwufsolmenpjeqvtq" andMainViewController:self.navigationController ];
     [Crittercism sharedInstance].delegate = self;
-     */
+     
+    
+    [iVersion sharedInstance].appStoreID = 455881163;
+	[iVersion sharedInstance].remoteVersionsPlistURL = @"http://cjdesch.com/CoachTools/versions.plist";
+	[iVersion sharedInstance].localVersionsPlistPath = @"versions.plist";
+    
+    */
+    
     /*
     //Facebook
     facebook = [[Facebook alloc] initWithAppId:@"328310270514873" andDelegate:self];

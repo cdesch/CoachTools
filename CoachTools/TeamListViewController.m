@@ -20,6 +20,8 @@
 #import "FlurryAnalytics.h"
 #import "PopulateTeam.h"
 
+//#import "TeamEditViewController.h"
+
 @implementation TeamListViewController
 
 @synthesize fetchedResultsController = _fetchedResultsController;
@@ -81,6 +83,7 @@
     
     self.navigationItem.rightBarButtonItem = addButton;
     [addButton release];
+    
     /*
     
     UIBarButtonItem *sortAscendingButton = [[UIBarButtonItem alloc] initWithTitle:@"Sort" style:UIBarButtonItemStyleBordered target:self action:@selector(sortButton:)];
@@ -196,12 +199,12 @@
     }else if (actionSheet.tag == 1){
         if(buttonIndex == 0){
             [self newItemForm];
+            //[self newItem];
         }else if (buttonIndex == 1){
             //Populate Team        
             [self generateItem];
         }
     }
-
 }
 
 #pragma mark - implementation of buttons
@@ -243,6 +246,31 @@
     //
     [self.tableView reloadData];
 }
+
+/*
+- (void)newItem{
+    RootViewController *sharedController = [RootViewController sharedAppController];
+    NSManagedObjectContext *managedObjectContext = [sharedController managedObjectContext];
+    item = [NSEntityDescription insertNewObjectForEntityForName:@"Team" inManagedObjectContext:managedObjectContext];
+    TeamEditViewController *detailViewController = [[TeamEditViewController alloc] initWithStyle:UITableViewStyleGrouped team:item];
+    detailViewController.delegate = self;
+    
+    UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:detailViewController];
+    navigation.modalPresentationStyle = UIModalPresentationFormSheet;
+    [self presentModalViewController:navigation animated:YES];
+    [navigation release];
+    [detailViewController release];
+
+}
+
+- (void)editingFinished:(TeamEditViewController *)teamEditViewController didAddTeam:(Team *)team{
+    NSLog(@"Fisnished");
+    [self dismissModalViewControllerAnimated:YES];    
+}
+- (void)editingCancelled:(TeamEditViewController *)teamEditViewController didAddTeam:(Team *)team{
+    NSLog(@"Cancelled");
+    [self dismissModalViewControllerAnimated:YES];
+}*/
 
 //New Item from a form.
 - (void)newItemForm{
@@ -301,8 +329,8 @@
         
     }else {
         item.name = [self.itemModel valueForKey:@"name"];
-        item.homeLocation = [self.itemModel valueForKey:@"homeLocation"];
-        item.uniformColor = [self.itemModel valueForKey:@"uniformColor"];
+        //item.homeLocation = [self.itemModel valueForKey:@"homeLocation"];
+        //item.uniformColor = [self.itemModel valueForKey:@"uniformColor"];
         
         //Save the Data.
         RootViewController *ac = [RootViewController sharedAppController];

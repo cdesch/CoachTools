@@ -34,7 +34,7 @@
     if (self) {
         // Custom initialization
         item = player;
-         NSLog(@"%@",item.playerNumber);
+       
 
     }
     return self;

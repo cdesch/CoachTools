@@ -22,9 +22,8 @@
         
 		[basicFieldSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"name" title:@"Name"] autorelease]];
 
-        [basicFieldSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"uniformColor" title:@"Uniform Color"] autorelease]];
+        //[basicFieldSection addFormField:[[[IBATextFormField alloc] initWithKeyPath:@"uniformColor" title:@"Uniform Color"] autorelease]];
 
-        //TODO: Fix Style for Long label name fields
         /*
         IBATextFormField* myfield = [[[IBATextFormField alloc] initWithKeyPath:@"uniformColor" title:@"Uniform Color"] autorelease];
         myfield.formFieldStyle = 

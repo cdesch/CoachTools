@@ -15,26 +15,40 @@
 
 #import "IAPManagerViewController.h"
 
-@interface RootViewController : UIViewController <NSFetchedResultsControllerDelegate, AboutDelegate, EKEventEditViewDelegate, IAPManagerDelegate> {
+
+#import "APICallsViewController.h"
+#import "FBConnect.h"
+
+
+@interface RootViewController : UIViewController <NSFetchedResultsControllerDelegate, AboutDelegate, EKEventEditViewDelegate, IAPManagerDelegate,FBRequestDelegate,
+FBDialogDelegate,
+FBSessionDelegate> {
 	
-    NSArray *menuSectionsArray;
-    NSMutableArray *menuOptionsArray;
+    NSArray *permissions;
+
+    IBOutlet UIButton *loginButton;
+    IBOutlet UILabel *nameLabel;
+    IBOutlet UIImageView *profilePhotoImageView;
     
     GameTimer   *gameTimer;
     GameManagementViewController *gameManagementViewController;
     
     IBOutlet UIImageView *background;
     IBOutlet UILabel *titleLabel;
+    
+    APICallsViewController *pendingApiCallsController;
 }
 
-@property (nonatomic, retain) NSArray *menuSectionsArray;
-@property (nonatomic, retain) NSMutableArray *menuOptionsArray;
+@property (nonatomic, retain) NSArray *permissions;
 
+@property (nonatomic, retain) IBOutlet UILabel *nameLabel;
+@property (nonatomic, retain) IBOutlet UIImageView *profilePhotoImageView;
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 
 @property (nonatomic, retain) GameTimer *gameTimer;
 @property (nonatomic, retain) GameManagementViewController *gameManagementViewController;
+
 @property (nonatomic, retain) UIImageView *background;
 @property (nonatomic, retain) IBOutlet UILabel *titleLabel;
 
@@ -50,7 +64,10 @@
 - (IBAction)notAvailable:(id)sender;
 - (IBAction)launchFeedback:(id)sender;
 - (IBAction)testButton:(id)sender;
+- (IBAction)shareKitButton:(id)sender;
 
+- (void)showLoggedIn;
+- (void)showLoggedOut;
 
 
 @end

@@ -21,9 +21,10 @@
 #import "HelpManagement.h"
 #import "FlurryAnalytics.h"
 
-//#import "AdWhirlView.h"
+#import "AdWhirlView.h"
+#import "InAppRageIAPHelper.h"
 
-//#import "InAppRageIAPHelper.h"
+#import "EmailViewController.h"
 
 #define kAdWhirlViewWidth 320
 #define kAdWhirlViewHeight 50
@@ -37,7 +38,7 @@
 @synthesize nameTextField;
 @synthesize uniformColorTextField;
 
-//@synthesize adView;
+@synthesize adView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil teamSelected:(Team *)aTeam
 {
@@ -79,7 +80,7 @@
     
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     //[self setToolbarItems:[NSArray arrayWithObject:self.editButtonItem]];
-    /*
+    
     if([[InAppRageIAPHelper sharedHelper].purchasedProducts containsObject:@"com.cdesch.CoachTools.AdFree"]){
     
     }else{
@@ -94,15 +95,11 @@
         [self.view addSubview:adView];
         [self.view bringSubviewToFront:adView];
         
-
     }
-    */
-
+    
 }
 
-- (void)viewDidUnload
-
-{   
+- (void)viewDidUnload{   
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
     self.nameTextField = nil;
@@ -118,8 +115,6 @@
 
     nameTextField.text = team.name;
     uniformColorTextField.text = team.uniformColor;
-
-    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -165,7 +160,6 @@
 	sampleFormController.tableViewStyle = showcaseModel.tableViewStyleGrouped ? UITableViewStyleGrouped : UITableViewStylePlain;
 
     [[IBAInputManager sharedIBAInputManager] setInputNavigationToolbarEnabled:showcaseModel.displayNavigationToolbar];
-
     
 	UIViewController *rootViewController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
 	if (showcaseModel.modalPresentation) {
@@ -201,9 +195,8 @@
         
     }else{
         
-        //item.gameNumber = [NSNumber numberWithInt:[[self.itemModel valueForKey:@"gameNumber"] intValue]];
         team.name = [self.itemModel valueForKey:@"name"];
-        team.uniformColor = [self.itemModel valueForKey:@"uniformColor"];
+        //team.uniformColor = [self.itemModel valueForKey:@"uniformColor"];
         
           //Save the Data.
         RootViewController *ac = [RootViewController sharedAppController];
@@ -254,6 +247,7 @@
 
     [self.navigationController pushViewController:listViewController animated:YES];
     [listViewController release];
+    
 }
 
 - (IBAction)manageSeasonButton{
@@ -263,7 +257,6 @@
     
     [self.navigationController pushViewController:listViewController animated:YES];
     [listViewController release];
-
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -274,33 +267,25 @@
 
 
 #pragma mark - Adwhirl functions
-/*
+
 - (NSString *)adWhirlApplicationKey {
     //Here you have to enter your AdWhirl SDK key
     NSString *key = [NSString stringWithFormat:@"ab943d0fd0af4b3684a5f3839733cf54"];
-
 	return key ;
 }
-
-
 
 
 - (NSString *)admobPublisherID
 {
     NSString *admobID = [NSString stringWithFormat:@"a14ec830778d4e5"];
-    
-
-    
     return admobID;
 }
-
 
 - (UIViewController *)viewControllerForPresentingModalView {
     return self;
 }
 
 - (void)adWhirlDidReceiveAd:(AdWhirlView *)adWhirlView {
-    
     [UIView beginAnimations:@"AdWhirlDelegate.adWhirlDidReceiveAd:"
                     context:nil];
     
@@ -318,11 +303,27 @@
 }
 
 - (void)adWhirlDidFailToReceiveAd:(AdWhirlView *)adWhirlView usingBackup:(BOOL)yesOrNo{
-
     [FlurryAnalytics logEvent:@"Failed to Recieve Ad Whirl Ad"];
 }
 
 
+#pragma mark - Button Actions
+- (IBAction)emailButton:(id)sender{
 
-*/
+    EmailViewController *detailViewController = [[EmailViewController alloc] initWithStyle:UITableViewStyleGrouped object:team];
+    detailViewController.delegate = self;
+    
+    UINavigationController *navigation = [[UINavigationController alloc] initWithRootViewController:detailViewController];
+    navigation.modalPresentationStyle = UIModalPresentationFormSheet;
+    [self presentModalViewController:navigation animated:YES];
+    [navigation release];
+    [detailViewController release];
+
+}
+
+- (void)doneEmail:(EmailViewController*)viewController{
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+
 @end

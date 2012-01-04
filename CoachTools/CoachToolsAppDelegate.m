@@ -15,7 +15,10 @@
 #import "TestFlight.h"
 #import <Foundation/Foundation.h>
 #import "iVersion.h"
-//#import "InAppRageIAPHelper.h"
+#import "InAppRageIAPHelper.h"
+
+
+static NSString* kAppId = @"328310270514873";
 
 @implementation CoachToolsAppDelegate
 
@@ -25,9 +28,10 @@
 @synthesize persistentStoreCoordinator=__persistentStoreCoordinator;
 @synthesize navigationController=_navigationController;
 
-//@synthesize facebook;
+@synthesize facebook;
+@synthesize userPermissions;
 
-//Flurr Excepption Handler
+//Flurry Excepption Handler
 void uncaughtExceptionHandler(NSException *exception) {
     [FlurryAnalytics logError:@"uncaughtExceptionHandler" message:@"Crash!" exception:exception];
     NSLog(@"uncaughtExceptionHandler");
@@ -35,18 +39,6 @@ void uncaughtExceptionHandler(NSException *exception) {
     //NSLog(@"This is where we save the application data during a exception");
 }
 
-/*
- My Apps Custom uncaught exception catcher, we do special stuff here, and TestFlight takes care of the rest
- **/
-/*
-void HandleExceptions(NSException *exception) {
-    NSLog(@"This is where we save the application data during a exception");
-    // Save application data on crash
-}*/
-
-/*
- My Apps Custom signal catcher, we do special stuff here, and TestFlight takes care of the rest
- **/
 void SignalHandler(int sig) {
     NSLog(@"This is where we save the application data during a signal");
     // Save application data on crash
@@ -56,7 +48,7 @@ void SignalHandler(int sig) {
 {
 
     //Start In App Purchase Manager
-    //[[SKPaymentQueue defaultQueue] addTransactionObserver:[InAppRageIAPHelper sharedHelper]];
+    [[SKPaymentQueue defaultQueue] addTransactionObserver:[InAppRageIAPHelper sharedHelper]];
     
     //APIs
     //Test Flight
@@ -96,6 +88,13 @@ void SignalHandler(int sig) {
     [director setAnimationInterval:1.0/60];
 	[director setDisplayFPS:YES];
 
+    //Facebook
+    // Initialize Facebook
+    facebook = [[Facebook alloc] initWithAppId:kAppId andDelegate:self];
+    
+    // Initialize user permissions
+    userPermissions = [[NSMutableDictionary alloc] initWithCapacity:1];
+    
     /*
     // NOT NEEDED FOR IPAD
     // Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
@@ -109,34 +108,89 @@ void SignalHandler(int sig) {
     [self.window makeKeyAndVisible];
     
     /*
-     //Flurry API
+    //Flurry API - Beging the Flurry session with Key
     [FlurryAnalytics startSession:@"XCHIX4BBSVNWK861PWPC"];
+    
+    //Check if the first run value exists
+    if([[NSUserDefaults standardUserDefaults] objectForKey:@"firstLaunch"] == nil ){
+    
+        //Set the First Launch to YES for Default Value 
+        [[NSUserDefaults standardUserDefaults] registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES],@"firstLaunch",nil]];
+    }
+
+    //Detect if it is the FIRST Launch
+    if([[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"]){
+        //Report to Flurry which iOS version this app install is. 
+        [FlurryAnalytics logEvent:@"iOS V:%@",[[UIDevice currentDevice] systemVersion]];
+    }else {
+        //Do Nothing
+    }
+    
+    //Set First Launch to no - 
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"firstLaunch"];
      
-    //Crittercism API
+    //Crittercism API - Begin Crittercism Session with API Key
     [Crittercism initWithAppID:@"4ec82c723f5b316f9a00004f" andKey:@"4ec82c723f5b316f9a00004flwax7sls" andSecret:@"if9cgs1z3bhu8gncwufsolmenpjeqvtq" andMainViewController:self.navigationController ];
     [Crittercism sharedInstance].delegate = self;
      
     
+    //Check the current version with the version in the store. Alert the user if the current version is out of date to upgrade to the next version
     [iVersion sharedInstance].appStoreID = 455881163;
 	[iVersion sharedInstance].remoteVersionsPlistURL = @"http://cjdesch.com/CoachTools/versions.plist";
 	[iVersion sharedInstance].localVersionsPlistPath = @"versions.plist";
     
     */
     
-    /*
-    //Facebook
-    facebook = [[Facebook alloc] initWithAppId:@"328310270514873" andDelegate:self];
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults objectForKey:@"FBAccessTokenKey"] 
-        && [defaults objectForKey:@"FBExpirationDateKey"]) {
-        facebook.accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
-        facebook.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
+    //Facebook Testing Checkes //TODO: REMOVE BEFORE RELEASE
+    // Check App ID:
+    // This is really a warning for the developer, this should not
+    // happen in a completed app
+    if (!kAppId) {
+        UIAlertView *alertView = [[UIAlertView alloc] 
+                                  initWithTitle:@"Setup Error" 
+                                  message:@"Missing app ID. You cannot run the app until you provide this in the code." 
+                                  delegate:self 
+                                  cancelButtonTitle:@"OK" 
+                                  otherButtonTitles:nil, 
+                                  nil];
+        [alertView show];
+        [alertView release];
+    } else {
+        // Now check that the URL scheme fb[app_id]://authorize is in the .plist and can
+        // be opened, doing a simple check without local app id factored in here
+        NSString *url = [NSString stringWithFormat:@"fb%@://authorize",kAppId];
+        BOOL bSchemeInPlist = NO; // find out if the sceme is in the plist file.
+        NSArray* aBundleURLTypes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleURLTypes"];
+        if ([aBundleURLTypes isKindOfClass:[NSArray class]] && 
+            ([aBundleURLTypes count] > 0)) {
+            NSDictionary* aBundleURLTypes0 = [aBundleURLTypes objectAtIndex:0];
+            if ([aBundleURLTypes0 isKindOfClass:[NSDictionary class]]) {
+                NSArray* aBundleURLSchemes = [aBundleURLTypes0 objectForKey:@"CFBundleURLSchemes"];
+                if ([aBundleURLSchemes isKindOfClass:[NSArray class]] &&
+                    ([aBundleURLSchemes count] > 0)) {
+                    NSString *scheme = [aBundleURLSchemes objectAtIndex:0];
+                    if ([scheme isKindOfClass:[NSString class]] && 
+                        [url hasPrefix:scheme]) {
+                        bSchemeInPlist = YES;
+                    }
+                }
+            }
+        }
+        // Check if the authorization callback will work
+        BOOL bCanOpenUrl = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString: url]];
+        if (!bSchemeInPlist || !bCanOpenUrl) {
+            UIAlertView *alertView = [[UIAlertView alloc] 
+                                      initWithTitle:@"Setup Error" 
+                                      message:@"Invalid or missing URL scheme. You cannot run the app until you set up a valid URL scheme in your .plist." 
+                                      delegate:self 
+                                      cancelButtonTitle:@"OK" 
+                                      otherButtonTitles:nil, 
+                                      nil];
+            [alertView show];
+            [alertView release];
+        }
     }
-    
-    if (![facebook isSessionValid]) {
-        [facebook authorize:nil];
-    }*/
+
     
     return YES;
 }
@@ -144,7 +198,7 @@ void SignalHandler(int sig) {
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     
-    //NSLog(@" %s", __PRETTY_FUNCTION__);
+
 
     /*
      Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -189,7 +243,6 @@ void SignalHandler(int sig) {
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    //NSLog(@" %s", __PRETTY_FUNCTION__);
     /*
      Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
      */
@@ -199,18 +252,20 @@ void SignalHandler(int sig) {
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-    //NSLog(@" %s", __PRETTY_FUNCTION__);
+
     // Saves changes in the application's managed object context before the application terminates.
     [self saveContext];
     //
     //Coocos2d
     [[CCDirector sharedDirector] end];
 
+
 }
 
 // purge memroy
 - (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
 {
+    
     [[CCDirector sharedDirector] purgeCachedData];
 }
 
@@ -245,7 +300,6 @@ void SignalHandler(int sig) {
             NSException *exception = [NSException exceptionWithName: @"Context Save Failed"   
                                                              reason: @"Bad Programming" userInfo: nil];  
             uncaughtExceptionHandler(exception);
-            
             NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
             abort();
         } 
@@ -398,12 +452,16 @@ void SignalHandler(int sig) {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
-/*
+
 #pragma mark - Facebook Delegates
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     return [facebook handleOpenURL:url]; 
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    return [self.facebook handleOpenURL:url];
 }
 
 - (void)fbDidLogin {
@@ -414,5 +472,4 @@ void SignalHandler(int sig) {
     
 }
 
-*/
 @end

@@ -11,6 +11,7 @@
 #import "AddTeamViewController.h"
 #import "MBProgressHUD.h"
 
+
 @interface TeamListViewController : UITableViewController <UINavigationControllerDelegate, UIPopoverControllerDelegate, AddTeamDelegate, UIActionSheetDelegate, MBProgressHUDDelegate, NSFetchedResultsControllerDelegate> {
     
     NSFetchedResultsController *_fetchedResultsController;
@@ -34,6 +35,7 @@
 - (void)sortButton:(id)sender;
 - (void)sortList:(NSString *)key ascendingOrder:(BOOL)order;
 - (void)generateItem;
+- (void)newItem;
 - (void)newItemForm;
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath;
 - (void)showTeam:(Team *)team animated:(BOOL)animated;

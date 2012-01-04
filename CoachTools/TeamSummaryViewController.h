@@ -7,20 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
-//#import "AdWhirlDelegateProtocol.h"
-//#import "AdWhirlView.h"
+#import "AdWhirlDelegateProtocol.h"
+#import "AdWhirlView.h"
+
+#import "EmailViewController.h"
 
 @class Team;
 
-//@interface TeamSummaryViewController : UIViewController <UIPopoverControllerDelegate,AdWhirlDelegate> {
-@interface TeamSummaryViewController : UIViewController <UIPopoverControllerDelegate> {
+@interface TeamSummaryViewController : UIViewController <UIPopoverControllerDelegate,AdWhirlDelegate,EmailDelegate> {
     Team *team;
     NSMutableDictionary *itemModel;
 
     UITextField *nameTextField;
     UITextField *uniformColorTextField;
     
-    //IBOutlet AdWhirlView *adView;
+    IBOutlet AdWhirlView *adView;
 
 }
 
@@ -31,7 +32,7 @@
 @property (nonatomic, retain) IBOutlet UITextField *nameTextField;
 @property (nonatomic, retain) IBOutlet UITextField *uniformColorTextField;
 
-//@property (nonatomic, retain) IBOutlet AdWhirlView *adView;
+@property (nonatomic, retain) IBOutlet AdWhirlView *adView;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil teamSelected:(Team *)aTeam;
@@ -43,5 +44,7 @@
 
 - (IBAction)managePlayersButton;
 - (IBAction)manageSeasonButton; 
+
+- (IBAction)emailButton:(id)sender;
 
 @end
